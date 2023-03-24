@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+
+import react, { useState } from 'react';
 import './App.css';
+import {Button}  from './Components/Button/Button';
+import { Card } from './Components/Card/Card';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [counter, setCounter] = useState(1);
+
+    const increment = () => {
+        let tempCounter = counter + 1;
+        setCounter(tempCounter);
+    }
+    
+    const decrement = () => {
+        let tempCounter = counter - 1;
+        setCounter(tempCounter);
+    }
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <Card data={counter} />
+                <Button title='Incerement' handleOnClick={increment} />
+                <Button title='Decrement' handleOnClick={decrement} />
+            </header>
+        </div>
+    );
 }
 
 export default App;
