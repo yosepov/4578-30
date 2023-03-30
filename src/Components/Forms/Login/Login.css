@@ -1,0 +1,8 @@
+.myTextInput{
+    width: 100%;
+}
+
+.myButtonDiv{
+    display: flex;
+    justify-content: flex-end;
+}
