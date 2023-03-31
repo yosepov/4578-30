@@ -1,0 +1,9 @@
+.SignUpContainer {
+  background-color: transparent;
+  padding: 0;
+  display: inline-flex;
+}
+
+p {
+  font-size: 10pt;
+}
