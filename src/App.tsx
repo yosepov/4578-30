@@ -1,6 +1,8 @@
-import { NavBar } from "./Components/NavBar/NavBar";
+
+import { RouterProvider } from 'react-router-dom';
+import { router } from './Routes/Routes';
 
 export const App = () => {
 
-    return <NavBar />;
+    return <RouterProvider router={router} />;
 }
