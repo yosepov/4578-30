@@ -3,53 +3,43 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import './Login.css'
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword} from 'firebase/auth';
+import { auth } from '../../../Services/firebase'
+import { toast } from 'react-toastify';
 
 interface LoginProp {
     closeParentModel: () => void
 }
 
 
-export const Login = (prop: LoginProp) => {
+export const Login = ({closeParentModel}: LoginProp) => {
 
     const [user, setUsername] = useState('');
     const [pass, setPassword] = useState('');
+    const [isSignedUp, setIsSignedUp] = useState(true);
     const [usernameError, setUsernamError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
-    localStorage.setItem('HardCodedLoginInfo', JSON.stringify({ User: 'User', Pass: 'Pass' }))
-
-    const handleSubmit = () => {
-        let noerrors = true;
-        let close = true;
-
-        if (user.length === 0) {
-            setUsernamError(true)
-            noerrors = false;
-        }
-
-        if (pass.length === 0) {
-            setPasswordError(true)
-            noerrors = false;
-        }
-        if (noerrors) {
-            const userFromLocalStorage = JSON.parse(localStorage.getItem("HardCodedLoginInfo") || '{}')
-            if (userFromLocalStorage != null) {
-                if (userFromLocalStorage.User.toLowerCase() != user.toLowerCase()) {
-                    setUsernamError(true)
-                    close = false;
+    const handleSubmit = async () => {
+        if(isSignedUp){
+            await createUserWithEmailAndPassword(auth, user, pass).then((res) => {
+                const user = res.user;
+                localStorage.setItem('user', JSON.stringify(user));
+                sessionStorage.setItem('Auth Token', user.refreshToken);
+                closeParentModel();
+                toast(user.email + ' Welcome!', {
+                    type: "warning",
+                });
+            }).catch((e) => toast(e));
+        }else{
+            await signInWithEmailAndPassword(auth, user,pass).then(res => {
+                closeParentModel();
+                toast(res.user.email + ' Signed in successfully!', {
+                    type: "success",
                 }
-                if (userFromLocalStorage.Pass.toLowerCase() != pass.toLowerCase()) {
-                    setPasswordError(true)
-                    close = false;
-                }
-                if (close)
-                    prop.closeParentModel()
+                );
             }
-            else {
-                prop.closeParentModel()
-            }
-
-
+            ).catch(e => toast(e));
         }
     }
 
@@ -76,33 +66,48 @@ export const Login = (prop: LoginProp) => {
     }
 
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                alignItems: 'center',
-                '& > :not(style)': { m: 1 },
-                flexDirection: 'column'
-            }}
-        >
-            <TextField className='myTextInput'
-                helperText="Please enter Username/Email"
-                id="demo-helper-text-aligned"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.currentTarget.value, 'user')}
-                label="Username"
-                error={usernameError}
-            />
-            <TextField className='myTextInput'
-                helperText="Please enter Password"
-                id="demo-helper-text-aligned-no-helper"
-                onChange={(e:React.ChangeEvent<HTMLInputElement>) => handleChange(e.currentTarget.value, 'pass')}
-                label="Password"
-                type="password"
-                error={passwordError}
-            />
-            <div className='myButtonDiv'>
-                <Button className='myButton' onClick={handleSubmit}>Login</Button>
-            </div>
-        </Box>
+        <>
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    '& > :not(style)': { m: 1 },
+                    flexDirection: 'column'
+                }}
+            >
+                <TextField className='myTextInput'
+                    helperText="Please enter Username/Email"
+                    id="demo-helper-text-aligned"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.currentTarget.value, 'user')}
+                    label="Username"
+                    error={usernameError}
+                />
+                <TextField className='myTextInput'
+                    helperText="Please enter Password"
+                    id="demo-helper-text-aligned-no-helper"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.currentTarget.value, 'pass')}
+                    label="Password"
+                    type="password"
+                    error={passwordError}
+                />
+                
+                <div className='myButtonDiv'>
+                    <Button
+                        className='myButton'
+                        onClick={handleSubmit}>
+                        {isSignedUp ? 'Signup' : 'Login'}
+                    </Button>
+                </div>
+                <div className='myButtonDiv'>
+                    <Button
+                        variant='text'
+                        className='myButton'
+                        onClick={() => setIsSignedUp(!isSignedUp)}>
+                        {isSignedUp ? 'Already signed up? Login!' : 'Create new account!'}
+                    </Button>
+                </div>
+            </Box>
+        </>
     );
 }
 

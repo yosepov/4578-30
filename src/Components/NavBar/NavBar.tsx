@@ -7,8 +7,12 @@ import Avatar from '@mui/material/Avatar'
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import { AddNewVideoPopup } from '../Popup/AddNewVideoPopup';
 import { LoginPopup } from '../Popup/LoginPopup';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export const NavBar = () => {
     return <div className='myDiv'>
+        <ToastContainer />
         <IconButton>
             <MenuOutlinedIcon />
         </IconButton>
