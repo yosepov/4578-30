@@ -13,8 +13,8 @@ export const Login = (prop: LoginProp) => {
 
     const [user, setUsername] = useState('');
     const [pass, setPassword] = useState('');
-    const [usernameError, setUsernamError] = useState(false)
-    const [passwordError, setPasswordError] = useState(false)
+    const [usernameError, setUsernamError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
     localStorage.setItem('HardCodedLoginInfo', JSON.stringify({ User: 'User', Pass: 'Pass' }))
 
@@ -22,12 +22,12 @@ export const Login = (prop: LoginProp) => {
         let noerrors = true;
         let close = true;
 
-        if (user.length == 0) {
+        if (user.length === 0) {
             setUsernamError(true)
             noerrors = false;
         }
 
-        if (pass.length == 0) {
+        if (pass.length === 0) {
             setPasswordError(true)
             noerrors = false;
         }
@@ -38,7 +38,6 @@ export const Login = (prop: LoginProp) => {
                     setUsernamError(true)
                     close = false;
                 }
-
                 if (userFromLocalStorage.Pass.toLowerCase() != pass.toLowerCase()) {
                     setPasswordError(true)
                     close = false;
@@ -77,7 +76,6 @@ export const Login = (prop: LoginProp) => {
     }
 
     return (
-
         <Box
             sx={{
                 display: 'flex',
@@ -89,21 +87,20 @@ export const Login = (prop: LoginProp) => {
             <TextField className='myTextInput'
                 helperText="Please enter Username/Email"
                 id="demo-helper-text-aligned"
-                onChange={(e) => handleChange(e.currentTarget.value, 'user')}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.currentTarget.value, 'user')}
                 label="Username"
                 error={usernameError}
             />
             <TextField className='myTextInput'
                 helperText="Please enter Password"
                 id="demo-helper-text-aligned-no-helper"
-                onChange={(e) => handleChange(e.currentTarget.value, 'pass')}
+                onChange={(e:React.ChangeEvent<HTMLInputElement>) => handleChange(e.currentTarget.value, 'pass')}
                 label="Password"
                 type="password"
                 error={passwordError}
             />
             <div className='myButtonDiv'>
                 <Button className='myButton' onClick={handleSubmit}>Login</Button>
-
             </div>
         </Box>
     );
