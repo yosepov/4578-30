@@ -17,8 +17,14 @@
     border-radius: 20px;
 }
 .imageTeaser:hover {
-    border-radius: 0%;
+    animation: mymove 0.5s ;
+    animation-fill-mode: forwards;
 } 
+
+@keyframes mymove {
+    from {border-radius: 20px;}
+    to {border-radius: 0px;}
+  }
 
 .timeVideoDiv {
     /* display: inline-flex; */
