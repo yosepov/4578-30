@@ -9,9 +9,11 @@ import { AddNewVideoPopup } from '../Popup/AddNewVideoPopup';
 import { LoginPopup } from '../Popup/LoginPopup';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { VideoCard } from '../VideoCard/VideoCard';
 
 export const NavBar = () => {
-    return <div className='myDiv'>
+    return<>
+     <div className='myDiv'>
         <ToastContainer />
         <IconButton>
             <MenuOutlinedIcon />
@@ -30,4 +32,6 @@ export const NavBar = () => {
             <Avatar src='https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg' />
         </IconButton>
     </div>
+        <VideoCard/>
+        </>
 }
