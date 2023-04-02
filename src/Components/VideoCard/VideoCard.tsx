@@ -1,6 +1,5 @@
 import React from 'react'
 import { Avatar, IconButton } from '@mui/material'
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import './videoCard.css'
 import { ModalVideo } from './ModalVideo';
 
