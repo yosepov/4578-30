@@ -10,14 +10,13 @@ import { LoginPopup } from '../Popup/LoginPopup';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Outlet } from 'react-router-dom';
+import MiniDrawer from '../SideMenu/SideMenu';
 
 export const NavBar = () => {
     return <>
         <div className='myDiv'>
             <ToastContainer />
-            <IconButton>
-                <MenuOutlinedIcon />
-            </IconButton>
+            <MiniDrawer/>
             <img width='100' src='https://logos-world.net/wp-content/uploads/2020/04/YouTube-Logo.png' />
             <div className='search'>
                 <Search />
