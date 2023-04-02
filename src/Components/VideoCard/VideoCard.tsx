@@ -24,9 +24,9 @@ export const VideoCard = () => {
             <p className='headerText'>test your skills in Javascript in our toturial</p>
         </div>
         <div className='moreOption'>
-            <IconButton>
+            
             <ModalVideo/>
-            </IconButton>
+            
         </div>
     </div>  
     <div className='channelNameDiv'>
