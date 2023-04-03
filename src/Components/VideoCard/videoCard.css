@@ -8,6 +8,24 @@
     width: 360px;
     height: 350px;
     padding: 30px;
+    position: relative;
+}
+
+.hide {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+}
+
+
+
+.volumeAndSubtitle {
+    background-color: rgba(0, 0, 0, 0.132);
+    color: aliceblue;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    
 }
 
 
@@ -27,15 +45,13 @@
   }
 
 .timeVideoDiv {
-    /* display: inline-flex; */
     position: absolute;
-    bottom: 100px;
+    bottom: 190px;
     border-radius: 4px;
     padding: 3px 4px;
     background-color: #0f0f0f;
     height: 12px;
     width: 40px;
-    margin-bottom: 250px;
     margin-left: 5px;
     font-size: 14px;
     color: aliceblue;

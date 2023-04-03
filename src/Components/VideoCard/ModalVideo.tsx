@@ -40,16 +40,18 @@ export const ModalVideo = () => {
       </IconButton>
       <Menu
         id="long-menu"
+        sx={{borderRadius: '50px'}}
         MenuListProps={{
           'aria-labelledby': 'long-button',
+          
         }}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
         PaperProps={{
           style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            width: '20ch',
+            maxHeight: ITEM_HEIGHT * 7,
+            width: '30ch',
           },
         }}
       >

@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Avatar, IconButton } from '@mui/material'
-import './videoCard.css'
 import { ModalVideo } from './ModalVideo';
+import ClosedCaptionOutlinedIcon from '@mui/icons-material/ClosedCaptionOutlined';
+import VolumeUpOutlinedIcon from '@mui/icons-material/VolumeUpOutlined';
+import VolumeOffOutlinedIcon from '@mui/icons-material/VolumeOffOutlined';
+import ClosedCaptionDisabledOutlinedIcon from '@mui/icons-material/ClosedCaptionDisabledOutlined';
+import './videoCard.css'
 
 export const VideoCard = () => {
+
+const [volume, setVolume] = React.useState(true)
+const [subtitle, setSubtitle] = React.useState(true)
+
+
+const handleVolume = () => {
+    setVolume(prev => !prev)
+}
+
+const handleSubtitle = () => {
+    setSubtitle(prev => !prev)
+}
+
   return <>
 
   <section className='sectionVideo'>
@@ -13,6 +30,19 @@ export const VideoCard = () => {
         <img className='imageTeaser' src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"  />
     </div>
         <div className='timeVideoDiv'><span className='timeVideo'>20:45</span></div>
+
+        <div className='hide'><span className='volumeAndSubtitle'>
+        <IconButton onClick={handleVolume}>
+        {volume ? <VolumeUpOutlinedIcon sx={{color: 'white'}}/> :
+         <VolumeOffOutlinedIcon sx={{color: 'white'}}/>}
+        </IconButton>
+         | 
+         <IconButton onClick={handleSubtitle}>
+         {subtitle ? <ClosedCaptionOutlinedIcon sx={{color: 'white'} }/> :
+         <ClosedCaptionDisabledOutlinedIcon sx={{color: 'white'} }/>}
+         </IconButton>
+            </span></div>
+
     <div className='headerAndAvatatr'>
         <div className='avatar'>
             <IconButton>
@@ -37,8 +67,5 @@ export const VideoCard = () => {
   </div>
 
   </section>
-
-
-
   </>
 }
