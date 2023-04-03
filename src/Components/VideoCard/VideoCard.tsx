@@ -1,10 +1,10 @@
 import React from 'react'
 import { Avatar, IconButton } from '@mui/material'
-import { ModalVideo } from './ModalVideo';
 import ClosedCaptionOutlinedIcon from '@mui/icons-material/ClosedCaptionOutlined';
 import VolumeUpOutlinedIcon from '@mui/icons-material/VolumeUpOutlined';
 import VolumeOffOutlinedIcon from '@mui/icons-material/VolumeOffOutlined';
 import ClosedCaptionDisabledOutlinedIcon from '@mui/icons-material/ClosedCaptionDisabledOutlined';
+import { ModalVideo } from './ModalVideo';
 import './videoCard.css'
 
 export const VideoCard = (): JSX.Element => {
