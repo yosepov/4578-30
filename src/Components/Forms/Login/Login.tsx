@@ -9,10 +9,12 @@ import { toast } from 'react-toastify';
 
 interface LoginProp {
     closeParentModel: () => void
+    toParent : (user:any)=>void
+
 }
 
 
-export const Login = ({closeParentModel}: LoginProp) => {
+export const Login = (props: LoginProp) => {
 
     const [user, setUsername] = useState('');
     const [pass, setPassword] = useState('');
@@ -24,16 +26,21 @@ export const Login = ({closeParentModel}: LoginProp) => {
         if(isSignedUp){
             await createUserWithEmailAndPassword(auth, user, pass).then((res) => {
                 const user = res.user;
+                
                 localStorage.setItem('user', JSON.stringify(user));
                 sessionStorage.setItem('Auth Token', user.refreshToken);
-                closeParentModel();
+                props.toParent(user)
+                props.closeParentModel();
                 toast(user.email + ' Welcome!', {
                     type: "warning",
                 });
             }).catch((e) => toast(e));
         }else{
             await signInWithEmailAndPassword(auth, user,pass).then(res => {
-                closeParentModel();
+                localStorage.setItem('user', JSON.stringify(res.user));
+                sessionStorage.setItem('Auth Token', res.user.refreshToken);
+                props.toParent(user)
+                props.closeParentModel();
                 toast(res.user.email + ' Signed in successfully!', {
                     type: "success",
                 }

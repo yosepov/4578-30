@@ -1,0 +1,23 @@
+
+
+.MenuItem{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+}
+
+.MenuItem1
+{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap:20px;
+}
+
+.MenuItem1:first-child()
+{
+    background-color: red;
+}

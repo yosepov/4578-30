@@ -9,8 +9,18 @@ import { AddNewVideoPopup } from '../Popup/AddNewVideoPopup';
 import { LoginPopup } from '../Popup/LoginPopup';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
+import { useEffect, useState } from 'react';
 
 export const NavBar = () => {
+
+    const [user, setUser] = useState(null);
+
+    const GetLoggedInUserFromLoginComponent = (user: any) => {
+        if (user != null)
+            setUser(user);
+    }
+
     return <div className='myDiv'>
         <ToastContainer />
         <IconButton>
@@ -25,9 +35,17 @@ export const NavBar = () => {
             <NotificationsNoneOutlinedIcon />
         </IconButton>
 
-        <LoginPopup/>
-        <IconButton style={{ marginRight: '20px' }}>
-            <Avatar src='https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg' />
-        </IconButton>
+        <LoginPopup toParent={GetLoggedInUserFromLoginComponent} />
+        <ProfileMenu user={user} />
+
     </div>
 }
+
+
+
+// const GetLoggedInUser = () => {
+//     let user = localStorage.getItem('user')
+//     if (!user)
+//         return null
+//     return JSON.parse(user)
+// }

@@ -20,7 +20,11 @@ const style = {
     p: 4,
 };
 
-export const LoginPopup = () => {
+interface LoginPopupProps {
+    toParent : (user:any)=>void
+}
+
+export const LoginPopup = (props:LoginPopupProps) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -37,7 +41,7 @@ export const LoginPopup = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                <Login closeParentModel={handleClose}/>
+                <Login closeParentModel={handleClose} toParent = {props.toParent}/>
                 </Box>
             </Modal>
         </div>
