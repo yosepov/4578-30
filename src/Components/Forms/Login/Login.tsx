@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import './Login.css'
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword} from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../Services/firebase'
 import { toast } from 'react-toastify';
 
@@ -11,8 +11,7 @@ interface LoginProp {
     closeParentModel: () => void
 }
 
-
-export const Login = ({closeParentModel}: LoginProp) => {
+export const Login = ({ closeParentModel }: LoginProp) => {
 
     const [user, setUsername] = useState('');
     const [pass, setPassword] = useState('');
@@ -21,7 +20,7 @@ export const Login = ({closeParentModel}: LoginProp) => {
     const [passwordError, setPasswordError] = useState(false);
 
     const handleSubmit = async () => {
-        if(isSignedUp){
+        if (isSignedUp) {
             await createUserWithEmailAndPassword(auth, user, pass).then((res) => {
                 const user = res.user;
                 localStorage.setItem('user', JSON.stringify(user));
@@ -31,8 +30,8 @@ export const Login = ({closeParentModel}: LoginProp) => {
                     type: "warning",
                 });
             }).catch((e) => toast(e));
-        }else{
-            await signInWithEmailAndPassword(auth, user,pass).then(res => {
+        } else {
+            await signInWithEmailAndPassword(auth, user, pass).then(res => {
                 closeParentModel();
                 toast(res.user.email + ' Signed in successfully!', {
                     type: "success",
@@ -44,18 +43,18 @@ export const Login = ({closeParentModel}: LoginProp) => {
     }
 
     const handleChange = (val: string, eleName: string) => {
-        if (eleName == 'user') {
+        if (eleName === 'user') {
             setUsername(val)
-            if (val.length == 0) {
+            if (val.length === 0) {
                 setUsernamError(true)
             }
             else {
                 setUsernamError(false)
             }
         }
-        else if (eleName == 'pass') {
+        else if (eleName === 'pass') {
             setPassword(val)
-            if (val.length == 0) {
+            if (val.length === 0) {
                 setPasswordError(true)
             }
             else {
@@ -90,7 +89,7 @@ export const Login = ({closeParentModel}: LoginProp) => {
                     type="password"
                     error={passwordError}
                 />
-                
+
                 <div className='myButtonDiv'>
                     <Button
                         className='myButton'

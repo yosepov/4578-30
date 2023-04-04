@@ -2,6 +2,7 @@
     display: flex;
     flex-wrap: wrap;
 }
+
 .videoCardDiv {
     margin-top: 30px;
     /* margin-left: 30px; */
@@ -26,7 +27,7 @@
     padding-top: 5px;
     padding-bottom: 5px;
     border-radius: 5px;
-    
+
 }
 
 
@@ -35,15 +36,21 @@
     width: 360px;
     border-radius: 20px;
 }
+
 .imageTeaser:hover {
-    animation: mymove 0.5s ;
+    animation: mymove 0.5s;
     animation-fill-mode: forwards;
-} 
+}
 
 @keyframes mymove {
-    from {border-radius: 20px;}
-    to {border-radius: 0px;}
-  }
+    from {
+        border-radius: 20px;
+    }
+
+    to {
+        border-radius: 0px;
+    }
+}
 
 .timeVideoDiv {
     position: absolute;
@@ -59,23 +66,23 @@
 }
 
 .moreOption {
-    display: flex; 
-    align-items: start;
-    justify-content: start; 
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
     margin-bottom: 20px;
 }
 
 .headerAndAvatatr {
-    display: flex; 
+    display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
 }
 
 .avatar {
-    display:flex;
+    display: flex;
     align-items: center;
-    justify-content: end; 
-  
+    justify-content: flex-end;
+
 }
 
 
@@ -94,14 +101,14 @@
 .channelNameDiv {
     display: flex;
     align-items: center;
-    justify-content:start;
+    justify-content: flex-start;
     margin-left: 17%;
     width: 80%;
-    
+
 }
 
 .channelName {
-    
+
     font-size: 16px;
     text-align: right;
     margin: 0px;
@@ -110,11 +117,11 @@
 .whatching {
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     margin-left: 17%;
     width: 80%;
 }
 
 .dot {
-margin: 0 4px;
+    margin: 0 4px;
 }

@@ -1,7 +1,5 @@
+
 .myDiv {
-    width: 100%;
-    height: 8vh;
-    background-color: #fff;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -13,4 +11,93 @@
     justify-content: center;
     align-items: center;
     margin: auto;
+}
+
+.divInput {
+    position: relative;
+    width: 500px;
+    height: 39.5px;
+    padding-right: 100px;
+    box-sizing: border-box;
+    border-right: #d3d3d3 0.5px solid;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.input {
+    padding: 0 8px;
+    font-size: 16px;
+    background-color: transparent;
+    border: 1px solid #d3d3d3;
+    box-shadow: none;
+    outline: none;
+    border-radius: 30px;
+    height: 38px;
+    width: 550px !important;
+
+}
+
+.input:focus {
+    outline: none;
+    border: 2px solid #4d90fe;
+    border-left: none;
+    box-shadow: 0 0 5px black;
+    transition: border 0.3s, box-shadow 0.3s
+}
+
+
+.searchButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 3px;
+    margin-right: -68px;
+    height: 38px;
+    width: 70px;
+    background-color: transparent;
+    border: none;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    color: #0000007e;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.searchButton:hover {
+    background-color: #d3d3d34a;
+}
+
+.searchButton:focus {
+    background-color: #d3d3d39f;
+    transition: box-shadow 1s, border-right-width 1s ease-out;
+}
+
+.kayBoardButton {
+    position: absolute;
+    margin-right: -500px;
+    height: 30px;
+    width: 40px;
+    border: none;
+    background-color: transparent;
+    color: rgb(148, 145, 145);
+
+}
+
+.keyboardIcon :hover {
+    color: black;
+}
+
+.micIconButton {
+    border: none;
+    background-color: transparent;
+    margin-right: 11px;
+}
+
+.micIconButton:hover {
+    border: none;
+    background-color: rgb(208, 206, 206);
+    height: 37px;
+    width: 38px;
+    border-radius: 90px;
+    margin-right: 10px;
 }
