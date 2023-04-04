@@ -10,6 +10,7 @@ import { LoginPopup } from '../Popup/LoginPopup';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Outlet } from 'react-router-dom';
+import SideNav from '../SideNav/SideNav';
 
 export const NavBar = () => {
     return <>
@@ -33,5 +34,6 @@ export const NavBar = () => {
             </IconButton>
         </div>
         <Outlet />
+        <SideNav />
     </>
 }
