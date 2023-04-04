@@ -1,19 +1,13 @@
-import { useState } from 'react';
 import AnnouncementOutlinedIcon from '@mui/icons-material/AnnouncementOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import '../UploadVideo/AddNewVideoForm.css'
 import UploadIcon from '@mui/icons-material/Upload';
 import { Button } from '@mui/material';
 
-
+import '../UploadVideo/AddNewVideoForm.css'
 
 export const AddNewVideoForm = () => {
-
-
-
     return <>
         <section>
-
             <div className='titleDiv' >
                 <p>Upload videos</p>
                 <div>
@@ -38,7 +32,6 @@ export const AddNewVideoForm = () => {
                     Please be sure not to violate others' copyright or privacy rights. <span> Learn more</span>
                 </p>
             </div>
-
         </section>
 
     </>
