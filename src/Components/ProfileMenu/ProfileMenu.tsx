@@ -1,8 +1,5 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import './ProfileMenu.css'
 import { IconButton, Avatar, Divider } from '@mui/material';
 import { ProfileMenuCard } from './ProfileMenuCard/ProfileMenuCard';
 import { ProfileMenuItem } from './ProfileMenuItem/ProfileMenuItem';
@@ -21,16 +18,17 @@ import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import KeyboardOutlinedIcon from '@mui/icons-material/KeyboardOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SmsFailedOutlinedIcon from '@mui/icons-material/SmsFailedOutlined';
-import { useEffect, useState } from 'react';
+
+import './ProfileMenu.css';
 
 interface ProfileMenuProps {
-    user : any
+    user: any
 }
 
-export const ProfileMenu = (props : ProfileMenuProps) => {
+export const ProfileMenu = (props: ProfileMenuProps) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    
+
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -57,35 +55,35 @@ export const ProfileMenu = (props : ProfileMenuProps) => {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <ProfileMenuCard user={props.user}/>
+                <ProfileMenuCard user={props.user} />
                 <Divider className='divider' />
-                <br/>
+                <br />
 
-                <ProfileMenuItem MenuItemText='Your Channel' MenuitemImage={<PortraitOutlinedIcon/>} ShowArrow={false} handleClose = {handleClose}/>
-                <ProfileMenuItem MenuItemText='Youtube Studio' MenuitemImage={<NotStartedOutlinedIcon/>} ShowArrow={false} handleClose = {handleClose}/>
-                <ProfileMenuItem MenuItemText='Switch Account' MenuitemImage={<ContactsOutlinedIcon/>} ShowArrow={false} handleClose = {handleClose}/>
-                <ProfileMenuItem MenuItemText='Sign Out' MenuitemImage={<LoginOutlinedIcon/>} ShowArrow={false} handleClose = {handleClose}/>
-                <Divider className='divider' />
-
-                <ProfileMenuItem MenuItemText='Your Premuim Benefits' MenuitemImage={<LocalParkingOutlinedIcon/>} ShowArrow={false} handleClose = {handleClose}/>
-                <ProfileMenuItem MenuItemText='Parchase and membership' MenuitemImage={<MonetizationOnOutlinedIcon/>} ShowArrow={false} handleClose = {handleClose}/>
-                <ProfileMenuItem MenuItemText='Your Data on Youtube' MenuitemImage={<LocalPoliceOutlinedIcon/>} ShowArrow={false} handleClose = {handleClose}/>
+                <ProfileMenuItem MenuItemText='Your Channel' MenuitemImage={<PortraitOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
+                <ProfileMenuItem MenuItemText='Youtube Studio' MenuitemImage={<NotStartedOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
+                <ProfileMenuItem MenuItemText='Switch Account' MenuitemImage={<ContactsOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
+                <ProfileMenuItem MenuItemText='Sign Out' MenuitemImage={<LoginOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
                 <Divider className='divider' />
 
-                <ProfileMenuItem MenuItemText='Apperance Devise Theme' MenuitemImage={<ModeNightOutlinedIcon/>} ShowArrow={true} handleClose = {handleClose}/>
-                <ProfileMenuItem MenuItemText='Language English' MenuitemImage={<TranslateOutlinedIcon/>} ShowArrow={true} handleClose = {handleClose}/>
-                <ProfileMenuItem MenuItemText='Restricted Mode Off' MenuitemImage={<AdminPanelSettingsOutlinedIcon/>} ShowArrow={true} handleClose = {handleClose}/>
-                <ProfileMenuItem MenuItemText='Location Israel' MenuitemImage={<LanguageOutlinedIcon/>} ShowArrow={true} handleClose = {handleClose}/>
-                <ProfileMenuItem MenuItemText='Keyboard Shortcuts' MenuitemImage={<KeyboardOutlinedIcon/>} ShowArrow={true} handleClose = {handleClose}/>
-
+                <ProfileMenuItem MenuItemText='Your Premuim Benefits' MenuitemImage={<LocalParkingOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
+                <ProfileMenuItem MenuItemText='Parchase and membership' MenuitemImage={<MonetizationOnOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
+                <ProfileMenuItem MenuItemText='Your Data on Youtube' MenuitemImage={<LocalPoliceOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
                 <Divider className='divider' />
 
-                <ProfileMenuItem MenuItemText='Settings' MenuitemImage={<SettingsOutlinedIcon/>} ShowArrow={false} handleClose = {handleClose}/>
+                <ProfileMenuItem MenuItemText='Apperance Devise Theme' MenuitemImage={<ModeNightOutlinedIcon />} ShowArrow={true} handleClose={handleClose} />
+                <ProfileMenuItem MenuItemText='Language English' MenuitemImage={<TranslateOutlinedIcon />} ShowArrow={true} handleClose={handleClose} />
+                <ProfileMenuItem MenuItemText='Restricted Mode Off' MenuitemImage={<AdminPanelSettingsOutlinedIcon />} ShowArrow={true} handleClose={handleClose} />
+                <ProfileMenuItem MenuItemText='Location Israel' MenuitemImage={<LanguageOutlinedIcon />} ShowArrow={true} handleClose={handleClose} />
+                <ProfileMenuItem MenuItemText='Keyboard Shortcuts' MenuitemImage={<KeyboardOutlinedIcon />} ShowArrow={true} handleClose={handleClose} />
 
                 <Divider className='divider' />
 
-                <ProfileMenuItem MenuItemText='Help' MenuitemImage={<HelpOutlineOutlinedIcon/>} ShowArrow={false} handleClose = {handleClose}/>
-                <ProfileMenuItem MenuItemText='Send feedback'MenuitemImage={<SmsFailedOutlinedIcon/>} ShowArrow={false} handleClose = {handleClose}/>
+                <ProfileMenuItem MenuItemText='Settings' MenuitemImage={<SettingsOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
+
+                <Divider className='divider' />
+
+                <ProfileMenuItem MenuItemText='Help' MenuitemImage={<HelpOutlineOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
+                <ProfileMenuItem MenuItemText='Send feedback' MenuitemImage={<SmsFailedOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
 
             </Menu>
         </div>

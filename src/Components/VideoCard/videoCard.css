@@ -1,0 +1,127 @@
+.sectionVideo {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.videoCardDiv {
+    margin-top: 30px;
+    /* margin-left: 30px; */
+    width: 360px;
+    height: 350px;
+    padding: 30px;
+    position: relative;
+}
+
+.hide {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+}
+
+
+
+
+.volumeAndSubtitle {
+    background-color: rgba(0, 0, 0, 0.132);
+    color: aliceblue;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+
+}
+
+
+.imageTeaser {
+    height: 202px;
+    width: 360px;
+    border-radius: 20px;
+}
+
+.imageTeaser:hover {
+    animation: mymove 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes mymove {
+    from {
+        border-radius: 20px;
+    }
+
+    to {
+        border-radius: 0px;
+    }
+}
+
+.timeVideoDiv {
+    position: absolute;
+    bottom: 190px;
+    border-radius: 4px;
+    padding: 3px 4px;
+    background-color: #0f0f0f;
+    height: 12px;
+    width: 40px;
+    margin-left: 5px;
+    font-size: 14px;
+    color: aliceblue;
+}
+
+.moreOption {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.headerAndAvatatr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+}
+
+
+.headerText {
+    margin: 0%;
+    color: #0f0f0f;
+    font-size: 17px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    text-align: left;
+    cursor: pointer;
+}
+
+.channelNameDiv {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 17%;
+    width: 80%;
+
+}
+
+.channelName {
+
+    font-size: 16px;
+    text-align: right;
+    margin: 0px;
+}
+
+.whatching {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 17%;
+    width: 80%;
+}
+
+.dot {
+    margin: 0 4px;
+}

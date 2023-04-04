@@ -1,21 +1,20 @@
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { MenuItem } from '@mui/material';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+
 import './ProfileMenuItem.css'
-import { useState } from 'react';
 
 interface ProfileMenuItemProps {
     MenuItemText: string;
-    MenuitemImage:any;
+    MenuitemImage: any;
     ShowArrow: boolean;
-    handleClose : ()=>void;
+    handleClose: () => void;
 }
 
 export const ProfileMenuItem = (props: ProfileMenuItemProps) => {
 
     return (
         <>
-            <MenuItem  onClick={props.handleClose}>
+            <MenuItem onClick={props.handleClose}>
                 <div className='MenuItem'>
                     <div className='MenuItem1'>
                         {props.MenuitemImage}

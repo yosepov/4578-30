@@ -1,22 +1,31 @@
-import { Link, useNavigate, useParams } from "react-router-dom"
 
-
+import { Link, useParams } from 'react-router-dom';
+import { getAuth } from 'firebase/auth';
 
 export const Home = () => {
-
-
-    const HandelContact = () => {
-        const nav = useNavigate()
-
-
-        const { id } = useParams();
-        // nav('/Contacts')
+    const { id } = useParams();
+    const handleContact = () => {
+        alert(id);
     }
-
 
     return <>
         <h1>Home</h1>
-        <button onClick={() => { HandelContact }}>Take me about </button>
-        <Link to={'/Contact'}>Take Me To Contact</Link>
+        <button onClick={handleContact}>Take me to contact</button>
+        <Link to="/about" >Click</Link>
+    </>
+}
+
+export const Profile = () => {
+
+    const { id } = useParams();
+    const user = getAuth().currentUser;
+    const handleContact = () => {
+        console.log(id, user?.uid);
+    }
+
+    return <>
+        {user && <h1>{user.uid === id ? user?.email : 'Not found'} </h1>}
+        <button onClick={handleContact}>Take me to contact</button>
+        <Link to="/about" >Click</Link>
     </>
 }

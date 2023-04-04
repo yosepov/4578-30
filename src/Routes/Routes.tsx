@@ -1,32 +1,23 @@
-import { createBrowserRouter } from 'react-router-dom'
-import { Home } from '../Components/Home/Home';
-import { Profile } from '../Components/Home/Profile/Profile';
+import { Outlet, createBrowserRouter } from 'react-router-dom'
 import { NavBar } from '../Components/NavBar/NavBar';
+import { VideoCard } from '../Components/VideoCard/VideoCard';
 
-export const router = createBrowserRouter(
-    [
-        {
-            path: '/',
-            element: <NavBar />,
-            children : [
-                {
-                    path: '/Home',
-                    element: <Home />
-                },
-                {
-                    path: '/Contact',
-                    element: <Home />
-                },
-                {
-                    path: '/Profile/:id',
-                    element: <Profile />
-                },
+export const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <>
+            <NavBar />
+            <Outlet />
+        </>
+        ,
+        children: [
+            {
+                path: '/home',
+                element: <>
+                    <VideoCard />
+                </>,
+            },
+        ]
+    },
 
-
-            ]
-        },
-
-
-
-    ]
-);
+]);

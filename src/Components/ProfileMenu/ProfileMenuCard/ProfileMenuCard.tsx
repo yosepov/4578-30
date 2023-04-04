@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './ProfileMenuCard.css'
 
 interface ProfileMenuCardProps {
-    user : any,
+    user: any,
 }
 
-export const ProfileMenuCard = (props:ProfileMenuCardProps) => {
+export const ProfileMenuCard = (props: ProfileMenuCardProps) => {
 
-    const [user, setUser] = useState(props);
+    const [user,] = useState(props);
     // setEmail(props.user!=null ? props.user.email : 'Sign In')
-    
+
     // useEffect(() => {
     //     setUser(props);
     //   }, [props]);
-      
+
     //   console.log(user)
 
     return (
@@ -21,9 +21,9 @@ export const ProfileMenuCard = (props:ProfileMenuCardProps) => {
             <div className='Card'>
                 <img src="https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg" alt="" />
                 <div className='CardText'>
-                    <p>{user!=null && user.user!=null ? user.user : 'Sign In'}
-                    <br/>
-                    @{(user!=null && user.user!=null ? user.user : '')}
+                    <p>{user != null && user.user != null ? user.user : 'Sign In'}
+                        <br />
+                        @{(user != null && user.user != null ? user.user : '')}
                     </p>
                 </div>
 
