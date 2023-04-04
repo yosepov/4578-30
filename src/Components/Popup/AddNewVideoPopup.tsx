@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { IconButton } from '@mui/material';
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined';
+
 import { AddNewVideoForm } from '../Forms/UploadVideo/AddNewVideoForm';
 
 const style = {
@@ -40,7 +39,7 @@ export const AddNewVideoPopup = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                <AddNewVideoForm />
+                    <AddNewVideoForm />
                 </Box>
             </Modal>
         </div>
