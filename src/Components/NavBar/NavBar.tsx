@@ -10,6 +10,7 @@ import { LoginPopup } from '../Popup/LoginPopup';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Outlet } from 'react-router-dom';
+import { NotificationsPopup } from '../Popup/NotificationsPopUp';
 
 export const NavBar = () => {
     return <>
@@ -23,10 +24,8 @@ export const NavBar = () => {
                 <Search />
             </div>
             <AddNewVideoPopup />
-            <IconButton style={{ marginRight: '20px' }}>
-                <NotificationsNoneOutlinedIcon />
-            </IconButton>
-
+            
+            <NotificationsPopup/>
             <LoginPopup />
             <IconButton style={{ marginRight: '20px' }}>
                 <Avatar src='https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg' />
