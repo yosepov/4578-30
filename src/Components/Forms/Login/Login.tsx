@@ -6,11 +6,12 @@ import './Login.css'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../Services/firebase'
 import { toast } from 'react-toastify';
+import { useAppDispatch } from '../../../app/hooks';
+import { setUser } from '../../../features/user/userSlice';
 
 interface LoginProp {
     closeParentModel: () => void
     toParent: (user: any) => void
-
 }
 
 
@@ -21,13 +22,13 @@ export const Login = (props: LoginProp) => {
     const [isSignedUp, setIsSignedUp] = useState(true);
     const [usernameError, setUsernamError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+    const dispatch = useAppDispatch();
 
     const handleSubmit = async () => {
         if (isSignedUp) {
             await createUserWithEmailAndPassword(auth, user, pass).then((res) => {
                 const user = res.user;
-
-                localStorage.setItem('user', JSON.stringify(user));
+                dispatch(setUser(user))
                 sessionStorage.setItem('Auth Token', user.refreshToken);
                 props.toParent(user)
                 props.closeParentModel();
@@ -37,7 +38,8 @@ export const Login = (props: LoginProp) => {
             }).catch((e) => toast(e));
         } else {
             await signInWithEmailAndPassword(auth, user, pass).then(res => {
-                localStorage.setItem('user', JSON.stringify(res.user));
+                const user = res.user;
+                dispatch(setUser(user))
                 sessionStorage.setItem('Auth Token', res.user.refreshToken);
                 props.toParent(user)
                 props.closeParentModel();

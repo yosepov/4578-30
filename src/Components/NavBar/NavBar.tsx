@@ -12,6 +12,8 @@ import { AddNewVideoPopup } from '../Popup/AddNewVideoPopup';
 import { LoginPopup } from '../Popup/LoginPopup';
 import './navbar.css';
 import SliderSideBar from '../SideNav/SliderSideBar';
+import { useAppSelector } from '../../app/hooks';
+import { selectUser } from '../../features/user/userSlice';
 
 export const NavBar = () => {
 
@@ -22,6 +24,7 @@ export const NavBar = () => {
             setUser(user);
     }
 
+    const googleUser = useAppSelector(selectUser);
 
     return <div className='myDiv'>
         <ToastContainer />
@@ -29,6 +32,7 @@ export const NavBar = () => {
             <SliderSideBar />
         </IconButton>
         <img width='100' alt="youtube logo" src='./Assets/Logos/YouTube-Logo.png' />
+        {googleUser && googleUser.email}
         <div className='search' >
             <button className='micIconButton' ><MicIcon /></button>
             <div className='divInput'>
