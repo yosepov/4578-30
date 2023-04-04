@@ -87,7 +87,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
-    text-align: right;
+    text-align: left;
     cursor: pointer;
 }
 

@@ -66,8 +66,6 @@ const handleSubtitle = (): void => {
     </div>
   </div>
 
-
-
   </section>
   </>
 }
