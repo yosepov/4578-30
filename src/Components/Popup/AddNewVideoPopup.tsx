@@ -4,7 +4,7 @@ import Modal from '@mui/material/Modal';
 import { IconButton } from '@mui/material';
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined';
 
-import { AddNewVideoForm } from '../Forms/UploadVideo/AddNewVideoForm';
+import { AddNewVideoForm } from '../UploadVideo/AddNewVideoForm';
 
 const style = {
     position: 'absolute' as 'absolute',
