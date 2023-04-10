@@ -25,6 +25,7 @@ import { selectUser } from '../../features/user/userSlice';
 import { getAuth, signOut } from "firebase/auth";
 import { toast } from 'react-toastify';
 import { setUser, removeUser } from '../../features/user/userSlice';
+import { LoginPopup } from '../Popup/LoginPopup';
 
 
 export const ProfileMenu = () => {
@@ -38,6 +39,7 @@ export const ProfileMenu = () => {
         setAnchorEl(null);
     };
     const dispatch = useAppDispatch();
+    const googleUser = useAppSelector(selectUser);
 
     const signOutMethod = () => {
         const auth = getAuth();
@@ -54,7 +56,6 @@ export const ProfileMenu = () => {
         });
     }
 
-    const googleUser = useAppSelector(selectUser);
 
     return (
         <div>
@@ -80,7 +81,7 @@ export const ProfileMenu = () => {
                 <ProfileMenuItem MenuItemText='Your Channel' MenuitemImage={<PortraitOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
                 <ProfileMenuItem MenuItemText='Youtube Studio' MenuitemImage={<NotStartedOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
                 <ProfileMenuItem MenuItemText='Switch Account' MenuitemImage={<ContactsOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
-                <ProfileMenuItem MenuItemText='Sign Out' MenuitemImage={<LoginOutlinedIcon />} ShowArrow={false} handleClose={signOutMethod} />
+                {googleUser!=null && <ProfileMenuItem MenuItemText={(googleUser!=null ? 'Sign Out' : 'Sign In')} MenuitemImage={<LoginOutlinedIcon />} ShowArrow={false} handleClose={signOutMethod} />}
                 <Divider className='divider' />
 
                 <ProfileMenuItem MenuItemText='Your Premuim Benefits' MenuitemImage={<LocalParkingOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
