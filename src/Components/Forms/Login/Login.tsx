@@ -11,9 +11,7 @@ import { setUser } from '../../../features/user/userSlice';
 
 interface LoginProp {
     closeParentModel: () => void
-    toParent: (user: any) => void
 }
-
 
 export const Login = (props: LoginProp) => {
 
@@ -30,7 +28,6 @@ export const Login = (props: LoginProp) => {
                 const user = res.user;
                 dispatch(setUser(user))
                 sessionStorage.setItem('Auth Token', user.refreshToken);
-                props.toParent(user)
                 props.closeParentModel();
                 toast(user.email + ' Welcome!', {
                     type: "warning",
@@ -41,7 +38,6 @@ export const Login = (props: LoginProp) => {
                 const user = res.user;
                 dispatch(setUser(user))
                 sessionStorage.setItem('Auth Token', res.user.refreshToken);
-                props.toParent(user)
                 props.closeParentModel();
                 toast(res.user.email + ' Signed in successfully!', {
                     type: "success",

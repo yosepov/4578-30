@@ -20,12 +20,10 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SmsFailedOutlinedIcon from '@mui/icons-material/SmsFailedOutlined';
 
 import './ProfileMenu.css';
+import { useAppSelector } from '../../app/hooks';
+import { selectUser } from '../../features/user/userSlice';
 
-interface ProfileMenuProps {
-    user: any
-}
-
-export const ProfileMenu = (props: ProfileMenuProps) => {
+export const ProfileMenu = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -36,7 +34,7 @@ export const ProfileMenu = (props: ProfileMenuProps) => {
         setAnchorEl(null);
     };
 
-
+    const googleUser = useAppSelector(selectUser);
 
     return (
         <div>
@@ -55,7 +53,7 @@ export const ProfileMenu = (props: ProfileMenuProps) => {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <ProfileMenuCard user={props.user} />
+                <ProfileMenuCard user={googleUser?.email} />
                 <Divider className='divider' />
                 <br />
 
