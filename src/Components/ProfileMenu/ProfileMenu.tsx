@@ -20,8 +20,12 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SmsFailedOutlinedIcon from '@mui/icons-material/SmsFailedOutlined';
 
 import './ProfileMenu.css';
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectUser } from '../../features/user/userSlice';
+import { getAuth, signOut } from "firebase/auth";
+import { toast } from 'react-toastify';
+import { setUser, removeUser } from '../../features/user/userSlice';
+
 
 export const ProfileMenu = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -33,6 +37,22 @@ export const ProfileMenu = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const dispatch = useAppDispatch();
+
+    const signOutMethod = () => {
+        const auth = getAuth();
+
+        let tkn = sessionStorage.getItem('Auth Token');
+        signOut(auth).then(() => {
+            dispatch(removeUser());
+            handleClose()
+            if (tkn && tkn != '')
+                toast("Sign-out successful")
+            sessionStorage.setItem('Auth Token', '');
+        }).catch((error) => {
+            toast("Error Signing Out" + error)
+        });
+    }
 
     const googleUser = useAppSelector(selectUser);
 
@@ -60,7 +80,7 @@ export const ProfileMenu = () => {
                 <ProfileMenuItem MenuItemText='Your Channel' MenuitemImage={<PortraitOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
                 <ProfileMenuItem MenuItemText='Youtube Studio' MenuitemImage={<NotStartedOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
                 <ProfileMenuItem MenuItemText='Switch Account' MenuitemImage={<ContactsOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
-                <ProfileMenuItem MenuItemText='Sign Out' MenuitemImage={<LoginOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
+                <ProfileMenuItem MenuItemText='Sign Out' MenuitemImage={<LoginOutlinedIcon />} ShowArrow={false} handleClose={signOutMethod} />
                 <Divider className='divider' />
 
                 <ProfileMenuItem MenuItemText='Your Premuim Benefits' MenuitemImage={<LocalParkingOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
