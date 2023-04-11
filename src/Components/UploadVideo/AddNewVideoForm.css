@@ -34,10 +34,10 @@ section {
 }
 
 .uploadDiv {
-    background-color: #f9f9f9;
+    /* background-color: #3d1616; */
     display: flex;
     border-radius: 64%;
-    width: 9em;
+    width: 100%;
     height: 9em;
     margin: auto;
     justify-content: center;
@@ -47,7 +47,7 @@ section {
 }
 
 .uploadDiv>svg {
-    color: #909090;
+    color: #686666;
     height: 50%;
     width: auto;
 }
@@ -72,6 +72,7 @@ section {
 
 .textDiv {
     text-align: center;
+    
 }
 
 .endTextDiv {

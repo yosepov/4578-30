@@ -1,42 +1,29 @@
 import AnnouncementOutlinedIcon from '@mui/icons-material/AnnouncementOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import UploadIcon from '@mui/icons-material/Upload';
 import { Button } from '@mui/material';
-import {useState} from 'react'
+import {useState,useCallback} from 'react'
 import { storage } from '../../Services/firebase';
-import { ref,uploadBytes,uploadBytesResumable,getDownloadURL } from "firebase/storage";
+import { ref,uploadBytesResumable,getDownloadURL } from "firebase/storage";
 import { toast } from 'react-toastify'
+import IconButton from '@mui/material/IconButton';
+import Dropzone from './Drag&Drop/Dropzone';
 
 
-import './AddNewVideoForm.css'
+
+import './AddNewVideoForm.css';
 import "react-toastify/dist/ReactToastify.css";
 import 'firebase/storage';
 
 export const AddNewVideoForm = () => {
 
-     const [videoUpload, setVideoUpload] = useState<File | null>(null);
      const [loadingConversion, setLoadingConversion] = useState<boolean>(false);
      const [uploadedFile , setUploadedFile] = useState(false)
      const [fileName, setFileName] = useState(``);
      const [imageUrl, setImageUrl] = useState(``);
      const [imageAsFile, setImageAsFile] = useState<any>( );
 
-     const uploadVideo = () =>{
-        if (videoUpload===null) return;
-        const videoRef = ref (storage, `videos/`)
-        uploadBytes(videoRef,videoUpload).then(() => {
-            alert(`video uploaded`);
-            console.log(`video uploaded`);
-        })
-     }
 
-     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const file = e.target.files[0];
-            setFileName(file.name);
-            setImageAsFile(file);
-        }
-     }
+     
 
      const handleFirebaseUpload = (e:React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
 
@@ -89,6 +76,16 @@ export const AddNewVideoForm = () => {
         )
      }
 
+
+     const onDrop = useCallback((acceptedFile:File[]) => {
+        if (acceptedFile.length > 0) {
+            const file = acceptedFile[0];
+            setFileName(file.name);
+            setImageAsFile(file);
+            toast.info(file.name)
+        }
+    }, []);
+
     return <>
         <section>
             <div className='titleDiv' >
@@ -101,12 +98,13 @@ export const AddNewVideoForm = () => {
             </div>
             <br />
             <div className='uploadDiv'>
-                <UploadIcon />
+            <IconButton>
+            <Dropzone onDrop={onDrop} accept="video/*"/>
+            </IconButton>
             </div>
             <div className='textDiv'>
                 <p id='firstP'>Drag and drop video files to upload</p>
                 <p id='secondP'>Your videos will be private until you publish them.</p>
-                <input accept="video/*" type="file" onChange={handleChange} />
                 <Button id='uploadFile' onClick={(e)=>handleFirebaseUpload(e)} component="label" sx={{ marginTop: '3%', background: '#085ed4', borderRadius: '2px' }} variant="contained" >
                     Upload Video
                 </Button>
