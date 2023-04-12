@@ -9,7 +9,6 @@ import IconButton from '@mui/material/IconButton';
 import Dropzone from './Drag&Drop/Dropzone';
 
 
-
 import './AddNewVideoForm.css';
 import "react-toastify/dist/ReactToastify.css";
 import 'firebase/storage';
@@ -86,19 +85,26 @@ export const AddNewVideoForm = () => {
         }
     }, []);
 
+
+    const closeModal = () => {
+        const modal = document.getElementById(`popup`);
+        if (modal)
+        modal.style.display=`none`;       
+      }
+
     return <>
         <section>
             <div className='titleDiv' >
                 <p>Upload videos</p>
                 <div>
                     <p><AnnouncementOutlinedIcon sx={{ cursor: 'pointer' }} /></p>
-                    <p><CloseOutlinedIcon sx={{ cursor: 'pointer' }} /></p>
+                    <p><CloseOutlinedIcon sx={{ cursor: 'pointer' }} onClick={closeModal} /></p>
                 </div>
 
             </div>
             <br />
             <div className='uploadDiv'>
-            <IconButton>
+            <IconButton sx={{scale:`1.6`}}>
             <Dropzone onDrop={onDrop} accept="video/*"/>
             </IconButton>
             </div>
