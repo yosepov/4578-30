@@ -21,6 +21,7 @@ export const VideoCard = (): JSX.Element => {
         setSubtitle(prev => !prev)
     }
 
+  
     return <>
 
         <section className='sectionVideo'>

@@ -14,6 +14,7 @@ import './navbar.css';
 import SliderSideBar from '../SideNav/SliderSideBar';
 import { useAppSelector } from '../../app/hooks';
 import { selectUser } from '../../features/user/userSlice';
+import { VideoPage } from '../VideoPage/VideoPage';
 
 export const NavBar = () => {
 
@@ -26,7 +27,7 @@ export const NavBar = () => {
 
     const googleUser = useAppSelector(selectUser);
 
-    return <div className='myDiv'>
+    return <><div className='myDiv'>
         <ToastContainer />
         <IconButton>
             <SliderSideBar />
@@ -48,7 +49,12 @@ export const NavBar = () => {
         </IconButton>
         <LoginPopup toParent={GetLoggedInUserFromLoginComponent} />
         <ProfileMenu user={user} />
+
+
     </div>
+<VideoPage/>
+
+    </>
 }
 
 
