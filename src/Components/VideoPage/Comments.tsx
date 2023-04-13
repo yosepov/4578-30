@@ -3,12 +3,9 @@ import { Avatar, Box, Button, IconButton, ListItemIcon, ListItemText, Menu, Menu
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { width } from '@mui/system';
-
 
 export const Comments = () => {
   const comments: {newValue: string} [] = []
-
 
 const [showButtons, setShowButtons] = useState(<></>)
 const [value, setValue] = useState('')
@@ -43,12 +40,18 @@ const publishComment = () => {
     setComment(<>
     <Box sx={{
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       width: '640px',
       marginTop: '50px'
     }}>
     <IconButton><Avatar src='https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg' /></IconButton>
-      <Typography></Typography>
+    <Box sx={{display: 'block'}}>
+      <Typography sx={{
+        fontSize: '14px',
+        fontWeight: '600',
+        color: 'black',
+      }}>David amagid</Typography>
+
       <Typography sx={{
         textTransform: 'capitalize',
         fontSize: '14px',
@@ -57,6 +60,7 @@ const publishComment = () => {
         maxWidth: '90%',
         overflowWrap: 'break-word'
       }}>{newValue}</Typography>
+      </Box>
     <Box>
     <IconButton
         aria-label="more"
