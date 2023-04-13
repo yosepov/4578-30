@@ -31,7 +31,7 @@ export const AllVideo = () => {
         paddingLeft: '5px',
         width: '202px',
         height: '10px',
-        fontSize: '10px',
+        fontSize: '12px',
         fontWeight: '400',
 
     }}>
@@ -42,11 +42,11 @@ export const AllVideo = () => {
         paddingTop: '5px',
         width: '202px',
         height: '10px',
-        fontSize: '10px',
+        fontSize: '12px',
         fontWeight: '400',
 
     }}>
-        JavaSCript
+        3,847 views • 2 days ago
     </Typography>
     </Box>
     <ModalVideo/>
