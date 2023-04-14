@@ -19,7 +19,7 @@ export const AddNewVideoForm = () => {
     const [uploadedFile, setUploadedFile] = useState(false)
     const [fileName, setFileName] = useState(``);
     const [imageUrl, setImageUrl] = useState(``);
-    const [imageAsFile, setImageAsFile] = useState<any>( );
+    const [imageAsFile, setImageAsFile] = useState<any>();
     const [showUploadForm, setShowUploadForm] = useState<boolean>(false);
 
     const handleFirebaseUpload = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
@@ -30,14 +30,14 @@ export const AddNewVideoForm = () => {
             return;
         }
         const storageRef = ref(storage, `videos/`);
-        const metadata = {contentType:`video/mp4`};
+        const metadata = { contentType: `video/mp4` };
         let progress = `0`;
         const toastProgress = toast.info(`Your video is ${progress}% uploaded`);
         const uploadTask = uploadBytesResumable(storageRef, imageAsFile, metadata);
         uploadTask.on("state_changed", (snapshot) => {
-            progress=((snapshot.bytesTransferred/snapshot.totalBytes)*100).toString();
-            progress = progress.toString().substring(0,3);
-           
+            progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toString();
+            progress = progress.toString().substring(0, 3);
+
             switch (snapshot.state) {
                 case `paused`:
                     toast.update(toastProgress, {
@@ -64,10 +64,10 @@ export const AddNewVideoForm = () => {
 
         const uploadLandingPage = document.getElementById(`uploadLandingPage`);
         if (uploadLandingPage)
-        uploadLandingPage.style.display = 'none';
+            uploadLandingPage.style.display = 'none';
     }
 
-    const onDrop = useCallback((acceptedFile:File[]) => {
+    const onDrop = useCallback((acceptedFile: File[]) => {
         if (acceptedFile.length > 0) {
             const file = acceptedFile[0];
             setFileName(file.name);
@@ -82,36 +82,36 @@ export const AddNewVideoForm = () => {
     }
 
     return <>
-            <section>
-                <div className='titleDiv'>
-                    <p>Upload videos</p>
-                    <div>
-                        <p><AnnouncementOutlinedIcon sx={{ cursor: 'pointer' }} /></p>
-                        <p><CloseOutlinedIcon sx={{ cursor: 'pointer' }} onClick={closeModal}/></p>
+        <section>
+            <div className='titleDiv'>
+                <p>Upload videos</p>
+                <div>
+                    <p><AnnouncementOutlinedIcon sx={{ cursor: 'pointer' }} /></p>
+                    <p><CloseOutlinedIcon sx={{ cursor: 'pointer' }} onClick={closeModal} /></p>
                 </div>
             </div>
             <br />
 
             <div id='test'>
-            {showUploadForm && <VideoUploadForm />}
+                {showUploadForm && <VideoUploadForm />}
             </div>
 
             <div id="uploadLandingPage">
-                    <div className='uploadDiv'>
-                    <IconButton sx={{scale:`1.6`}}>
-                    <Dropzone onDrop={onDrop} accept="video/*"/>
+                <div className='uploadDiv'>
+                    <IconButton sx={{ scale: `1.6` }}>
+                        <Dropzone onDrop={onDrop} accept="video/*" />
                     </IconButton>
-                    </div>
-                    <div className='textDiv'>
-                        <p id='firstP'>Drag and drop video files to upload</p>
-                        <p id='secondP'>Your videos will be private until you publish them.</p>
-                        <Button id='uploadFile' onClick={(e) => { handleFirebaseUpload(e) }} component="label" sx={{ marginTop: '3%', background: '#085ed4', borderRadius: '2px' }} variant="contained">
-                         Upload Video
-                        </Button>
-                    </div>
+                </div>
+                <div className='textDiv'>
+                    <p id='firstP'>Drag and drop video files to upload</p>
+                    <p id='secondP'>Your videos will be private until you publish them.</p>
+                    <Button id='uploadFile' onClick={(e) => { handleFirebaseUpload(e) }} component="label" sx={{ marginTop: '3%', background: '#085ed4', borderRadius: '2px' }} variant="contained">
+                        Upload Video
+                    </Button>
+                </div>
             </div>
 
-          
+
             {imageUrl && <a href={imageUrl} download>Click here to download </a>}
             <div className='endTextDiv'>
                 <p>By submitting your videos to YouTube, you acknowledge that you agree to YouTube's <span>Terms of Service</span> and<span> Community Guidelines</span>.
