@@ -1,0 +1,53 @@
+
+
+
+.thumbPar{
+    font-family: "Roboto","Noto",sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--ytcp-text-secondary);
+}
+
+h4{
+    margin-bottom: 1%;
+}
+
+
+#radioGroupID{
+    color: black;
+}
+
+#formID::-webkit-scrollbar {
+    display: none;
+}
+
+#bottomBar{
+    width: 100%;
+    height: 5vh;
+    border-top: 1px solid rgb(52, 52, 52);
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+#barIndicators{
+    display: inline-flex;
+    align-items: center;
+    gap: 2%;
+    color: #065fd4;
+    width: 50vh;
+    height: 7vh;
+    transform: translateY(10px);
+    margin-left: 10px;
+}
+
+#iframeID{
+    transform: translateY(80px);
+    width:40%;
+    height:40vh;
+    display:flex;
+    border:1px solid black;
+}
