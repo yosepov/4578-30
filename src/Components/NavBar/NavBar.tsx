@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import KeyboardIcon from '@mui/icons-material/Keyboard';
 import MicIcon from '@mui/icons-material/Mic';
 import 'react-toastify/dist/ReactToastify.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { AddNewVideoPopup } from '../Popup/AddNewVideoPopup';
@@ -26,6 +26,27 @@ export const NavBar = () => {
 
     const googleUser = useAppSelector(selectUser);
 
+    const [value, setValue] = useState('');
+
+    function handleChange(event: any) {
+        setValue(event.target.value);
+    }
+    
+    const [time, setTime] = useState(new Date());
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTime(new Date());
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [])
+
+    function handleClick(){
+        let searchArr= []
+    
+        searchArr.push({value, time})
+        console.log(searchArr)
+        }
+        
     return <div className='myDiv'>
         <ToastContainer />
         <IconButton>
@@ -36,8 +57,8 @@ export const NavBar = () => {
         <div className='search' >
             <button className='micIconButton' ><MicIcon /></button>
             <div className='divInput'>
-                <input className='input' placeholder='search'></input>
-                <button className='searchButton'><SearchIcon /></button>
+                <input className='input' value = {value} onChange={handleChange} placeholder='search'></input>
+                <button className='searchButton' onClick={handleClick}><SearchIcon /></button>
             </div>
             <button className='kayBoardButton keyboardButton'><KeyboardIcon className='keyboardIcon' /></button>
         </div>
