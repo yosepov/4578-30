@@ -25,7 +25,6 @@ export const AddNewVideoForm = () => {
     const handleFirebaseUpload = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
         e.preventDefault();
         setLoadingConversion(true);
-        toast.info(`Uploading...`);
         if (!imageAsFile) {
             toast.error(`File Error`);
             return;
@@ -38,10 +37,7 @@ export const AddNewVideoForm = () => {
         uploadTask.on("state_changed", (snapshot) => {
             progress=((snapshot.bytesTransferred/snapshot.totalBytes)*100).toString();
             progress = progress.toString().substring(0,3);
-            toast.update(toastProgress, {
-                render: `video is ${progress}% done`,
-                type: 'info'
-            })
+           
             switch (snapshot.state) {
                 case `paused`:
                     toast.update(toastProgress, {
@@ -49,7 +45,9 @@ export const AddNewVideoForm = () => {
                         type: 'warning'
                     })
                     break;
+
                 default:
+
                     toast.update(toastProgress, {
                         render: `video is ${progress}% done`,
                         type: 'info'
@@ -66,7 +64,7 @@ export const AddNewVideoForm = () => {
 
         const uploadLandingPage = document.getElementById(`uploadLandingPage`);
         if (uploadLandingPage)
-            uploadLandingPage.style.display = 'none';
+        uploadLandingPage.style.display = 'none';
     }
 
     const onDrop = useCallback((acceptedFile:File[]) => {
@@ -107,17 +105,9 @@ export const AddNewVideoForm = () => {
                     <div className='textDiv'>
                         <p id='firstP'>Drag and drop video files to upload</p>
                         <p id='secondP'>Your videos will be private until you publish them.</p>
-                        <Button
-            id='uploadFile'
-            onClick={(e) => {
-              handleFirebaseUpload(e);
-            }}
-            component="label"
-            sx={{ marginTop: '3%', background: '#085ed4', borderRadius: '2px' }}
-            variant="contained"
-          >
-            Upload Video
-          </Button>
+                        <Button id='uploadFile' onClick={(e) => { handleFirebaseUpload(e) }} component="label" sx={{ marginTop: '3%', background: '#085ed4', borderRadius: '2px' }} variant="contained">
+                         Upload Video
+                        </Button>
                     </div>
             </div>
 

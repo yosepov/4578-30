@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import HorizontalLinearStepper from '../../Stepper/Stepper';
 import { Box } from '@mui/material';
 import { IconButton } from '@mui/material';
@@ -14,14 +15,34 @@ import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutli
 import './VideoUploadForm.css'
 
 
+
 export default function VideoUploadForm() {
+
+    const [hasScrolled, setHasScrolled] = useState(false);
+
+    useEffect(() => {
+        function handleScroll() {
+          if (window.pageYOffset > 0) {
+            setHasScrolled(true);
+          } else {
+            setHasScrolled(false);
+          }
+        }
+    
+        window.addEventListener('scroll', handleScroll);
+    
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
+
 
 
   return (
     <>
       <Box sx={{width:`100%`,height:'100%',display:'flex', justifyContent:'center',flexDirection:'column'}}>
-            <Box sx={{width:`100%`,padding:'1%',display:'flex', justifyContent:'center'}}>
-            <HorizontalLinearStepper />
+            <Box sx={{width:`100%`,padding:'1%',display:'flex', justifyContent:'center',borderBottom: hasScrolled ? 'solid 1px grey' : 'none'}}>
+                <HorizontalLinearStepper />
             </Box>
             <Box sx={{width:`90%`,height:`100%`,display:'flex', justifyContent:'flex-start',gap:`2%`}}>
 
