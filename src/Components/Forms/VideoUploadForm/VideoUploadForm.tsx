@@ -12,6 +12,9 @@ import { Button } from '@mui/joy';
 import UploadIcon from '@mui/icons-material/Upload';
 import HdOutlinedIcon from '@mui/icons-material/HdOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import CustomizedAccordions from '../../Accordion/Accordion';
+import ButtonAccordion from '../../Accordion/ButtonAccordion/ButtonAccordion';
+import { ShowVideoFromFirebase } from '../../ShowVideoFromFirebase/ShowVideoFromFirebase';
 import './VideoUploadForm.css'
 
 
@@ -40,17 +43,16 @@ export default function VideoUploadForm() {
 
   return (
     <>
-      <Box sx={{width:`100%`,height:'100%',display:'flex', justifyContent:'center',flexDirection:'column'}}>
+      <Box sx={{width:`100%`,height:'100%',display:'flex', justifyContent:'center',flexDirection:'column',padding:'0',margin:'0'}}>
             <Box sx={{width:`100%`,padding:'1%',display:'flex', justifyContent:'center',borderBottom: hasScrolled ? 'solid 1px grey' : 'none'}}>
                 <HorizontalLinearStepper />
             </Box>
-            <Box sx={{width:`90%`,height:`100%`,display:'flex', justifyContent:'flex-start',gap:`2%`}}>
+            <Box sx={{width:`90%`,height:`90%`,display:'flex', justifyContent:'center',gap:`1%`}}>
 
-                <Box id="formID" sx={{width:`72%`,height:`60vh`,display:'flex',marginLeft:`10%`,flexDirection:`column`, overflowY:'scroll',overflowX:'hidden'}}>
+                <Box id="formID" sx={{width:`75%`,height:`60vh`,display:'flex',marginLeft:`10%`,flexDirection:`column`, overflowY:'scroll',overflowX:'hidden'}}>
                     <Box sx={{width:`100%`,height:`8vh`,display:'flex',justifyContent:'space-between',alignItems:`center`}}>
                         <h2>Details</h2> <IconButton sx={{color:'#065fd4', fontSize:'18px',letterSpacing: `0.01em`,fontWeight:`600`}}><p>Reuse details</p></IconButton>    
                     </Box>
-                    <br/>
                     <Box>  
                         <Textarea minRows={3} placeholder='Add a title that describes your video (type @ to mention a channel)'/>
                         <br/>
@@ -67,8 +69,8 @@ export default function VideoUploadForm() {
                         <h4>Playlists</h4>
                         <p className='thumbPar'>Add your video to one or more playlists. Playlists can help viewers discover your content faster. Learn more</p>
                         <Select placeholder={`Select`} sx={{width:'15rem',height:'2rem'}}>
-                            <Option >Playlist 1</Option>
-                            <Option >Playlist 2</Option>
+                            <Option>Playlist 1</Option>
+                            <Option>Playlist 2</Option>
                         </Select>
                     </Box>
 
@@ -76,33 +78,42 @@ export default function VideoUploadForm() {
                         <h4>Audience</h4>
                         <h5>Is this video made for kids? (required)</h5>
                         <p className='thumbPar'>Regardless of your location, you're legally required to comply with the Children's Online Privacy Protection Act (COPPA) and/or other laws. You're required to tell us whether your videos are made for kids. What's content made for kids?</p>
-                        <FormControl>
-                            <RadioGroup defaultValue="outlined" id="radioGroupID">
-                                <Radio value="outlined" label="Yes, it's made for kids"/>
-                                <Radio value="outlined" label="No, it's not made for kids"/>
-                            </RadioGroup>
-                        </FormControl>
+                            <FormControl>
+                                <RadioGroup id="radioGroupID" name="madeForKids">
+                                    <Radio color='neutral' value="yes" label="Yes, it's made for kids" />
+                                    <Radio color='neutral' value="no" label="No, it's not made for kids" />
+                                </RadioGroup>
+                            </FormControl>
+                        <Box>
+                        <CustomizedAccordions/>
+                        </Box>
+                        <Box>
+                        <ButtonAccordion/>
+                        </Box>
                     </Box>
 
 
                 </Box>
 
 
-                <Box id="iframeID" sx={{}}>
+                <Box id="iframeID">
+                    <Box sx={{border:'1px solid black'}}>
+                    {/* <ShowVideoFromFirebase/> */}
+                    </Box>
 
                 </Box>
 
             </Box>
 
-            <Box id="bottomBar">
-                    <Box id="barIndicators">
-                    <UploadIcon/>
-                    <HdOutlinedIcon/>
-                    <CheckCircleOutlineOutlinedIcon/>
-                    <p>Checks complete. No issues found.</p>
-                    </Box>
-                    <Button sx={{marginTop:`2%`,marginRight:`2%`,backgroundColor:'#065fd4',borderRadius:'2px'}}>Next</Button>
-            </Box>
+      </Box>
+      <Box id="bottomBar">
+              <Box id="barIndicators">
+              <UploadIcon/>
+              <HdOutlinedIcon/>
+              <CheckCircleOutlineOutlinedIcon/>
+              <p>Checks complete. No issues found.</p>
+              </Box>
+              <Button sx={{marginRight:`2%`,backgroundColor:'#065fd4',borderRadius:'2px'}}>Next</Button>
       </Box>
     </>
   );
