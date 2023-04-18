@@ -48,8 +48,9 @@ h4{
 
 #iframeID{
     transform: translateY(60px);
-    width:50%;
-    height:40vh;
+    width:60%;
+    height:50vh;
     display:flex;
-    border:1px solid black;
+    /* border:1px solid black; */
 }
+

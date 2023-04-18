@@ -1,35 +1,42 @@
-import { storageRef } from "../../Services/firebase";
 import "firebase/storage";
-import { Box } from "@mui/material";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
 
 
 export const ShowVideoFromFirebase = () => {
 
-    const videoBox = document.getElementById('videoBoxID');
- 
 
 // Get the download URL for your video file
-storageRef.child('videos/').getDownloadURL()
-  .then((url:string) => {
-    // Use the URL to display the video in a HTML5 video element
-    const video = document.createElement('video');
-    video.src = url;
-    video.controls = true;
+const storage = getStorage();
+getDownloadURL(ref(storage, 'videos/'))
+  .then((url) => {
+    // `url` is the download URL for 'images/stars.jpg'
 
-    if(videoBox)
-    videoBox.append(video);
+    // This can be downloaded directly:
+    const xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';
+    xhr.onload = (event) => {
+      const blob = xhr.response;
+    };
+    xhr.open('GET', url);
+    xhr.send();
+
+    console.log(url)
+
+    // Or inserted into an <img> element
+    const vid = document.getElementById('iframeID');
+    if (vid)
+    vid.setAttribute('src', url);
   })
-  .catch((error:Error) => {
-    console.error(error);
+  .catch((error) => {
+    // Handle any errors
   });
 
 
 
+
   return <>
-    <Box id='videoBoxID'>
-
-
-    </Box>
-  </>
+        <video id="iframeID"></video>
+        </>
 
 }

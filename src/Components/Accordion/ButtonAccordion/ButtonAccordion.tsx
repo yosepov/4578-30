@@ -27,7 +27,7 @@ const Accordion = styled((props: AccordionProps) => (
 
 export default function ButtonAccordion() {
 
-  const [expanded, setExpanded] = React.useState<string | false>('panel1');
+  const [expanded, setExpanded] = React.useState<string | false>('false');
   const [selectedValue, setSelectedValue] = React.useState<boolean>(false);
 
 

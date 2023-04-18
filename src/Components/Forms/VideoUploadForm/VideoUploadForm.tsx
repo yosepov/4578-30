@@ -15,6 +15,7 @@ import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutli
 import CustomizedAccordions from '../../Accordion/Accordion';
 import ButtonAccordion from '../../Accordion/ButtonAccordion/ButtonAccordion';
 import { ShowVideoFromFirebase } from '../../ShowVideoFromFirebase/ShowVideoFromFirebase';
+
 import './VideoUploadForm.css'
 
 
@@ -40,6 +41,9 @@ export default function VideoUploadForm() {
       }, []);
 
 
+    
+
+
 
   return (
     <>
@@ -51,7 +55,7 @@ export default function VideoUploadForm() {
 
                 <Box id="formID" sx={{width:`75%`,height:`60vh`,display:'flex',marginLeft:`10%`,flexDirection:`column`, overflowY:'scroll',overflowX:'hidden'}}>
                     <Box sx={{width:`100%`,height:`8vh`,display:'flex',justifyContent:'space-between',alignItems:`center`}}>
-                        <h2>Details</h2> <IconButton sx={{color:'#065fd4', fontSize:'18px',letterSpacing: `0.01em`,fontWeight:`600`}}><p>Reuse details</p></IconButton>    
+                        <h2>Details</h2> <IconButton sx={{color:'#065fd4', fontSize:'16px',letterSpacing: `0.01em`,fontWeight:`400`}}><p>Reuse details</p></IconButton>    
                     </Box>
                     <Box>  
                         <Textarea minRows={3} placeholder='Add a title that describes your video (type @ to mention a channel)'/>
@@ -91,16 +95,11 @@ export default function VideoUploadForm() {
                         <ButtonAccordion/>
                         </Box>
                     </Box>
-
-
                 </Box>
 
 
                 <Box id="iframeID">
-                    <Box sx={{border:'1px solid black'}}>
-                    {/* <ShowVideoFromFirebase/> */}
-                    </Box>
-
+                <ShowVideoFromFirebase/>
                 </Box>
 
             </Box>

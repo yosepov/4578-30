@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from '../features/user/userSlice'
+import videoReducer from '../features/uploadVideo/uploadVideoSlice'
 
 export const store = configureStore({
     reducer: {
-        user: userReducer
+        user: userReducer,
+        video:videoReducer
     }
 })
 
