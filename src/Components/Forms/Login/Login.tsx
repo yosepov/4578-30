@@ -8,6 +8,7 @@ import { auth } from '../../../Services/firebase'
 import { toast } from 'react-toastify';
 import { useAppDispatch } from '../../../app/hooks';
 import { setUser } from '../../../features/user/userSlice';
+import { addNewUserToDB } from '../../../Services/user/addNewUser';
 
 interface LoginProp {
     closeParentModel: () => void
@@ -28,6 +29,7 @@ export const Login = (props: LoginProp) => {
                 const user = res.user;
                 dispatch(setUser(user))
                 sessionStorage.setItem('Auth Token', user.refreshToken);
+                addNewUserToDB(user.uid, user.email);
                 props.closeParentModel();
                 toast(user.email + ' Welcome!', {
                     type: "warning",

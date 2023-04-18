@@ -5,19 +5,15 @@ import SearchIcon from '@mui/icons-material/Search';
 import KeyboardIcon from '@mui/icons-material/Keyboard';
 import MicIcon from '@mui/icons-material/Mic';
 import 'react-toastify/dist/ReactToastify.css';
-import { useState } from 'react';
 
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { AddNewVideoPopup } from '../Popup/AddNewVideoPopup';
 import { LoginPopup } from '../Popup/LoginPopup';
 import './navbar.css';
 import SliderSideBar from '../SideNav/SliderSideBar';
-import { useAppSelector } from '../../app/hooks';
-import { selectUser } from '../../features/user/userSlice';
 
 export const NavBar = () => {
 
-    const googleUser = useAppSelector(selectUser);
 
     return <div className='myDiv'>
         <ToastContainer />
