@@ -11,7 +11,6 @@ import VideoUploadForm from '../Forms/VideoUploadForm/VideoUploadForm';
 
 import './AddNewVideoForm.css';
 import "react-toastify/dist/ReactToastify.css";
-import 'firebase/storage';
 
 export const AddNewVideoForm = () => {
 
@@ -19,7 +18,7 @@ export const AddNewVideoForm = () => {
     const [uploadedFile, setUploadedFile] = useState(false)
     const [fileName, setFileName] = useState(``);
     const [imageUrl, setImageUrl] = useState(``);
-    const [imageAsFile, setImageAsFile] = useState<any>();
+    const [imageAsFile, setImageAsFile] = useState<File | undefined>();
     const [showUploadForm, setShowUploadForm] = useState<boolean>(false);
 
     const handleFirebaseUpload = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
@@ -29,12 +28,12 @@ export const AddNewVideoForm = () => {
             toast.error(`File Error`);
             return;
         }
-        const storageRef = ref(storage, `videos/`);
+        const storageRef = ref(storage, `/videos/${fileName}`);
         const metadata = { contentType: `video/mp4` };
         let progress = `0`;
         const toastProgress = toast.info(`Your video is ${progress}% uploaded`);
         const uploadTask = uploadBytesResumable(storageRef, imageAsFile, metadata);
-        uploadTask.on("state_changed", (snapshot) => {
+        uploadTask.on("state_changed", (snapshot: { bytesTransferred: number; totalBytes: number; state: string; }) => {
             progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toString();
             progress = progress.toString().substring(0, 3);
 
@@ -47,16 +46,22 @@ export const AddNewVideoForm = () => {
                     break;
 
                 default:
-
                     toast.update(toastProgress, {
                         render: `video is ${progress}% done`,
                         type: 'info'
                     })
                     setShowUploadForm(true);
                     closeUploadLandingPage();
-
                     break;
             }
+        }, error => toast.update(toastProgress, {
+            render: `Failed uploading: ${error}`,
+            type: 'error'
+        }), () => {
+            toast.update(toastProgress, {
+                render: `video is ${progress}% done`,
+                type: 'success'
+            })
         });
     }
 
@@ -110,7 +115,6 @@ export const AddNewVideoForm = () => {
                     </Button>
                 </div>
             </div>
-
 
             {imageUrl && <a href={imageUrl} download>Click here to download </a>}
             <div className='endTextDiv'>
