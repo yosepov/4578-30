@@ -6,9 +6,10 @@ import { Box } from '@mui/system'
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined';
 import ShareIcon from '@mui/icons-material/Share';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 import { Comments } from './Comments';
-import './videoPage.css'
 import { ModalSubscribe } from './ModalSubscribe';
 import { MoreOption } from './MoreOption';
 import { AllVideo } from './AllVideo';
@@ -18,7 +19,18 @@ import { Info } from './Info';
 
 export const VideoPage = () => {
 
+const [like, setLike] = useState(true)
+const [unLike, setUnlike] = useState(true)
+
 const [showMore, setShowMore] = useState(false)
+
+const handleLike = () => {
+  setLike(!like)
+}
+
+const handleUnlike = () => {
+  setUnlike(!unLike)
+}
 
 const handleShowMor = () => {
   setShowMore(!showMore)
@@ -79,12 +91,13 @@ const handleShowMor = () => {
           borderRadius: '50px',
           color: 'black'
         }} variant="text" aria-label="text button group" >
-          <Button sx={{borderRadius: '50px', color: 'black'}}>
-          <ThumbUpOutlinedIcon fontSize='small'/>
+          <Button onClick={handleLike} sx={{borderRadius: '50px', color: 'black'}}>
+          { like ? <ThumbUpOutlinedIcon fontSize='small'/> : <ThumbUpIcon fontSize='small'/>}
           <Typography sx={{paddingLeft: '5px'}}>10K</Typography>
           </Button>
-          <Button sx={{borderRadius: '50px', color: 'black'}}>
-          <ThumbDownOutlinedIcon fontSize='small'/>
+
+          <Button onClick={handleUnlike} sx={{borderRadius: '50px', color: 'black'}}>
+          { unLike ? <ThumbDownOutlinedIcon fontSize='small'/> : <ThumbDownIcon fontSize='small'/>}
           </Button>
           </ButtonGroup>
     </Box>
@@ -120,7 +133,9 @@ const handleShowMor = () => {
 
     </Box>
 
-    <Box sx={{
+    <Box
+    onClick={handleShowMor}
+     sx={{
       backgroundColor: 'rgba(0,0,0,0.05)',
       borderRadius: '12px',
       marginTop: '20px',
@@ -154,7 +169,7 @@ const handleShowMor = () => {
         testing in JavaScript using Jest. I will talk` }
 
         <Typography
-        onClick={handleShowMor}
+        
          sx={{
           display: 'inline',
           color: 'black',
