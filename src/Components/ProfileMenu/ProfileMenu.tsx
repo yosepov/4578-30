@@ -20,12 +20,14 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SmsFailedOutlinedIcon from '@mui/icons-material/SmsFailedOutlined';
 
 import './ProfileMenu.css';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { selectUser } from '../../features/user/userSlice';
+import { getAuth, signOut } from "firebase/auth";
+import { toast } from 'react-toastify';
+import { removeUser } from '../../features/user/userSlice';
 
-interface ProfileMenuProps {
-    user: any
-}
 
-export const ProfileMenu = (props: ProfileMenuProps) => {
+export const ProfileMenu = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -35,7 +37,23 @@ export const ProfileMenu = (props: ProfileMenuProps) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const dispatch = useAppDispatch();
+    const googleUser = useAppSelector(selectUser);
 
+    const signOutMethod = () => {
+        const auth = getAuth();
+
+        let tkn = sessionStorage.getItem('Auth Token');
+        signOut(auth).then(() => {
+            dispatch(removeUser());
+            handleClose()
+            if (tkn && tkn !== '')
+                toast("Sign-out successful")
+            sessionStorage.setItem('Auth Token', '');
+        }).catch((error) => {
+            toast("Error Signing Out" + error)
+        });
+    }
 
 
     return (
@@ -55,14 +73,14 @@ export const ProfileMenu = (props: ProfileMenuProps) => {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <ProfileMenuCard user={props.user} />
+                <ProfileMenuCard user={googleUser?.email} />
                 <Divider className='divider' />
                 <br />
 
                 <ProfileMenuItem MenuItemText='Your Channel' MenuitemImage={<PortraitOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
                 <ProfileMenuItem MenuItemText='Youtube Studio' MenuitemImage={<NotStartedOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
                 <ProfileMenuItem MenuItemText='Switch Account' MenuitemImage={<ContactsOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
-                <ProfileMenuItem MenuItemText='Sign Out' MenuitemImage={<LoginOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />
+                {googleUser != null && <ProfileMenuItem MenuItemText={(googleUser != null ? 'Sign Out' : 'Sign In')} MenuitemImage={<LoginOutlinedIcon />} ShowArrow={false} handleClose={signOutMethod} />}
                 <Divider className='divider' />
 
                 <ProfileMenuItem MenuItemText='Your Premuim Benefits' MenuitemImage={<LocalParkingOutlinedIcon />} ShowArrow={false} handleClose={handleClose} />

@@ -8,14 +8,7 @@ interface ProfileMenuCardProps {
 export const ProfileMenuCard = (props: ProfileMenuCardProps) => {
 
     const [user,] = useState(props);
-    // setEmail(props.user!=null ? props.user.email : 'Sign In')
-
-    // useEffect(() => {
-    //     setUser(props);
-    //   }, [props]);
-
-    //   console.log(user)
-
+  
     return (
         <div className='CardMain'>
             <div className='Card'>
@@ -23,7 +16,7 @@ export const ProfileMenuCard = (props: ProfileMenuCardProps) => {
                 <div className='CardText'>
                     <p>{user != null && user.user != null ? user.user : 'Sign In'}
                         <br />
-                        @{(user != null && user.user != null ? user.user : '')}
+                        {/* @{(user != null && user.user != null ? user.user : '')} */}
                     </p>
                 </div>
 
