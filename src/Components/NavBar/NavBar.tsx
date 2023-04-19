@@ -11,12 +11,9 @@ import { AddNewVideoPopup } from '../Popup/AddNewVideoPopup';
 import { LoginPopup } from '../Popup/LoginPopup';
 import './navbar.css';
 import SliderSideBar from '../SideNav/SliderSideBar';
-<<<<<<< HEAD
 import { useAppSelector } from '../../app/hooks';
 import { selectUser } from '../../features/user/userSlice';
 import { VideoPage } from '../VideoPage/VideoPage';
-=======
->>>>>>> f4b53f8724484cdafad818fef4ff6835554c6648
 
 export const NavBar = () => {
 
@@ -41,15 +38,12 @@ export const NavBar = () => {
         <IconButton >
             <NotificationsNoneOutlinedIcon />
         </IconButton>
-<<<<<<< HEAD
         <LoginPopup toParent={GetLoggedInUserFromLoginComponent} />
         <ProfileMenu user={user} />
 
 
-=======
         <LoginPopup />
         <ProfileMenu />
->>>>>>> f4b53f8724484cdafad818fef4ff6835554c6648
     </div>
 <VideoPage/>
 
