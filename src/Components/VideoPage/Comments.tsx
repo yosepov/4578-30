@@ -5,11 +5,15 @@ import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 export const Comments = () => {
-  const comments: {newValue: string} [] = []
+
+  // const comments: {newValue: string} [] = []
 
 const [showButtons, setShowButtons] = useState(<></>)
 const [value, setValue] = useState('')
 const [comment, setComment] = useState(<></>)
+
+const [searches, setSearches] = useState<string[]>([])
+const [query, setQuery] = useState("")
 
 const hideButtons = () => {
   setShowButtons(<></>)
@@ -33,9 +37,12 @@ const handleClose = () => {
 const commentsShow = (event: React.ChangeEvent<HTMLInputElement>) => {  
   const newValue = event.target.value
   setValue(event.target.value)
+
+  setQuery(event.target.value)
   
 const publishComment = () => {
-    comments.push({newValue})
+  setSearches(searches => searches.concat(query))
+    // comments.push({newValue})
 
     setComment(<>
     <Box sx={{

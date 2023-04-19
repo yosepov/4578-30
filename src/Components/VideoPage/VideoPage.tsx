@@ -155,7 +155,7 @@ const handleShowMor = () => {
        fontSize: '16px'
       }}> #Jest #UnitTest #WDS</Typography>
       </Box>
-      <Box >
+      <Box sx={{width: '640px'}}>
         <Typography sx={{
           color: 'black',
           fontSize: '14px'
