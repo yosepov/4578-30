@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
-import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import Radio from '@mui/joy/Radio';
