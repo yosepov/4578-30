@@ -2,10 +2,12 @@ import AnnouncementOutlinedIcon from '@mui/icons-material/AnnouncementOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { Box, Button } from '@mui/material';
 import { useState, useCallback } from 'react';
-import { storage } from '../../Services/firebase';
+import { database, firestore, storage } from '../../Services/firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { toast } from 'react-toastify';
 import IconButton from '@mui/material/IconButton';
+import { v4 as uuidv4 } from 'uuid';
+import {addNewUserURLToDB} from '../../Services/user/addUserUrl';
 import Dropzone from './Drag&Drop/Dropzone';
 import VideoUploadForm from '../Forms/VideoUploadForm/VideoUploadForm';
 
@@ -28,7 +30,9 @@ export const AddNewVideoForm = () => {
             toast.error(`File Error`);
             return;
         }
-        const storageRef = ref(storage, `/videos/${fileName}`);
+        const fileId = uuidv4(); // Generate a UUID for the file reference
+        // const storageRef = ref(storage, `avatars/${res.user.uid}/${fileId}`);
+        const storageRef = ref(storage, `/videos/${fileId}`);
         const metadata = { contentType: `video/mp4` };
         let progress = `0`;
         const toastProgress = toast.info(`Your video is ${progress}% uploaded`);
@@ -62,7 +66,15 @@ export const AddNewVideoForm = () => {
                 render: `video is ${progress}% done`,
                 type: 'success'
             })
+            getUrl()
         });
+        function getUrl(){
+            // Upload completed successfully, now we can get the download URL
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              const userData=localStorage.getItem('newUser')
+            addNewUserURLToDB(`${userData}`, downloadURL)
+            });
+          }
     }
 
     function closeUploadLandingPage() {

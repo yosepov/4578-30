@@ -30,6 +30,7 @@ export const Login = (props: LoginProp) => {
                 dispatch(setUser(user))
                 sessionStorage.setItem('Auth Token', user.refreshToken);
                 addNewUserToDB(user.uid, user.email);
+                localStorage.setItem('newUser', user.uid)
                 props.closeParentModel();
                 toast(user.email + ' Welcome!', {
                     type: "warning",
@@ -40,6 +41,7 @@ export const Login = (props: LoginProp) => {
                 const user = res.user;
                 dispatch(setUser(user))
                 sessionStorage.setItem('Auth Token', res.user.refreshToken);
+                localStorage.setItem('newUser', user.uid)
                 props.closeParentModel();
                 toast(res.user.email + ' Signed in successfully!', {
                     type: "success",
