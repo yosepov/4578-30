@@ -6,31 +6,44 @@ section {
 
 .titleDiv {
     display: flex;
+    align-items: center;
     height: 10%;
     width: 100%;
     border-bottom: 1px solid #dfdfdf;
-    align-items: center;
 }
 
-.titleDiv>div {
-    margin-left: auto;
-    margin-right: 5%;
+.header2 {
     color: #212121;
     display: flex;
+    align-items: center;
+    justify-content: right;
+    width: 40%;
+} 
 
-}
 
-.titleDiv>p {
-    margin-left: 3%;
-    font-weight: 600;
-    font-family: "Roboto", "Noto", sans-serif;
-    font-size: large;
-    color: #212121;
-}
 
 .titleDiv>div>p {
-    margin-left: 15%;
+    margin: 5%;
+}
 
+.videoName {
+    font-size: 16px;
+    word-break: break-all;
+    width: 60%;
+    color: #212121;
+    font-weight: 600;
+    font-family: "Roboto", "Noto", sans-serif;
+    padding: 3%;
+}
+
+.savedIsPrivete {
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #ebebeb;
+    margin-right: 5%;
+    color: #737373;
+    padding: 0 8px;
+    border-radius: 2px;
 }
 
 .uploadDiv {

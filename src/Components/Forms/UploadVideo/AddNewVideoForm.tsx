@@ -94,15 +94,31 @@ const handleFileChange = (event: any) => {
 }
 
 return <>
+<div>
 <IconButton onClick={handleOpen} style={{ marginRight: '20px' }}>
-        <VideoCallOutlinedIcon />
+    <VideoCallOutlinedIcon />
 </IconButton>
-
-<Dialog open={open} onClose={handleClose}>
-    <Box>
+<Modal open={open} onClose={handleClose}>
+    <Box sx={{    
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    // width: '67%',
+    height: '86%',
+    bgcolor: 'background.paper',
+    border: '1px solid rgb(168, 166, 166)',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: '10px',
+    padding: 'none',
+    display: 'flex',
+}}>
+        <Box>
         <div className='titleDiv' >
-            <p>Upload videos</p>
-            <div>
+            <p className='videoName'>{videoUpload === null ? 'Upload videos' : videoUpload.name}</p>
+            <div className='header2'>
+                <p className='savedIsPrivete'>{videoUpload === null ? '' : 'Saved as private'}</p>
                 <p><AnnouncementOutlinedIcon sx={{ cursor: 'pointer' }} /></p>
                 <p><CloseOutlinedIcon onClick={handleClose} sx={{ cursor: 'pointer' }} /></p>
             </div>
@@ -125,7 +141,9 @@ return <>
                 Please be sure not to violate others' copyright or privacy rights. <span> Learn more</span>
             </p>
         </div>
+        </Box>
     </Box> 
-</Dialog>
+</Modal>
+</div>
 </>
 }
