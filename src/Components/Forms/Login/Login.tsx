@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { useAppDispatch } from '../../../app/hooks';
 import { setUser } from '../../../features/user/userSlice';
 import { addNewUserToDB } from '../../../Services/user/addNewUser';
+import { AddNewVideoForm } from '../UploadVideo/AddNewVideoForm';
 
 interface LoginProp {
     closeParentModel: () => void
@@ -39,6 +40,7 @@ export const Login = (props: LoginProp) => {
         } else {
             await signInWithEmailAndPassword(auth, user, pass).then(res => {
                 const user = res.user;
+                const userUID = res.user.uid
                 dispatch(setUser(user))
                 sessionStorage.setItem('Auth Token', res.user.refreshToken);
                 props.closeParentModel();
@@ -118,4 +120,3 @@ export const Login = (props: LoginProp) => {
         </>
     );
 }
-

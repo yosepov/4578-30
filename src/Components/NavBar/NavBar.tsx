@@ -38,8 +38,8 @@ export const NavBar = () => {
         <IconButton >
             <NotificationsNoneOutlinedIcon />
         </IconButton>
-        <LoginPopup toParent={GetLoggedInUserFromLoginComponent} />
-        <ProfileMenu user={user} />
+        {/* <LoginPopup toParent={GetLoggedInUserFromLoginComponent} />
+        <ProfileMenu user={user} /> */}
 
 
         <LoginPopup />

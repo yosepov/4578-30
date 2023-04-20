@@ -15,3 +15,12 @@ export const addNewUserToDB = async (uid: string, email: string | null) => {
         toast.error('Error: failed to upload new user ' + error)
     }
 }
+
+
+
+
+
+
+
+
+
