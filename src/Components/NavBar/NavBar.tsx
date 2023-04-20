@@ -11,6 +11,7 @@ import { AddNewVideoPopup } from '../Popup/AddNewVideoPopup';
 import { LoginPopup } from '../Popup/LoginPopup';
 import './navbar.css';
 import SliderSideBar from '../SideNav/SliderSideBar';
+import { AddNewVideoForm } from '../Forms/UploadVideo/AddNewVideoForm';
 
 export const NavBar = () => {
 
@@ -31,7 +32,7 @@ export const NavBar = () => {
             <button className='kayBoardButton keyboardButton'><KeyboardIcon className='keyboardIcon' /></button>
         </div>
 
-        <AddNewVideoPopup />
+        <AddNewVideoForm />
         <IconButton >
             <NotificationsNoneOutlinedIcon />
         </IconButton>
