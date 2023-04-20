@@ -5,18 +5,26 @@ import SearchIcon from '@mui/icons-material/Search';
 import KeyboardIcon from '@mui/icons-material/Keyboard';
 import MicIcon from '@mui/icons-material/Mic';
 import 'react-toastify/dist/ReactToastify.css';
+import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined';
+
 
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
-import { AddNewVideoPopup } from '../Popup/AddNewVideoPopup';
+// import { AddNewVideoPopup } from '../Popup/AddNewVideoPopup';
 import { LoginPopup } from '../Popup/LoginPopup';
 import './navbar.css';
 import SliderSideBar from '../SideNav/SliderSideBar';
 import { useAppSelector } from '../../app/hooks';
 import { selectUser } from '../../features/user/userSlice';
 import { VideoPage } from '../VideoPage/VideoPage';
+import { AddNewVideoForm } from '../Forms/UploadVideo/AddNewVideoForm';
+import { useState } from 'react';
 
 export const NavBar = () => {
 
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    }
 
     return <><div className='myDiv'>
         <ToastContainer />
@@ -34,7 +42,8 @@ export const NavBar = () => {
             <button className='kayBoardButton keyboardButton'><KeyboardIcon className='keyboardIcon' /></button>
         </div>
 
-        <AddNewVideoPopup />
+    
+        <AddNewVideoForm /> 
         <IconButton >
             <NotificationsNoneOutlinedIcon />
         </IconButton>

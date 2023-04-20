@@ -1,12 +1,13 @@
 import AnnouncementOutlinedIcon from '@mui/icons-material/AnnouncementOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import UploadIcon from '@mui/icons-material/Upload';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Dialog, IconButton, Modal } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
+import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined';
 
 import { storage, database } from '../../../Services/firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import {doc, updateDoc, getDoc } from 'firebase/firestore'
+import {doc, updateDoc } from 'firebase/firestore'
 
 import '../UploadVideo/AddNewVideoForm.css'
 import { toast } from 'react-toastify';
@@ -17,6 +18,10 @@ export const AddNewVideoForm = () => {
 
     const [videoUpload, setVideoUpload] = useState<File | null>(null)
     const [videoUrl, setVideoUrl] = useState('')
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const uploadVideo = () => 
     {
@@ -89,12 +94,17 @@ const handleFileChange = (event: any) => {
 }
 
 return <>
+<IconButton onClick={handleOpen} style={{ marginRight: '20px' }}>
+        <VideoCallOutlinedIcon />
+</IconButton>
+
+<Dialog open={open} onClose={handleClose}>
     <Box>
         <div className='titleDiv' >
             <p>Upload videos</p>
             <div>
                 <p><AnnouncementOutlinedIcon sx={{ cursor: 'pointer' }} /></p>
-                <p><CloseOutlinedIcon sx={{ cursor: 'pointer' }} /></p>
+                <p><CloseOutlinedIcon onClick={handleClose} sx={{ cursor: 'pointer' }} /></p>
             </div>
 
         </div>
@@ -116,6 +126,6 @@ return <>
             </p>
         </div>
     </Box> 
-
-    </>
+</Dialog>
+</>
 }
