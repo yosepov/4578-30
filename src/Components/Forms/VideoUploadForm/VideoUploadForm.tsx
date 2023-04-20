@@ -73,8 +73,8 @@ export default function VideoUploadForm() {
                         <h4>Playlists</h4>
                         <p className='thumbPar'>Add your video to one or more playlists. Playlists can help viewers discover your content faster. Learn more</p>
                         <Select placeholder={`Select`} sx={{width:'15rem',height:'2rem'}}>
-                            <Option>Playlist 1</Option>
-                            <Option>Playlist 2</Option>
+                            {/* <Option>Playlist 1</Option>
+                            <Option>Playlist 2</Option> */}
                         </Select>
                     </Box>
 

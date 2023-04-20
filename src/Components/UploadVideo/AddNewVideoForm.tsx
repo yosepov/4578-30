@@ -9,6 +9,12 @@ import IconButton from '@mui/material/IconButton';
 import Dropzone from './Drag&Drop/Dropzone';
 import VideoUploadForm from '../Forms/VideoUploadForm/VideoUploadForm';
 
+
+import { useAppSelector } from '../../app/hooks';
+import { selectUser } from '../../features/user/userSlice';
+import { addNewVideoToDB } from '../../Services/video/addNewVideoToDB'
+
+
 import './AddNewVideoForm.css';
 import "react-toastify/dist/ReactToastify.css";
 import 'firebase/storage';
@@ -22,6 +28,8 @@ export const AddNewVideoForm = () => {
     const [imageAsFile, setImageAsFile] = useState<any>();
     const [showUploadForm, setShowUploadForm] = useState<boolean>(false);
 
+    const user = useAppSelector(selectUser);
+
     const handleFirebaseUpload = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
         e.preventDefault();
         setLoadingConversion(true);
@@ -29,15 +37,19 @@ export const AddNewVideoForm = () => {
             toast.error(`File Error`);
             return;
         }
-        const storageRef = ref(storage, `videos/`);
+
+
+
+        const storageRef = ref(storage, `/videos/${fileName}`);
         const metadata = { contentType: `video/mp4` };
         let progress = `0`;
         const toastProgress = toast.info(`Your video is ${progress}% uploaded`);
-        const uploadTask = uploadBytesResumable(storageRef, imageAsFile, metadata);
+        const uploadTask = uploadBytesResumable(storageRef, imageAsFile, metadata)
         uploadTask.on("state_changed", (snapshot) => {
             progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toString();
             progress = progress.toString().substring(0, 3);
 
+            console.log(snapshot.state);
             switch (snapshot.state) {
                 case `paused`:
                     toast.update(toastProgress, {
@@ -45,19 +57,31 @@ export const AddNewVideoForm = () => {
                         type: 'warning'
                     })
                     break;
-
-                default:
-
+                case `running`:
                     toast.update(toastProgress, {
-                        render: `video is ${progress}% done`,
+                        render: `video uploading is ${progress} done`,
                         type: 'info'
                     })
+
                     setShowUploadForm(true);
                     closeUploadLandingPage();
+                    break;
+                default:
 
                     break;
             }
-        });
+        }
+            , (e) => toast.error(e.message)
+            , () => {
+                toast.update(toastProgress, {
+                    render: `video uploading is done`,
+                    type: 'success'
+                })
+                addNewVideoToDB(user?.uid, fileName);
+            }
+        );
+
+
     }
 
     function closeUploadLandingPage() {
