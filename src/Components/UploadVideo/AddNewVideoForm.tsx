@@ -14,6 +14,9 @@ import { database } from '../../Services/firebase';
 
 import './AddNewVideoForm.css';
 import "react-toastify/dist/ReactToastify.css";
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectVideoId, setVideoUid, setVideoUrl } from '../../features/uploadVideo/uploadVideoSlice';
+import { selectUser } from '../../features/user/userSlice';
 
 export const AddNewVideoForm = () => {
 
@@ -22,69 +25,73 @@ export const AddNewVideoForm = () => {
     const [imageUrl] = useState(``);
     const [imageAsFile, setImageAsFile] = useState<File | undefined>();
     const [showUploadForm, setShowUploadForm] = useState<boolean>(false);
-
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(selectUser);
+    const videoId = useAppSelector(selectVideoId);
     const handleFirebaseUpload = async (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
-        e.preventDefault();
-        setLoadingConversion(true);
-        if (!imageAsFile) {
-            toast.error(`File Error`);
-            return;
-        }
-        const storageRef = ref(storage, `/videos/${fileName}`);
-        const metadata = { contentType: `video/mp4` };
-        let progress = `0`;
-        const toastProgress = toast.info(`Your video is ${progress}% uploaded`);
-
-        const uploadTask = uploadBytesResumable(storageRef, imageAsFile, metadata);
-
-        uploadTask.on("state_changed", (snapshot: { bytesTransferred: number; totalBytes: number; state: string; }) => {
-            progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toString();
-            progress = progress.toString().substring(0, 3);
-
-            switch (snapshot.state) {
-                case `paused`:
-                    toast.update(toastProgress, {
-                        render: `video uploading is paused`,
-                        type: 'warning'
-                    })
-                    break;
-
-                default:
-                    toast.update(toastProgress, {
-                        render: `video is ${progress}% done`,
-                        type: 'info'
-                    })
-                    setShowUploadForm(true);
-                    closeUploadLandingPage();
-                    break;
+        if (user) {
+            e.preventDefault();
+            setLoadingConversion(true);
+            if (!imageAsFile) {
+                toast.error(`File Error`);
+                return;
             }
-        }, error => toast.update(toastProgress, {
-            render: `Failed uploading: ${error}`,
-            type: 'error'
-        }), async () => {
-            const downloadURL = await getDownloadURL(storageRef);
-            toast.update(toastProgress, {
-                render: `video is ${progress}% done`,
-                type: 'success'
+            const storageRef = ref(storage, `/videos/${fileName}`);
+            const metadata = { contentType: `video/mp4` };
+            let progress = `0`;
+            const toastProgress = toast.info(`Your video is ${progress}% uploaded`);
+
+            const uploadTask = uploadBytesResumable(storageRef, imageAsFile, metadata);
+
+            uploadTask.on("state_changed", (snapshot: { bytesTransferred: number; totalBytes: number; state: string; }) => {
+                progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toString();
+                progress = progress.toString().substring(0, 3);
+
+                switch (snapshot.state) {
+                    case `paused`:
+                        toast.update(toastProgress, {
+                            render: `video uploading is paused`,
+                            type: 'warning'
+                        })
+                        break;
+
+                    default:
+                        toast.update(toastProgress, {
+                            render: `video is ${progress}% done`,
+                            type: 'info'
+                        })
+                        setShowUploadForm(true);
+                        closeUploadLandingPage();
+                        break;
+                }
+            }, error => toast.update(toastProgress, {
+                render: `Failed uploading: ${error}`,
+                type: 'error'
+            }), async () => {
+                const downloadURL = await getDownloadURL(storageRef);
+                toast.update(toastProgress, {
+                    render: `video is ${progress}% done`,
+                    type: 'success'
+                });
+                // updateUserData( downloadURL);
+                dispatch(setVideoUrl(downloadURL));
+                dispatch(setVideoUid(user.uid));
+                updateUserData(user.uid)
             });
-            updateUserData( downloadURL);
-        });
+        }
     };
 
-    async function updateUserData( downloadURL: string) {
+    async function updateUserData(uid: string) {
         try {
-            const currentUser = auth.currentUser;
-            if (currentUser) {
-                const userDataRef = doc(database, 'users', (currentUser.uid));
+                const userDataRef = doc(database, 'users', (uid));
                 await updateDoc(userDataRef, {
-                    videos: arrayUnion(downloadURL)
+                    videos: arrayUnion(videoId)
                 }).then(() => {
                     toast.success(`User videos updated successfully!`);
                 }).catch(e => {
                     toast.error(`Faild update user videos: ${e}`);
                 });
-            }
-            
+
         } catch (error) {
             toast.error(`Logic Fail at updateUserData() : ${error}`);
         }

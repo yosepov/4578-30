@@ -2,11 +2,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import { VideoType } from '../../Types/VideoType';
+import { v4 as uuid } from 'uuid';
+
+const unique_id = uuid();
+const small_id = unique_id.slice(0,8)
 
 interface VideoState extends VideoType {
 }
 
 const initialState: VideoState = {
+    id: small_id,
     title: "",
     description: "",
     dislikes: 0,
@@ -29,11 +34,23 @@ export const videoSlice = createSlice({
         setVideoUrl: (state, action: PayloadAction<string>) => {
             state.url = action.payload;
         },
+        setVideoTitle: (state, action: PayloadAction<string>) => {
+            state.title = action.payload;
+        },
+        setVideoDescription: (state, action: PayloadAction<string>) => {
+            state.description = action.payload;
+        },
+        setVideoIsForKids: (state, action: PayloadAction<boolean>) => {
+            state.isForKids = action.payload;
+        },
+        setVideoUid: (state, action: PayloadAction<string>) => {
+            state.uid = action.payload;
+        },
 
     },
 });
 
-export const { setVideoUrl, } = videoSlice.actions;
+export const { setVideoUrl,setVideoTitle,setVideoDescription,setVideoIsForKids,setVideoUid } = videoSlice.actions;
 
 export const fetchVideoUrl = () => {
     return async (dispatch: any) => {
@@ -49,5 +66,7 @@ export const fetchVideoUrl = () => {
 };
 
 export const selectVideoUrl = (state: RootState) => state.video.url;
+export const selectVideoId = (state: RootState) => state.video.id;
+export const selectVideo = (state: RootState) => state.video;
 
 export default videoSlice.reducer;

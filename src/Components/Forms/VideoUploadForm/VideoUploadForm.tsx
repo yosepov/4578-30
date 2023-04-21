@@ -18,10 +18,22 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import './VideoUploadForm.css'
 import { VideoType } from '../../../Types/VideoType';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { selectVideoId, setVideoDescription, setVideoIsForKids, setVideoTitle } from '../../../features/uploadVideo/uploadVideoSlice';
+import { uploadVideoToFirebase } from '../../../Services/videos/videosDB';
+import { useNavigate } from 'react-router-dom';
 
 export default function VideoUploadForm() {
     const { register, handleSubmit } = useForm<VideoType>();
-    const onSubmit: SubmitHandler<VideoType> = data => console.log(data);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const onSubmit: SubmitHandler<VideoType> = data => {
+        dispatch(setVideoTitle(data.title));
+        dispatch(setVideoDescription(data.description));
+        dispatch(setVideoIsForKids(data.isForKids));
+        navigate('/saveNewVideo')
+    }
+
     const [hasScrolled, setHasScrolled] = useState(false);
 
     useEffect(() => {
@@ -76,9 +88,9 @@ export default function VideoUploadForm() {
                                 <p className='thumbPar'>Regardless of your location, you're legally required to comply with the Children's Online Privacy Protection Act (COPPA) and/or other laws. You're required to tell us whether your videos are made for kids. What's content made for kids?</p>
 
                                 <RadioGroup id="radioGroupID" name="madeForKids">
-                                    <Radio color='neutral' value="yes" label="Yes, it's made for kids"
+                                    <Radio color='neutral' value={true} label="Yes, it's made for kids"
                                         {...register('isForKids', { required: true })} />
-                                    <Radio color='neutral' value="no" label="No, it's not made for kids"
+                                    <Radio color='neutral' value={false} label="No, it's not made for kids"
                                         {...register('isForKids', { required: true })} />
                                 </RadioGroup>
 
