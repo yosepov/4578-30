@@ -23,7 +23,11 @@ export const userSlice = createSlice({
     }
 })
 
+// must
 export const { setUser, removeUser } = userSlice.actions;
+
+// 
 export const selectUser = (state: RootState) => state.user.user;
 
+// must
 export default userSlice.reducer;

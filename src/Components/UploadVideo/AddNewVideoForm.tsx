@@ -1,6 +1,6 @@
 import AnnouncementOutlinedIcon from '@mui/icons-material/AnnouncementOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import {  Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { useState, useCallback } from 'react';
 import { storage } from '../../Services/firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 import IconButton from '@mui/material/IconButton';
 import Dropzone from './Drag&Drop/Dropzone';
 import VideoUploadForm from '../Forms/VideoUploadForm/VideoUploadForm';
-import { Login } from '../Forms/Login/Login';
 import { auth } from '../../Services/firebase';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { database } from '../../Services/firebase';
@@ -18,7 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export const AddNewVideoForm = () => {
 
-    const [,setLoadingConversion] = useState<boolean>(false);
+    const [, setLoadingConversion] = useState<boolean>(false);
     const [fileName, setFileName] = useState(``);
     const [imageUrl] = useState(``);
     const [imageAsFile, setImageAsFile] = useState<File | undefined>();
@@ -28,72 +27,75 @@ export const AddNewVideoForm = () => {
         e.preventDefault();
         setLoadingConversion(true);
         if (!imageAsFile) {
-          toast.error(`File Error`);
-          return;
+            toast.error(`File Error`);
+            return;
         }
         const storageRef = ref(storage, `/videos/${fileName}`);
         const metadata = { contentType: `video/mp4` };
         let progress = `0`;
         const toastProgress = toast.info(`Your video is ${progress}% uploaded`);
-      
+
         const uploadTask = uploadBytesResumable(storageRef, imageAsFile, metadata);
-      
+
         uploadTask.on("state_changed", (snapshot: { bytesTransferred: number; totalBytes: number; state: string; }) => {
-          progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toString();
-          progress = progress.toString().substring(0, 3);
-      
-          switch (snapshot.state) {
-            case `paused`:
-              toast.update(toastProgress, {
-                render: `video uploading is paused`,
-                type: 'warning'
-              })
-              break;
-      
-            default:
-              toast.update(toastProgress, {
-                render: `video is ${progress}% done`,
-                type: 'info'
-              })
-              setShowUploadForm(true);
-              closeUploadLandingPage();
-              break;
-          }
+            progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toString();
+            progress = progress.toString().substring(0, 3);
+
+            switch (snapshot.state) {
+                case `paused`:
+                    toast.update(toastProgress, {
+                        render: `video uploading is paused`,
+                        type: 'warning'
+                    })
+                    break;
+
+                default:
+                    toast.update(toastProgress, {
+                        render: `video is ${progress}% done`,
+                        type: 'info'
+                    })
+                    setShowUploadForm(true);
+                    closeUploadLandingPage();
+                    break;
+            }
         }, error => toast.update(toastProgress, {
-          render: `Failed uploading: ${error}`,
-          type: 'error'
+            render: `Failed uploading: ${error}`,
+            type: 'error'
         }), async () => {
-          const downloadURL = await getDownloadURL(storageRef);
-          toast.update(toastProgress, {
-            render: `video is ${progress}% done`,
-            type: 'success'
-          });
-          updateUserData(Login.name, downloadURL);
+            const downloadURL = await getDownloadURL(storageRef);
+            toast.update(toastProgress, {
+                render: `video is ${progress}% done`,
+                type: 'success'
+            });
+            updateUserData( downloadURL);
         });
-      };
-      
-      async function updateUserData(userId: string, downloadURL: string) {
+    };
+
+    async function updateUserData( downloadURL: string) {
         try {
-            const currentUser = auth.currentUser?.uid;
-            if(currentUser){
-            const userDataRef = doc(database, 'users', (currentUser));
-            await updateDoc(userDataRef, {
-            videos: arrayUnion(downloadURL)
-          });
-          toast.success(`Firestore data updated successfully!`);
+            const currentUser = auth.currentUser;
+            if (currentUser) {
+                const userDataRef = doc(database, 'users', (currentUser.uid));
+                await updateDoc(userDataRef, {
+                    videos: arrayUnion(downloadURL)
+                }).then(() => {
+                    toast.success(`User videos updated successfully!`);
+                }).catch(e => {
+                    toast.error(`Faild update user videos: ${e}`);
+                });
             }
             
         } catch (error) {
-          console.log(`Error: ${error}`);
+            toast.error(`Logic Fail at updateUserData() : ${error}`);
         }
-      }
-      
+    }
+
 
     function closeUploadLandingPage() {
 
         const uploadLandingPage = document.getElementById(`uploadLandingPage`);
         if (uploadLandingPage)
-        uploadLandingPage.style.display = 'none';
+            uploadLandingPage.style.display = 'none';
     }
 
     const onDrop = useCallback((acceptedFile: File[]) => {
@@ -134,7 +136,7 @@ export const AddNewVideoForm = () => {
                 <div className='textDiv'>
                     <p id='firstP'>Drag and drop video files to upload</p>
                     <p id='secondP'>Your videos will be private until you publish them.</p>
-                    <Button id='uploadFile' onClick={(e) => { handleFirebaseUpload(e) }} component="label" sx={{ marginTop: '3%', background: '#085ed4', borderRadius: '2px' }} variant="contained">
+                    <Button id='uploadFile' disabled={!imageAsFile} onClick={(e) => { handleFirebaseUpload(e) }} component="label" sx={{ marginTop: '3%', background: '#085ed4', borderRadius: '2px' }} variant="contained">
                         Upload Video
                     </Button>
                 </div>
