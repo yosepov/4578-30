@@ -2,20 +2,30 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
-import './Login.css'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../Services/firebase'
 import { toast } from 'react-toastify';
 import { useAppDispatch } from '../../../app/hooks';
 import { setUser } from '../../../features/user/userSlice';
 import { addNewUserToDB } from '../../../Services/user/addNewUser';
+import './Login.css'
 
 interface LoginProp {
     closeParentModel: () => void
 }
 
 export const Login = (props: LoginProp) => {
-
+    var firebase = require('firebase');
+    var firebaseui = require('firebaseui');
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    ui.start('#firebaseui-auth-container', {
+        signInOptions: [
+          firebase.auth.EmailAuthProvider.PROVIDER_ID
+        ],
+        // Other config options...
+      });
+    
+    
     const [user, setUsername] = useState('');
     const [pass, setPassword] = useState('');
     const [isSignedUp, setIsSignedUp] = useState(true);
@@ -23,6 +33,8 @@ export const Login = (props: LoginProp) => {
     const [passwordError, setPasswordError] = useState(false);
     const dispatch = useAppDispatch();
 
+    
+    
     const handleSubmit = async () => {
         if (isSignedUp) {
             await createUserWithEmailAndPassword(auth, user, pass).then((res) => {
