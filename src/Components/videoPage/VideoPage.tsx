@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Avatar, Button, ButtonGroup, IconButton, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 
@@ -14,14 +14,24 @@ import { ModalSubscribe } from './ModalSubscribe';
 import { MoreOption } from './MoreOption';
 import { AllVideo } from './AllVideo';
 import { Info } from './Info';
+import { getDoc, doc, query, collection, getDocs } from "firebase/firestore";
+import { database } from '../../Services/firebase';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectVideoId } from '../../features/uploadVideo/uploadVideoSlice';
+import { async } from '@firebase/util';
+
 
 
 
 export const VideoPage = () => {
 
+// const dispatch = useAppSelector()
+const videoId = useAppSelector(selectVideoId);
+
 const [like, setLike] = useState(true)
 const [unLike, setUnlike] = useState(true)
-
+const [url, setUrl] = useState('')
+const [title, setTitle] = useState('')
 const [showMore, setShowMore] = useState(false)
 
 const handleLike = () => {
@@ -36,6 +46,21 @@ const handleShowMor = () => {
   setShowMore(!showMore)
 }
 
+
+
+const test = async () => {
+  const querySnapshot = await getDocs(collection(database, "videos"));
+  querySnapshot.forEach((doc) => {
+
+  setUrl(doc.data().url)
+  setTitle(doc.data().title)
+
+});
+}
+test()
+
+
+
   return <>
   
   <Box sx={{
@@ -47,12 +72,12 @@ const handleShowMor = () => {
 }}>
 
   <Box>
-  <iframe allowFullScreen width="640" height="360" src="https://www.youtube.com/embed/FgnxcUQ5vho" title="Introduction To Testing In JavaScript With Jest"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
+  <video src={url} width="640" height="360" controls ></video>
   <Typography sx={{
     fontSize: '18px',
     fontWeight: '600'
   }}>
-  Introduction To Testing In JavaScript With Jest
+  {title}
   </Typography>
 
   <Box sx={{
@@ -197,3 +222,7 @@ const handleShowMor = () => {
 </Box>
 </>
 }
+function setUrl(url: any) {
+  throw new Error('Function not implemented.');
+}
+

@@ -1,71 +1,104 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Avatar, IconButton } from '@mui/material'
 import ClosedCaptionOutlinedIcon from '@mui/icons-material/ClosedCaptionOutlined';
 import VolumeUpOutlinedIcon from '@mui/icons-material/VolumeUpOutlined';
 import VolumeOffOutlinedIcon from '@mui/icons-material/VolumeOffOutlined';
 import ClosedCaptionDisabledOutlinedIcon from '@mui/icons-material/ClosedCaptionDisabledOutlined';
+
 import { ModalVideo } from './ModalVideo';
 import './videoCard.css'
+import { useNavigate } from 'react-router-dom';
+import { getDocs, collection } from 'firebase/firestore';
+import { database } from '../../Services/firebase';
 
-export const VideoCard = (): JSX.Element => {
+export const VideoCard = () => {
 
-    const [volume, setVolume] = React.useState(true)
-    const [subtitle, setSubtitle] = React.useState(true)
+    const navigate = useNavigate()
+
+    const [url, setUrl] = useState('')
+    const [title, setTitle] = useState('')
+    const [date, setDate] = useState('')
 
 
-    const handleVolume = (): void => {
-        setVolume(prev => !prev)
-    }
+    const [volume, setVolume] = useState(true)
+    const [subtitle, setSubtitle] = useState(true)
 
-    const handleSubtitle = (): void => {
-        setSubtitle(prev => !prev)
-    }
+    const handleVolume = () => setVolume(!volume)
+    const handleSubtitle = () => setSubtitle(!subtitle)
 
-    return <>
+const getVideoFromFirestore = async () => {
 
-        <section className='sectionVideo'>
+    const querySnapshot = await getDocs(collection(database, "videos"));
+    querySnapshot.forEach((doc) => {
 
-            <div className='videoCardDiv'>
-                <div className='image'>
-                    <img className='imageTeaser' src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg" alt='Learen JavaScript' />
-                </div>
-                <div className='timeVideoDiv'><span className='timeVideo'>20:45</span></div>
+    setUrl( doc.data().url);
+    setTitle(doc.data().title) 
+    setDate(doc.data().uploadDate) 
+    });
+}
+useEffect(() => {
 
-                <div className='hide'><span className='volumeAndSubtitle'>
-                    <IconButton onClick={handleVolume}>
-                        {volume ? <VolumeUpOutlinedIcon sx={{ color: 'white' }} /> :
-                            <VolumeOffOutlinedIcon sx={{ color: 'white' }} />}
+    getVideoFromFirestore()
+}, [])
+
+
+  const handleMouse = (e: React.MouseEvent<HTMLVideoElement>) => {
+    e.currentTarget.play();
+  }
+
+  const handlePause = (e: React.MouseEvent<HTMLVideoElement>) => {
+    e.currentTarget.pause();
+
+  }
+
+
+return <>
+
+    <section className='sectionVideo'>
+
+        <div className='videoCardDiv'>
+            <div className='image' onClick={() => navigate('/videoPage')}>
+                <video 
+                onMouseOver={handleMouse}
+                onMouseOut={handlePause}
+                src={url} 
+                controls={false} 
+                muted={volume}
+                className='imageTeaser' 
+                onClick={handlePause}></video>
+            </div>
+                {/* <div className='timeVideoDiv'><span className='timeVideo'>20:45</span></div> */}
+
+            <div className='hide'><span className='volumeAndSubtitle'>
+                <IconButton onClick={handleVolume}>
+                    {volume ? <VolumeUpOutlinedIcon sx={{ color: 'white' }} /> :
+                        <VolumeOffOutlinedIcon   sx={{ color: 'white' }} />}
+                </IconButton>
+                |
+                <IconButton onClick={handleSubtitle}>
+                    {subtitle ? <ClosedCaptionOutlinedIcon sx={{ color: 'white' }} /> :
+                        <ClosedCaptionDisabledOutlinedIcon sx={{ color: 'white' }} />}
+                </IconButton>
+            </span></div>
+
+            <div className='allHeader'>
+                <div className='titleAndAvatar'>
+                    <IconButton>
+                        <Avatar src='https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg' />
                     </IconButton>
-                    |
-                    <IconButton onClick={handleSubtitle}>
-                        {subtitle ? <ClosedCaptionOutlinedIcon sx={{ color: 'white' }} /> :
-                            <ClosedCaptionDisabledOutlinedIcon sx={{ color: 'white' }} />}
-                    </IconButton>
-                </span></div>
-
-                <div className='headerAndAvatatr'>
-                    <div className='avatar'>
-                        <IconButton>
-                            <Avatar src='https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg' />
-                        </IconButton>
-                    </div>
-                    <div className='header'>
-                        <p className='headerText'>test your skills in Javascript in our toturial</p>
-                    </div>
-                    <div className='moreOption'>
-
-                        <ModalVideo />
-
-                    </div>
+                    <p className='headerText'>{title}</p>
                 </div>
-                <div className='channelNameDiv'>
-                    <p className='channelName'>Javascript</p>
-                </div>
-                <div className='whatching'>
-                    <p className='channelName'><span>2 days ago</span> <span className='dot'>•</span>views 3,847 </p>
+                <div className='moreOption'>
+                    <ModalVideo />
                 </div>
             </div>
-
-        </section>
-    </>
+            <div className='channelNameDiv'>
+                <p className='channelName'>Javascript</p>
+            </div>
+            <div className='whatching'>
+                <p className='channelName'><span>{date}</span> <span className='dot'>•</span>views 3,847 </p>
+            </div>
+        </div>
+    </section>
+</>
 }

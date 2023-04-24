@@ -25,6 +25,7 @@ export const AddNewVideoForm = () => {
     const [imageUrl] = useState(``);
     const [imageAsFile, setImageAsFile] = useState<File | undefined>();
     const [showUploadForm, setShowUploadForm] = useState<boolean>(false);
+    
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
     const videoId = useAppSelector(selectVideoId);
@@ -119,6 +120,8 @@ export const AddNewVideoForm = () => {
         if (modal) modal.style.display = `none`;
     }
 
+    console.log(videoId);
+    
     return <>
         <section>
             <div className='titleDiv'>
