@@ -57,7 +57,10 @@ const test = async () => {
 
 });
 }
-test()
+useEffect(() => {
+
+  test()
+}, [])
 
 
 
