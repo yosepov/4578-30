@@ -9,7 +9,8 @@ import { toast } from 'react-toastify';
 import { useAppDispatch } from '../../../app/hooks';
 import { setUser } from '../../../features/user/userSlice';
 import { addNewUserToDB } from '../../../Services/user/addNewUser';
-
+import GoogleIcon from '@mui/icons-material/Google';
+import { signInWithGoogle } from '../../../Services/firebase';
 interface LoginProp {
     closeParentModel: () => void
 }
@@ -75,6 +76,7 @@ export const Login = (props: LoginProp) => {
     return (
         <>
             <Box
+            
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
@@ -106,12 +108,15 @@ export const Login = (props: LoginProp) => {
                     </Button>
                 </div>
                 <div className='myButtonDiv'>
+                    
                     <Button
                         variant='text'
                         className='myButton'
                         onClick={() => setIsSignedUp(!isSignedUp)}>
                         {isSignedUp ? 'Already signed up? Login!' : 'Create new account!'}
                     </Button>
+                    
+                    <Button className="googleButton" onClick={signInWithGoogle} variant='outlined' color='success'>Sign In With Google<GoogleIcon fontSize='small'/></Button>
                 </div>
             </Box>
         </>

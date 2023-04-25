@@ -25,7 +25,7 @@ import { selectUser } from '../../features/user/userSlice';
 import { getAuth, signOut } from "firebase/auth";
 import { toast } from 'react-toastify';
 import { removeUser } from '../../features/user/userSlice';
-
+import {signInWithGoogle} from '../../Services/firebase'
 
 export const ProfileMenu = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -48,6 +48,7 @@ export const ProfileMenu = () => {
             dispatch(removeUser());
             handleClose()
             if (tkn && tkn !== '')
+            localStorage.clear()
                 toast("Sign-out successful")
             sessionStorage.setItem('Auth Token', '');
         }).catch((error) => {
@@ -55,12 +56,16 @@ export const ProfileMenu = () => {
         });
     }
 
-
+    
+    const profilePic = localStorage.getItem('profilePic');
+    
+    const img = profilePic 
     return (
         <div>
 
             <IconButton style={{ marginRight: '20px' }} onClick={handleClick}>
-                <Avatar src='https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg' />
+                
+            <Avatar src={`${img}`} />
             </IconButton>
 
             <Menu
