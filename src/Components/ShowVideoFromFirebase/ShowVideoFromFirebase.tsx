@@ -1,43 +1,34 @@
-import "firebase/storage";
+import { useSelector } from 'react-redux';
+import { selectVideoUrl } from '../../features/uploadVideo/uploadVideoSlice';
+import { Box } from '@mui/material';
+import { Card } from '@mui/material';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
 export const ShowVideoFromFirebase = () => {
 
-
-// Get the download URL for your video file
-// export const downloadURL = getDownloadURL(ref(storage, '/videos/'))
-//   .then((url) => {
-//     // `url` is the download URL for 'images/stars.jpg'
-
-//     // This can be downloaded directly:
-//     const xhr = new XMLHttpRequest();
-//     xhr.responseType = 'blob';
-//     xhr.onload = (event) => {
-//       const blob = xhr.response;
-//     };
-//     xhr.open('GET', url);
-//     xhr.send();
-
-//     console.log(url)
-
-//     // // Or inserted into an <img> element
-//     // const vid = document.getElementById('iframeID');
-//     // if (vid)
-//     // vid.setAttribute('src', url);
-//   })
-//   .catch((error) => {
-//     // Handle any errors
-//     console.log(error)
-//   });
-
-
-
+  const videoUrl = useSelector(selectVideoUrl);
+  console.log(videoUrl)
 
   return <>
-        <video >
-          <source id="iframeID" src="" width={`200px`} height={`200px`} />
-        </video>
+        <Box sx={{maxWidth:'300px'}}>
+          <Card>
+          <CardMedia
+            sx={{maxWidth:'300px',maxHeight:'200px'}}
+            component='video'
+            image={videoUrl}
+            controls
+        />
+        <CardContent>
+            <Box sx={{display:'flex'}}>
+            <Typography sx={{fontSize:'12px',fontWeight:'bolder'}}>Video link</Typography>
+            </Box>
+            <Typography variant="caption">{videoUrl}</Typography>        
+        </CardContent>
+          </Card>
+        </Box>
         </>
-
 }
 
 

@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 import IconButton from '@mui/material/IconButton';
 import Dropzone from './Drag&Drop/Dropzone';
 import VideoUploadForm from '../Forms/VideoUploadForm/VideoUploadForm';
-import { auth } from '../../Services/firebase';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { database } from '../../Services/firebase';
 
@@ -28,6 +27,10 @@ export const AddNewVideoForm = () => {
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
     const videoId = useAppSelector(selectVideoId);
+
+
+
+
     const handleFirebaseUpload = async (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
         if (user) {
             e.preventDefault();
@@ -73,13 +76,14 @@ export const AddNewVideoForm = () => {
                     render: `video is ${progress}% done`,
                     type: 'success'
                 });
-                // updateUserData( downloadURL);
                 dispatch(setVideoUrl(downloadURL));
                 dispatch(setVideoUid(user.uid));
                 updateUserData(user.uid)
             });
         }
     };
+
+
 
     async function updateUserData(uid: string) {
         try {
@@ -89,13 +93,13 @@ export const AddNewVideoForm = () => {
                 }).then(() => {
                     toast.success(`User videos updated successfully!`);
                 }).catch(e => {
-                    toast.error(`Faild update user videos: ${e}`);
+                    toast.error(`Failed update user videos: ${e}`);
                 });
 
         } catch (error) {
             toast.error(`Logic Fail at updateUserData() : ${error}`);
         }
-    }
+    };
 
 
     function closeUploadLandingPage() {
@@ -103,7 +107,7 @@ export const AddNewVideoForm = () => {
         const uploadLandingPage = document.getElementById(`uploadLandingPage`);
         if (uploadLandingPage)
             uploadLandingPage.style.display = 'none';
-    }
+    };
 
     const onDrop = useCallback((acceptedFile: File[]) => {
         if (acceptedFile.length > 0) {
@@ -117,12 +121,12 @@ export const AddNewVideoForm = () => {
     const closeModal = () => {
         const modal = document.getElementById(`popup`);
         if (modal) modal.style.display = `none`;
-    }
+    };
 
     return <>
         <section>
             <div className='titleDiv'>
-                <p>Upload videos</p>
+                <p>{showUploadForm ? `${fileName}` : 'Upload videos'}</p>
                 <div>
                     <p><AnnouncementOutlinedIcon sx={{ cursor: 'pointer' }} /></p>
                     <p><CloseOutlinedIcon sx={{ cursor: 'pointer' }} onClick={closeModal} /></p>
@@ -131,7 +135,7 @@ export const AddNewVideoForm = () => {
             <br />
 
             <div id='test'>
-                {showUploadForm && <VideoUploadForm />}
+                {showUploadForm && <VideoUploadForm/>}
             </div>
 
             <div id="uploadLandingPage">

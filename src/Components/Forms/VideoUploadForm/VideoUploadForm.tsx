@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useRef } from 'react';
 import HorizontalLinearStepper from '../../Stepper/Stepper';
 import { Box } from '@mui/material';
 import { IconButton } from '@mui/material';
@@ -15,6 +15,9 @@ import CustomizedAccordions from '../../Accordion/Accordion';
 import ButtonAccordion from '../../Accordion/ButtonAccordion/ButtonAccordion';
 import { ShowVideoFromFirebase } from '../../ShowVideoFromFirebase/ShowVideoFromFirebase';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import SubtitlesOutlinedIcon from '@mui/icons-material/SubtitlesOutlined';
+import PictureInPictureSharpIcon from '@mui/icons-material/PictureInPictureSharp';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 import './VideoUploadForm.css'
 import { VideoType } from '../../../Types/VideoType';
@@ -25,40 +28,39 @@ import { useNavigate } from 'react-router-dom';
 
 export default function VideoUploadForm() {
     const { register, handleSubmit } = useForm<VideoType>();
+    let counter = 1;
+    const [activeElement, setActiveElement] = useState(counter);
+    
+    const handleElementChange = (counter:number) => {
+        setActiveElement(counter++);
+      };
+
+
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const onSubmit: SubmitHandler<VideoType> = data => {
         dispatch(setVideoTitle(data.title));
         dispatch(setVideoDescription(data.description));
         dispatch(setVideoIsForKids(data.isForKids));
-        navigate('/saveNewVideo')
+        handleElementChange(counter++)
+        console.log(counter)
+        // navigate('/saveNewVideo');
     }
 
-    const [hasScrolled, setHasScrolled] = useState(false);
+    
 
-    useEffect(() => {
-        function handleScroll() {
-            if (window.pageYOffset > 0) {
-                setHasScrolled(true);
-            } else {
-                setHasScrolled(false);
-            }
-        }
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+
 
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ width: `100%`, height: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column', padding: '0', margin: '0' }}>
-                    <Box sx={{ width: `100%`, padding: '1%', display: 'flex', justifyContent: 'center', borderBottom: hasScrolled ? 'solid 1px grey' : 'none' }}>
+                    <Box sx={{ width: `100%`, padding: '1%', display: 'flex', justifyContent: 'center'}}>
                         <HorizontalLinearStepper />
                     </Box>
-                    <Box sx={{ width: `90%`, height: `90%`, display: 'flex', justifyContent: 'center', gap: `1%` }}>
-                        <Box id="formID" sx={{ width: `75%`, height: `60vh`, display: 'flex', marginLeft: `10%`, flexDirection: `column`, overflowY: 'scroll', overflowX: 'hidden' }}>
+
+                    <Box sx={{ width: `90%`, height: `90%`, display: 'flex', justifyContent: 'center', gap: `2%` }}>
+                        {activeElement === 1 &&<Box  sx={{ width: `75%`, height: `60vh`, display: 'flex', marginLeft: `10%`, flexDirection: `column`, overflowY: 'scroll', overflowX: 'hidden' }}>
                             <Box sx={{ width: `100%`, height: `8vh`, display: 'flex', justifyContent: 'space-between', alignItems: `center` }}>
                                 <h2>Details</h2> <IconButton sx={{ color: '#065fd4', fontSize: '16px', letterSpacing: `0.01em`, fontWeight: `400` }}><p>Reuse details</p></IconButton>
                             </Box>
@@ -95,16 +97,70 @@ export default function VideoUploadForm() {
                                 </RadioGroup>
 
                                 <Box>
-                                    <CustomizedAccordions />
+                                    <CustomizedAccordions/>
                                 </Box>
                                 <Box>
-                                    <ButtonAccordion />
+                                    <ButtonAccordion/>
                                 </Box>
                             </Box>
-                        </Box>
-                        <Box id="iframeID">
-                            <ShowVideoFromFirebase />
-                        </Box>
+                        </Box>}
+                        {activeElement === 1 && <Box id="iframeID" > 
+                            <ShowVideoFromFirebase/>
+                        </Box>}
+                        {activeElement === 2 && <Box sx={{ width: `100%`, height: `60vh`, display: 'flex', marginLeft: `10%`, flexDirection: `column`, overflowY: 'scroll', overflowX: 'hidden',paddingRight:'10%' }}>
+                            <Box sx={{height: `8vh`, display: 'flex', flexDirection: `column`, alignItems: `flex-start`,padding:'0' }}>
+                                <h2>Video elements</h2>
+                                <p>Use cards and an end screen to show viewers related videos, websites, and calls to action. Learn more</p>
+                            </Box>
+
+                            <Box sx={{border:'1px solid grey',padding:'5px 16px 0px 24px;',marginTop:'12%',backgroundColor:'grey',display:'inline-flex',alignItems:'center'}}>
+                                <SubtitlesOutlinedIcon/>
+                                <Box sx={{marginLeft:'3%'}}>
+                                <h5>Add subtitles</h5>
+                                <p>Reach a broader audience by adding subtitles to your video</p>
+                                </Box>
+                                <IconButton sx={{transform:`translateX(110px)`,backgroundColor:'transparent',fontSize:'medium'}}>ADD</IconButton>
+                            </Box>
+                            <Box sx={{border:'1px solid grey',padding:'5px 16px 0px 24px;',marginTop:'2%',backgroundColor:'grey',display:'inline-flex',alignItems:'center'}}>
+                                <PictureInPictureSharpIcon/>
+                                <Box sx={{marginLeft:'3%'}}>
+                                <h5>Add an end screen</h5>
+                                <p>Promote related content at the end of your video</p>
+                                </Box>
+                                <IconButton sx={{transform:`translateX(182px)`,backgroundColor:'transparent',fontSize:'medium'}}>ADD</IconButton>
+
+                            </Box>
+                            <Box sx={{border:'1px solid grey',padding:'5px 16px 0px 24px;',marginTop:'2%',backgroundColor:'grey',display:'inline-flex',alignItems:'center'}}>
+                                <InfoOutlinedIcon/>
+                                <Box sx={{marginLeft:'3%'}}>
+                                <h5>Add cards</h5>
+                                <p>Promote related content during your video</p>
+                                </Box>
+                                <IconButton sx={{transform:`translateX(225px)`,backgroundColor:'transparent',fontSize:'medium'}}>ADD</IconButton>
+
+                            </Box>
+                            
+                        </Box>}
+                        {activeElement === 3 && <Box sx={{ width: `100%`, height: `60vh`, display: 'flex', marginLeft: `10%`, flexDirection: `column`, overflowY: 'scroll', overflowX: 'hidden',paddingRight:'10%' }}>
+                            <Box sx={{height: `8vh`, display: 'flex', flexDirection: `column`, alignItems: `flex-start`,padding:'0' }}>
+                                <h2>Checks</h2>
+                                <p>We’ll check your video for issues that may restrict its visibility and then you will have the opportunity to fix issues before publishing your video. Learn more</p>
+                            </Box>
+
+                            <Box sx={{border:'1px solid grey',padding:'5px 16px 0px 24px;',marginTop:'12%',backgroundColor:'grey',display:'inline-flex',alignItems:'center'}}>
+                                <SubtitlesOutlinedIcon/>
+                                <Box sx={{marginLeft:'3%'}}>
+                                <h5>Copyright</h5>
+                                <p>No issues found</p>
+                                </Box>
+                                <IconButton sx={{transform:`translateX(110px)`,backgroundColor:'transparent',fontSize:'medium'}}>ADD</IconButton>
+                            </Box>
+                            
+                            
+                        </Box>}
+
+                        
+                        
                     </Box>
                 </Box>
                 <Box id="bottomBar">
