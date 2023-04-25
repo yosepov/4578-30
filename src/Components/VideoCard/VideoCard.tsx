@@ -15,6 +15,8 @@ export const VideoCard = () => {
 
     const navigate = useNavigate()
 
+    const [allVideos, setAllVideos] = useState<any>([])
+
     const [url, setUrl] = useState('')
     const [title, setTitle] = useState('')
     const [date, setDate] = useState('')
@@ -30,17 +32,19 @@ const getVideoFromFirestore = async () => {
 
     const querySnapshot = await getDocs(collection(database, "videos"));
     querySnapshot.forEach((doc) => {
-
-    setUrl( doc.data().url);
-    setTitle(doc.data().title);
-    setDate(doc.data().uploadDate);
+        
+        setAllVideos((video: any) => [...video, doc.data()])  
+        setUrl(doc.data().url);
+        setTitle(doc.data().title);
+        setDate(doc.data().uploadDate);
+        
     });
 }
 useEffect(() => {
     getVideoFromFirestore()
 }, [])
 
-
+console.log(allVideos);
 const handleMouse = (e: React.MouseEvent<HTMLVideoElement>) => {
     e.currentTarget.play();
   }
