@@ -20,7 +20,7 @@ export const VideoCard = () => {
     const [date, setDate] = useState('')
 
 
-    const [volume, setVolume] = useState(true)
+    const [volume, setVolume] = useState(false)
     const [subtitle, setSubtitle] = useState(true)
 
     const handleVolume = () => setVolume(!volume)
@@ -32,30 +32,27 @@ const getVideoFromFirestore = async () => {
     querySnapshot.forEach((doc) => {
 
     setUrl( doc.data().url);
-    setTitle(doc.data().title) 
-    setDate(doc.data().uploadDate) 
+    setTitle(doc.data().title);
+    setDate(doc.data().uploadDate);
     });
 }
 useEffect(() => {
-
     getVideoFromFirestore()
 }, [])
 
 
-  const handleMouse = (e: React.MouseEvent<HTMLVideoElement>) => {
+const handleMouse = (e: React.MouseEvent<HTMLVideoElement>) => {
     e.currentTarget.play();
   }
 
-  const handlePause = (e: React.MouseEvent<HTMLVideoElement>) => {
+const handlePause = (e: React.MouseEvent<HTMLVideoElement>) => {
     e.currentTarget.pause();
-
   }
 
 
 return <>
 
     <section className='sectionVideo'>
-
         <div className='videoCardDiv'>
             <div className='image' onClick={() => navigate('/videoPage')}>
                 <video 
@@ -67,12 +64,11 @@ return <>
                 className='imageTeaser' 
                 onClick={handlePause}></video>
             </div>
-                {/* <div className='timeVideoDiv'><span className='timeVideo'>20:45</span></div> */}
 
             <div className='hide'><span className='volumeAndSubtitle'>
-                <IconButton onClick={handleVolume}>
-                    {volume ? <VolumeUpOutlinedIcon sx={{ color: 'white' }} /> :
-                        <VolumeOffOutlinedIcon   sx={{ color: 'white' }} />}
+                <IconButton onClick={handleVolume} >
+                    {volume ? <VolumeOffOutlinedIcon sx={{ color: 'white' }} /> :
+                    <VolumeUpOutlinedIcon sx={{ color: 'white' }} />}
                 </IconButton>
                 |
                 <IconButton onClick={handleSubtitle}>
