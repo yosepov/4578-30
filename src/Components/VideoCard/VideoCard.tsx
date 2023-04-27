@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import { Avatar, IconButton } from '@mui/material'
 import ClosedCaptionOutlinedIcon from '@mui/icons-material/ClosedCaptionOutlined';
 import VolumeUpOutlinedIcon from '@mui/icons-material/VolumeUpOutlined';
@@ -27,18 +27,13 @@ export const VideoCard = () => {
 useEffect(() => {
 
     const getVideoFromFirestore =async () => {
-
     const querySnapshot = await getDocs(collection(database, "videos"));
-    const newData = querySnapshot.docs.map((doc) => doc.data())
-                
+    const newData = querySnapshot.docs.map((doc) => doc.data())            
     setAllVideos(newData)  
-
     }
     getVideoFromFirestore()
-
 }, [])
 
-console.log(allVideos);
 const handleMouse = (e: React.MouseEvent<HTMLVideoElement>) => {
     e.currentTarget.play();
   }
@@ -47,14 +42,12 @@ const handlePause = (e: React.MouseEvent<HTMLVideoElement>) => {
     e.currentTarget.pause();
   }
 
-  const handleNavigation = (videoId: string) => {
+const handleNavigation = (videoId: string) => {
     navigate(`/videoPage/${videoId}`);
     
-  }
-
+}
 
 return <>
-
     <section className='sectionVideo'>
         {allVideos.map((res: any) => {
             return <>
@@ -69,7 +62,6 @@ return <>
                 className='imageTeaser' 
                 onClick={handlePause}></video>
             </div>
-
             <div className='hide'><span className='volumeAndSubtitle'>
                 <IconButton onClick={handleVolume} >
                     {volume ? <VolumeOffOutlinedIcon sx={{ color: 'white' }} /> :
@@ -101,7 +93,7 @@ return <>
             </div>
         </div>
             </>
-        }) }
+        })}
     </section>
 </>
 }

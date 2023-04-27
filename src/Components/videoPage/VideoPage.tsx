@@ -49,20 +49,18 @@ const handleShowMor = () => {
 
 useEffect(() => {
 
-  const test = async () => {
-    const docRef = doc(database, "videos", `${id}`);
-    const docSnap = await getDoc(docRef);
-    console.log(docSnap.data());
+const getDataOfIdVideoFromFirebase = async () => {
+  const docRef = doc(database, "videos", `${id}`);
+  const docSnap = await getDoc(docRef);
+  console.log(docSnap.data());
 
-    if (docSnap.exists()) {
+  if (docSnap.exists()) {
       setUrl(docSnap.data().url)
       setTitle(docSnap.data().title)
       
-    }
-
   }
-
-  test()
+}
+  getDataOfIdVideoFromFirebase()
 }, [])
 
 
