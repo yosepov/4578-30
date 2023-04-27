@@ -19,15 +19,14 @@ import { database } from '../../Services/firebase';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectVideoId } from '../../features/uploadVideo/uploadVideoSlice';
 import { async } from '@firebase/util';
+import { useParams } from 'react-router-dom';
 
 
 
 
 export const VideoPage = () => {
-
-// const dispatch = useAppSelector()
-const videoId = useAppSelector(selectVideoId);
-
+  const { id } = useParams();
+ 
 const [like, setLike] = useState(true)
 const [unLike, setUnlike] = useState(true)
 const [url, setUrl] = useState('')
@@ -48,16 +47,20 @@ const handleShowMor = () => {
 
 
 
-const test = async () => {
-  const querySnapshot = await getDocs(collection(database, "videos"));
-  querySnapshot.forEach((doc) => {
-
-  setUrl(doc.data().url)
-  setTitle(doc.data().title)
-
-});
-}
 useEffect(() => {
+
+  const test = async () => {
+    const docRef = doc(database, "videos", `${id}`);
+    const docSnap = await getDoc(docRef);
+    console.log(docSnap.data());
+
+    if (docSnap.exists()) {
+      setUrl(docSnap.data().url)
+      setTitle(docSnap.data().title)
+      
+    }
+
+  }
 
   test()
 }, [])

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Avatar, IconButton } from '@mui/material'
 import ClosedCaptionOutlinedIcon from '@mui/icons-material/ClosedCaptionOutlined';
 import VolumeUpOutlinedIcon from '@mui/icons-material/VolumeUpOutlined';
@@ -17,31 +17,25 @@ export const VideoCard = () => {
 
     const [allVideos, setAllVideos] = useState<any>([])
 
-    const [url, setUrl] = useState('')
-    const [title, setTitle] = useState('')
-    const [date, setDate] = useState('')
-
-
     const [volume, setVolume] = useState(false)
     const [subtitle, setSubtitle] = useState(true)
 
     const handleVolume = () => setVolume(!volume)
     const handleSubtitle = () => setSubtitle(!subtitle)
 
-const getVideoFromFirestore = async () => {
+
+useEffect(() => {
+
+    const getVideoFromFirestore =async () => {
 
     const querySnapshot = await getDocs(collection(database, "videos"));
-    querySnapshot.forEach((doc) => {
-        
-        setAllVideos((video: any) => [...video, doc.data()])  
-        setUrl(doc.data().url);
-        setTitle(doc.data().title);
-        setDate(doc.data().uploadDate);
-        
-    });
-}
-useEffect(() => {
+    const newData = querySnapshot.docs.map((doc) => doc.data())
+                
+    setAllVideos(newData)  
+
+    }
     getVideoFromFirestore()
+
 }, [])
 
 console.log(allVideos);
@@ -53,16 +47,23 @@ const handlePause = (e: React.MouseEvent<HTMLVideoElement>) => {
     e.currentTarget.pause();
   }
 
+  const handleNavigation = (videoId: string) => {
+    navigate(`/videoPage/${videoId}`);
+    
+  }
+
 
 return <>
 
     <section className='sectionVideo'>
-        <div className='videoCardDiv'>
-            <div className='image' onClick={() => navigate('/videoPage')}>
+        {allVideos.map((res: any) => {
+            return <>
+        <div className='videoCardDiv' key={res.id}>
+            <div className='image'  onClick={() => handleNavigation(res.id)}>
                 <video 
                 onMouseOver={handleMouse}
                 onMouseOut={handlePause}
-                src={url} 
+                src={res.url} 
                 controls={false} 
                 muted={volume}
                 className='imageTeaser' 
@@ -86,7 +87,7 @@ return <>
                     <IconButton>
                         <Avatar src='https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg' />
                     </IconButton>
-                    <p className='headerText'>{title}</p>
+                    <p className='headerText'>{res.title}</p>
                 </div>
                 <div className='moreOption'>
                     <ModalVideo />
@@ -96,9 +97,11 @@ return <>
                 <p className='channelName'>Javascript</p>
             </div>
             <div className='whatching'>
-                <p className='channelName'><span>{date}</span> <span className='dot'>•</span>views 3,847 </p>
+                <p className='channelName'><span>{res.uploadDate}</span> <span className='dot'>•</span>views 3,847 </p>
             </div>
         </div>
+            </>
+        }) }
     </section>
 </>
 }
