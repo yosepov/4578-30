@@ -60,6 +60,7 @@ export const ProfileMenu = () => {
     const profilePic = localStorage.getItem('profilePic');
     
     const img = profilePic 
+    console.log(img)
     return (
         <div>
 

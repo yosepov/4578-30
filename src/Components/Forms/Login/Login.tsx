@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import './Login.css'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../Services/firebase'
+import { auth, signInWithGoogle } from '../../../Services/firebase'
 import { toast } from 'react-toastify';
 import { useAppDispatch } from '../../../app/hooks';
 import { setUser } from '../../../features/user/userSlice';
+import { addNewUserToDB } from '../../../Services/user/addNewUser';
+
 
 interface LoginProp {
     closeParentModel: () => void
-    toParent: (user: any) => void
 }
-
 
 export const Login = (props: LoginProp) => {
 
@@ -22,6 +22,8 @@ export const Login = (props: LoginProp) => {
     const [isSignedUp, setIsSignedUp] = useState(true);
     const [usernameError, setUsernamError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+    const [passwordShown, setPasswordShown] = useState(false);
+    const togglePassword = () => { setPasswordShown(!passwordShown); }
     const dispatch = useAppDispatch();
 
     const handleSubmit = async () => {
@@ -30,7 +32,7 @@ export const Login = (props: LoginProp) => {
                 const user = res.user;
                 dispatch(setUser(user))
                 sessionStorage.setItem('Auth Token', user.refreshToken);
-                props.toParent(user)
+                addNewUserToDB(user.uid, user.email);
                 props.closeParentModel();
                 toast(user.email + ' Welcome!', {
                     type: "warning",
@@ -41,7 +43,6 @@ export const Login = (props: LoginProp) => {
                 const user = res.user;
                 dispatch(setUser(user))
                 sessionStorage.setItem('Auth Token', res.user.refreshToken);
-                props.toParent(user)
                 props.closeParentModel();
                 toast(res.user.email + ' Signed in successfully!', {
                     type: "success",
@@ -84,35 +85,48 @@ export const Login = (props: LoginProp) => {
                     flexDirection: 'column'
                 }}
             >
+
+                <img className='logoImag' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsXFUA0FjKXXTWVnPvl8sqCrX0k_ssLuTIvSumSzSxxj60XVCS8gOCOrfpPCsGpAOsyAc&usqp=CAU'></img>
+
                 <TextField className='myTextInput'
-                    helperText="Please enter Username/Email"
                     id="demo-helper-text-aligned"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.currentTarget.value, 'user')}
-                    label="Username"
+                    label="Enter your email"
                     error={usernameError}
                 />
                 <TextField className='myTextInput'
-                    helperText="Please enter Password"
+
                     id="demo-helper-text-aligned-no-helper"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.currentTarget.value, 'pass')}
-                    label="Password"
-                    type="password"
-                    error={passwordError}
-                />
+                    label="Enter your Password"
+                    type={passwordShown ? "text" : "password"}
+                    error={passwordError} />
+                <div className='myButtonDiv2'>
+                    <ul><li>
+                        <input type="checkbox" className='checkBoxInput' onClick={togglePassword} />
+                    </li><li>
+                            <label className='showPassLabel'>Show password</label>
+                        </li></ul>
+                        <Button className="login-with-google-btn" onClick={signInWithGoogle}>
+        Sign in with Google
+      </Button>
+
+
+                </div>
 
                 <div className='myButtonDiv'>
                     <Button
-                        className='myButton'
+                        className='myButton1'
                         onClick={handleSubmit}>
-                        {isSignedUp ? 'Signup' : 'Login'}
+                        {isSignedUp ? 'Next' : 'Login'}
                     </Button>
                 </div>
-                <div className='myButtonDiv'>
+                <div className='myButtonDiv2'>
                     <Button
                         variant='text'
-                        className='myButton'
+                        className='myButton2'
                         onClick={() => setIsSignedUp(!isSignedUp)}>
-                        {isSignedUp ? 'Already signed up? Login!' : 'Create new account!'}
+                        {isSignedUp ? 'Login' : 'Create new account!'}
                     </Button>
                 </div>
             </Box>

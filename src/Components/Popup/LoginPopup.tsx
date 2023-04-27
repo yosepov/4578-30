@@ -37,9 +37,7 @@ export const LoginPopup = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                <Login closeParentModel={handleClose} toParent={function (user: any): void {
-                        throw new Error('Function not implemented.');
-                    } }/>
+                <Login closeParentModel={handleClose}/>
                 </Box>
             </Modal>
         </div>
