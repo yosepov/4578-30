@@ -5,19 +5,27 @@ import videoReducer from '../features/uploadVideo/uploadVideoSlice'
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
-const persistConfig = {
+const rootPersistConfig = {
     key: 'root',
     storage,
   }
 
+  const userPersistConfig = {
+    key: 'user',
+    storage,
+    whitelist: ['uid']
+
+  }
+
   
 const rootReducer = combineReducers({ 
-      user: userReducer,
+      user: persistReducer(userPersistConfig, userReducer),
       video: videoReducer
     })
     
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(rootPersistConfig, rootReducer)
   
+
  export const store = configureStore({
     reducer: persistedReducer
   })
