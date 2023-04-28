@@ -18,14 +18,13 @@ import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import KeyboardOutlinedIcon from '@mui/icons-material/KeyboardOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SmsFailedOutlinedIcon from '@mui/icons-material/SmsFailedOutlined';
-
+    
 import './ProfileMenu.css';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectUser } from '../../features/user/userSlice';
 import { getAuth, signOut } from "firebase/auth";
 import { toast } from 'react-toastify';
 import { removeUser } from '../../features/user/userSlice';
-import {signInWithGoogle} from '../../Services/firebase'
 
 export const ProfileMenu = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -57,16 +56,14 @@ export const ProfileMenu = () => {
     }
 
     
-    const profilePic = localStorage.getItem('profilePic');
     
-    const img = profilePic 
-    console.log(img)
+    console.log(googleUser)
     return (
         <div>
 
             <IconButton style={{ marginRight: '20px' }} onClick={handleClick}>
                 
-            <Avatar src={`${img}`} />
+            <Avatar src={`${googleUser && googleUser.photoURL}`} />
             </IconButton>
 
             <Menu

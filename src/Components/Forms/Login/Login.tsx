@@ -1,11 +1,11 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
-import './Login.css'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth, signInWithGoogle } from '../../../Services/firebase'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { toast } from 'react-toastify';
+import './Login.css'
+import { auth, googleSigninProvider, } from '../../../Services/firebase'
 import { useAppDispatch } from '../../../app/hooks';
 import { setUser } from '../../../features/user/userSlice';
 import { addNewUserToDB } from '../../../Services/user/addNewUser';
@@ -32,7 +32,7 @@ export const Login = (props: LoginProp) => {
                 const user = res.user;
                 dispatch(setUser(user))
                 sessionStorage.setItem('Auth Token', user.refreshToken);
-                addNewUserToDB(user.uid, user.email);
+                addNewUserToDB(user.uid, user.email, null);
                 props.closeParentModel();
                 toast(user.email + ' Welcome!', {
                     type: "warning",
@@ -75,6 +75,23 @@ export const Login = (props: LoginProp) => {
 
     }
 
+    const signInWithGoogle = ()=>{
+        signInWithPopup(auth,googleSigninProvider).then((result)=>{
+   const user = result.user
+   dispatch(setUser(user))
+   const profilePic = result.user.photoURL
+   addNewUserToDB(user.uid, user.email,profilePic ).then(() => {
+       toast.success('Hi ' + user.email);
+   }).catch(e => {
+       toast.error(e)
+   
+   });
+       
+        }).catch((error)=>{
+           toast.error(error)
+        })
+   }
+
     return (
         <>
             <Box
@@ -86,7 +103,7 @@ export const Login = (props: LoginProp) => {
                 }}
             >
 
-                <img className='logoImag' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsXFUA0FjKXXTWVnPvl8sqCrX0k_ssLuTIvSumSzSxxj60XVCS8gOCOrfpPCsGpAOsyAc&usqp=CAU'></img>
+                <img className='logoImag' alt='logoPic' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsXFUA0FjKXXTWVnPvl8sqCrX0k_ssLuTIvSumSzSxxj60XVCS8gOCOrfpPCsGpAOsyAc&usqp=CAU'></img>
 
                 <TextField className='myTextInput'
                     id="demo-helper-text-aligned"
@@ -101,32 +118,39 @@ export const Login = (props: LoginProp) => {
                     label="Enter your Password"
                     type={passwordShown ? "text" : "password"}
                     error={passwordError} />
+                {isSignedUp && <TextField className='myTextInput'
+
+                    id="demo-helper-text-aligned-no-helper"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.currentTarget.value, 'repass')}
+                    label="reEnter your Password"
+                    type={passwordShown ? "text" : "password"}
+                    error={passwordError} />}
                 <div className='myButtonDiv2'>
                     <ul><li>
                         <input type="checkbox" className='checkBoxInput' onClick={togglePassword} />
                     </li><li>
                             <label className='showPassLabel'>Show password</label>
                         </li></ul>
-                        <Button className="login-with-google-btn" onClick={signInWithGoogle}>
-        Sign in with Google
-      </Button>
-
-
-                </div>
-
-                <div className='myButtonDiv'>
-                    <Button
-                        className='myButton1'
-                        onClick={handleSubmit}>
-                        {isSignedUp ? 'Next' : 'Login'}
+                    <Button className="login-with-google-btn" onClick={signInWithGoogle}>
+                        Sign in with Google
                     </Button>
+
+
                 </div>
+
+                {/* <div className='myButtonDiv'> */}
+                <Button
+                    className='myButton1'
+                    onClick={handleSubmit}>
+                    {isSignedUp ? 'SignUp' : 'Login'}
+                </Button>
+                {/* </div> */}
                 <div className='myButtonDiv2'>
                     <Button
                         variant='text'
                         className='myButton2'
                         onClick={() => setIsSignedUp(!isSignedUp)}>
-                        {isSignedUp ? 'Login' : 'Create new account!'}
+                        {isSignedUp ? 'Have an account? Login!' : "Don't have an account? SignUp!"}
                     </Button>
                 </div>
             </Box>
