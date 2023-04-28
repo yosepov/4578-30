@@ -46,13 +46,14 @@ const handleNavigation = (videoId: string) => {
   {allVideos.map((res: any) => {
     return <>
       <Box
-        
+        onClick={() => handleNavigation(res.id)}
         sx={{
         display: 'flex',
         marginLeft: '30px',
         wwidth: '402px',
         height: '94px',
-        paddingBottom: '10px'
+        paddingBottom: '10px',
+        cursor: 'pointer'
       }}>
         <Box 
         sx={{
