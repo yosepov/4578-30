@@ -8,12 +8,9 @@ import { useNavigate } from 'react-router'
 
 export const AllVideo = () => {
 
-
-  const [allVideos, setAllVideos] = useState<any>([])
-
-
   const navigate = useNavigate()
 
+  const [allVideos, setAllVideos] = useState<any>([])
 
   useEffect(() => {
 
