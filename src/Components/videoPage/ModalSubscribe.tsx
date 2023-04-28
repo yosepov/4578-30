@@ -2,7 +2,6 @@ import { Box, Button, Typography } from '@mui/material'
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 import React from 'react'
 
@@ -18,7 +17,6 @@ const handleClose = () => {
 };
 
   return <>
-        
           <Box
           onClick={handleClick}
           sx={{
