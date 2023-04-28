@@ -25,9 +25,8 @@ import TimezoneSelect from 'react-timezone-select'
 
 import './VideoUploadForm.css'
 import { VideoType } from '../../../Types/VideoType';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { selectVideoId, setVideoDescription, setVideoIsForKids, setVideoTitle } from '../../../features/uploadVideo/uploadVideoSlice';
-import { uploadVideoToFirebase } from '../../../Services/videos/videosDB';
+import { useAppDispatch } from '../../../app/hooks';
+import {  setVideoDescription, setVideoIsForKids, setVideoTitle } from '../../../features/uploadVideo/uploadVideoSlice';
 import { useNavigate } from 'react-router-dom';
 
 export default function VideoUploadForm() {
@@ -35,7 +34,7 @@ export default function VideoUploadForm() {
     const [visibilityOption, setVisibilityOption] = useState('');
     const [activeElement, setActiveElement] = useState(1);
     const [selectedTimezone, setSelectedTimezone] =useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
-    const [date, setDate] = useState('');
+    const [, setDate] = useState('');
     const dateInputRef = useRef(null)
 
       const handleTimezoneChange = (timezone:any) => {
