@@ -11,9 +11,11 @@ import { AddNewVideoPopup } from '../Popup/AddNewVideoPopup';
 import { LoginPopup } from '../Popup/LoginPopup';
 import './navbar.css';
 import SliderSideBar from '../SideNav/SliderSideBar';
+import { useAppSelector } from '../../app/hooks';
+import { selectUser } from '../../features/user/userSlice';
 
 export const NavBar = () => {
-
+    const user = useAppSelector(selectUser);
 
     return <div className='myDiv'>
         <ToastContainer />
@@ -31,7 +33,7 @@ export const NavBar = () => {
             <button className='kayBoardButton keyboardButton'><KeyboardIcon className='keyboardIcon' /></button>
         </div>
 
-        <AddNewVideoPopup />
+       {user && <AddNewVideoPopup />}
         <IconButton >
             <NotificationsNoneOutlinedIcon />
         </IconButton>
