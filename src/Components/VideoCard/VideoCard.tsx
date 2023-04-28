@@ -6,6 +6,7 @@ import VolumeOffOutlinedIcon from '@mui/icons-material/VolumeOffOutlined';
 import ClosedCaptionDisabledOutlinedIcon from '@mui/icons-material/ClosedCaptionDisabledOutlined';
 
 import { ModalVideo } from './ModalVideo';
+
 import './videoCard.css'
 import { useNavigate } from 'react-router-dom';
 import { getDocs, collection } from 'firebase/firestore';
@@ -14,11 +15,9 @@ import { database } from '../../Services/firebase';
 export const VideoCard = () => {
 
     const navigate = useNavigate()
-
+    const [volume, setVolume] = React.useState(true)
+    const [subtitle, setSubtitle] = React.useState(true)
     const [allVideos, setAllVideos] = useState<any>([])
-
-    const [volume, setVolume] = useState(false)
-    const [subtitle, setSubtitle] = useState(true)
 
     const handleVolume = () => setVolume(!volume)
     const handleSubtitle = () => setSubtitle(!subtitle)

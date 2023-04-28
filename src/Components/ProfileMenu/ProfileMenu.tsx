@@ -18,14 +18,13 @@ import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import KeyboardOutlinedIcon from '@mui/icons-material/KeyboardOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SmsFailedOutlinedIcon from '@mui/icons-material/SmsFailedOutlined';
-
+    
 import './ProfileMenu.css';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectUser } from '../../features/user/userSlice';
 import { getAuth, signOut } from "firebase/auth";
 import { toast } from 'react-toastify';
 import { removeUser } from '../../features/user/userSlice';
-
 
 export const ProfileMenu = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -48,6 +47,7 @@ export const ProfileMenu = () => {
             dispatch(removeUser());
             handleClose()
             if (tkn && tkn !== '')
+            localStorage.clear()
                 toast("Sign-out successful")
             sessionStorage.setItem('Auth Token', '');
         }).catch((error) => {
@@ -55,12 +55,15 @@ export const ProfileMenu = () => {
         });
     }
 
-
+    
+    
+    console.log(googleUser)
     return (
         <div>
 
             <IconButton style={{ marginRight: '20px' }} onClick={handleClick}>
-                <Avatar src='https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg' />
+                
+            <Avatar src={`${googleUser && googleUser.photoURL}`} />
             </IconButton>
 
             <Menu

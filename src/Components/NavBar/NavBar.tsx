@@ -37,7 +37,7 @@ export const NavBar = () => {
         <IconButton >
             <NotificationsNoneOutlinedIcon />
         </IconButton>
-        <LoginPopup />
+       { !user &&  <LoginPopup />}
         <ProfileMenu />
     </div>
 }

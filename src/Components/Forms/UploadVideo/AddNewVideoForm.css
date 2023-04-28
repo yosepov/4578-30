@@ -1,0 +1,95 @@
+section {
+    width: 100%;
+    height: 100%;
+}
+
+
+.titleDiv {
+    display: flex;
+    height: 10%;
+    width: 100%;
+    border-bottom: 1px solid #dfdfdf;
+    align-items: center;
+}
+
+.titleDiv>div {
+    margin-left: auto;
+    margin-right: 5%;
+    color: #212121;
+    display: flex;
+
+}
+
+.titleDiv>p {
+    margin-left: 3%;
+    font-weight: 600;
+    font-family: "Roboto", "Noto", sans-serif;
+    font-size: large;
+    color: #212121;
+}
+
+.titleDiv>div>p {
+    margin-left: 15%;
+
+}
+
+.uploadDiv {
+    background-color: #f9f9f9;
+    display: flex;
+    border-radius: 64%;
+    width: 9em;
+    height: 9em;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 9%;
+    cursor: pointer;
+}
+
+.uploadDiv>svg {
+    color: #909090;
+    height: 50%;
+    width: auto;
+}
+
+
+.textDiv>p {
+    text-align: center;
+    margin-bottom: -1%;
+
+}
+
+#firstP {
+    font-weight: 400;
+}
+
+#secondP {
+    font-weight: 400;
+    color: #787878;
+    font-size: small;
+}
+
+
+.textDiv {
+    text-align: center;
+}
+
+.endTextDiv {
+    text-align: center;
+    width: 86%;
+    margin: auto;
+    position: relative;
+    top: 15%;
+}
+
+.endTextDiv>p {
+    font-weight: 400;
+    color: #787878;
+    font-size: small;
+
+}
+
+span {
+    color: #427bdd;
+    cursor: pointer;
+}

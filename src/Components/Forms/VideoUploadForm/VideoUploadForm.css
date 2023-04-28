@@ -47,10 +47,10 @@ h4{
 }
 
 #iframeID{
-    transform: translateY(60px);
-    width:60%;
+    transform: translateY(20px);
+    margin-left: 1%;
+    width:35%;
     height:50vh;
     display:flex;
-    /* border:1px solid black; */
 }
 
