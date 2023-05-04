@@ -34,7 +34,7 @@ export default function VideoUploadForm() {
     const [visibilityOption, setVisibilityOption] = useState('');
     const [activeElement, setActiveElement] = useState(1);
     const [selectedTimezone, setSelectedTimezone] =useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
-    const [date, setDate] = useState('');
+    const [, setDate] = useState('');
     const dateInputRef = useRef(null)
 
       const handleTimezoneChange = (timezone:any) => {
