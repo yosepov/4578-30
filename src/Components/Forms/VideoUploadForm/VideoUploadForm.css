@@ -10,9 +10,15 @@
     color: var(--ytcp-text-secondary);
 }
 
-h4{
-    margin-bottom: 1%;
+h5{
+    margin: 0;
 }
+
+.visPar{
+    margin: 0;
+    padding: 0;
+}
+
 
 
 #radioGroupID{
@@ -29,8 +35,7 @@ h4{
     display: inline-flex;
     justify-content: space-between;
     align-items: baseline;
-    padding: 0;
-    margin: 0;
+    
 }
 
 
@@ -54,3 +59,11 @@ h4{
     display:flex;
 }
 
+.subPar{
+    font-size:smaller;
+}
+
+
+#navButtons:hover{
+    background-color: transparent;
+}

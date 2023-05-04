@@ -27,7 +27,6 @@ import './VideoUploadForm.css'
 import { VideoType } from '../../../Types/VideoType';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { selectVideoId, setVideoDescription, setVideoIsForKids, setVideoTitle } from '../../../features/uploadVideo/uploadVideoSlice';
-import { uploadVideoToFirebase } from '../../../Services/videos/videosDB';
 import { useNavigate } from 'react-router-dom';
 
 export default function VideoUploadForm() {
@@ -56,6 +55,7 @@ export default function VideoUploadForm() {
         dispatch(setVideoDescription(data.description));
         dispatch(setVideoIsForKids(data.isForKids));
         handleElementChange(counter++)
+        setActiveElement(2)
     }
 
     const goToSaveNewVideo = () => {
@@ -126,10 +126,10 @@ export default function VideoUploadForm() {
                         {activeElement === 2 && <Box sx={{ width: `100%`, height: `60vh`, display: 'flex', marginLeft: `10%`, flexDirection: `column`, overflowY: 'scroll', overflowX: 'hidden',paddingRight:'10%' }}>
                             <Box sx={{height: `8vh`, display: 'flex', flexDirection: `column`, alignItems: `flex-start`,padding:'0' }}>
                                 <h2>Video elements</h2>
-                                <p>Use cards and an end screen to show viewers related videos, websites, and calls to action. Learn more</p>
+                                <p className='subPar'>Use cards and an end screen to show viewers related videos, websites, and calls to action. Learn more</p>
                             </Box>
 
-                            <Box sx={{border:'1px solid grey',padding:'5px 16px 0px 24px;',marginTop:'12%',backgroundColor:'grey',display:'inline-flex',alignItems:'center'}}>
+                            <Box sx={{padding:'5px 16px 0px 24px;',marginTop:'12%',display:'inline-flex',alignItems:'center'}}>
                                 <SubtitlesOutlinedIcon/>
                                 <Box sx={{marginLeft:'3%'}}>
                                 <h5>Add subtitles</h5>
@@ -137,7 +137,7 @@ export default function VideoUploadForm() {
                                 </Box>
                                 <IconButton sx={{transform:`translateX(110px)`,backgroundColor:'transparent',fontSize:'medium'}}>ADD</IconButton>
                             </Box>
-                            <Box sx={{border:'1px solid grey',padding:'5px 16px 0px 24px;',marginTop:'2%',backgroundColor:'grey',display:'inline-flex',alignItems:'center'}}>
+                            <Box sx={{padding:'5px 16px 0px 24px;',marginTop:'2%',display:'inline-flex',alignItems:'center'}}>
                                 <PictureInPictureSharpIcon/>
                                 <Box sx={{marginLeft:'3%'}}>
                                 <h5>Add an end screen</h5>
@@ -146,7 +146,7 @@ export default function VideoUploadForm() {
                                 <IconButton sx={{transform:`translateX(182px)`,backgroundColor:'transparent',fontSize:'medium'}}>ADD</IconButton>
 
                             </Box>
-                            <Box sx={{border:'1px solid grey',padding:'5px 16px 0px 24px;',marginBottom:'10%',marginTop:'2%',backgroundColor:'grey',display:'inline-flex',alignItems:'center'}}>
+                            <Box sx={{padding:'5px 16px 0px 24px;',marginBottom:'10%',marginTop:'2%',display:'inline-flex',alignItems:'center'}}>
                                 <InfoOutlinedIcon/>
                                 <Box sx={{marginLeft:'3%'}}>
                                 <h5>Add cards</h5>
@@ -177,8 +177,8 @@ export default function VideoUploadForm() {
                         </Box>}
                         {activeElement === 4 && <Box sx={{ width: `100%`, height: `60vh`, display: 'flex', marginLeft: `10%`, flexDirection: `column`, overflowY: 'scroll', overflowX: 'hidden',paddingRight:'10%' }}>
                             <Box sx={{height: `8vh`, display: 'flex', flexDirection: `column`, alignItems: `flex-start`,padding:'0' }}>
-                                <h2>Visibility</h2>
-                                <p>Choose when to publish and who can see your video</p>
+                                <h3>Visibility</h3>
+                                <p className='visPar'>Choose when to publish and who can see your video</p>
                             </Box>
 
                          <Box sx={{border:'1px solid grey',padding:'5px 16px 0px 24px;',marginTop:'12%',display:'flex',flexDirection:'column',alignItems:'flex-start'}}>
@@ -230,7 +230,7 @@ export default function VideoUploadForm() {
                                 </Box>
 
                          </Box>
-                            <Box sx={{borderTop:'1px solid grey',padding:'5px 16px 0px 24px;',marginTop:'1%',marginBottom:'4%',display:'flex',flexDirection:'column',alignItems:'flex-start'}}>
+                            <Box sx={{borderTop:'1px solid grey',padding:'5px 16px 0px 24px;',marginTop:'1%',marginBottom:'4%',display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'0'}}>
                                 <h4>Before you publish, check the following:</h4>
                                 <h5>Do kids appear in this video?</h5>
                                 <p>Make sure you follow our policies to protect minors from harm, exploitation, bullying, and violations of labor law. Learn more</p>
@@ -249,9 +249,9 @@ export default function VideoUploadForm() {
                         <p>Checks complete. No issues found.</p>
                     </Box>
                     {activeElement === 1 && <Button type='submit' sx={{ marginRight: `2%`, backgroundColor: '#065fd4', borderRadius: '2px' }}>Next</Button>}
-                    {activeElement === 2 && <Button onClick={() => setActiveElement(3)} sx={{ marginRight: `2%`, backgroundColor: '#065fd4', borderRadius: '2px' }}>Next</Button>}
-                    {activeElement === 3 && <Button onClick={() => setActiveElement(4)} sx={{ marginRight: `2%`, backgroundColor: '#065fd4', borderRadius: '2px' }}>Next</Button>}
-                    {activeElement === 4 && <Button onClick={() => goToSaveNewVideo()} sx={{ marginRight: `2%`, backgroundColor: '#065fd4', borderRadius: '2px' }}>Finish</Button>}
+                    {activeElement === 2 && (<Box  display={'flex'} gap={'2%'} flexDirection={'revert'} sx={{transform: `translateX(-2.1rem)`,flexDirection:'row-reverse'}}><Button onClick={() => setActiveElement(3)} sx={{backgroundColor: '#065fd4', borderRadius: '2px' }}>Next</Button><Button sx={{color: '#606060', borderRadius: '2px',backgroundColor:'transparent' }} onClick={() => setActiveElement(1)} id='navButtons'>Back</Button></Box>)}
+                    {activeElement === 3 && (<Box  display={'flex'} gap={'2%'} flexDirection={'revert'} sx={{transform: `translateX(-2.1rem)`,flexDirection:'row-reverse'}}><Button onClick={() => setActiveElement(4)} sx={{backgroundColor: '#065fd4', borderRadius: '2px' }}>Next</Button><Button sx={{color: '#606060', borderRadius: '2px',backgroundColor:'transparent' }} onClick={() => setActiveElement(2)} id='navButtons'>Back</Button></Box>)}
+                    {activeElement === 4 &&  (<Box  display={'flex'} gap={'2%'} flexDirection={'revert'} sx={{transform: `translateX(-2.1rem)`,flexDirection:'row-reverse'}}><Button onClick={() => goToSaveNewVideo()} sx={{backgroundColor: '#065fd4', borderRadius: '2px' }}>Finish</Button><Button sx={{color: '#606060', borderRadius: '2px',backgroundColor:'transparent' }} onClick={() => setActiveElement(3)} id='navButtons'>Back</Button></Box>)}
                 </Box>
             </form>
         </>
