@@ -23,10 +23,14 @@ export const Login = (props: LoginProp) => {
     const [usernameError, setUsernamError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [passwordShown, setPasswordShown] = useState(false);
+    const [repeatedPassword, setRepeatedPassword] = useState('');
+
     const togglePassword = () => { setPasswordShown(!passwordShown); }
     const dispatch = useAppDispatch();
 
     const handleSubmit = async () => {
+        if(repeatedPassword === pass){
+
         if (isSignedUp) {
             await createUserWithEmailAndPassword(auth, user, pass).then((res) => {
                 const user = res.user;
@@ -50,12 +54,14 @@ export const Login = (props: LoginProp) => {
                 );
             }
             ).catch(e => toast(e));
+        }}else{
+            toast('password is not correct')
         }
     }
 
     const handleChange = (val: string, eleName: string) => {
         if (eleName === 'user') {
-            setUsername(val)
+                setUsername(val)
             if (val.length === 0) {
                 setUsernamError(true)
             }
@@ -64,6 +70,7 @@ export const Login = (props: LoginProp) => {
             }
         }
         else if (eleName === 'pass') {
+            
             setPassword(val)
             if (val.length === 0) {
                 setPasswordError(true)
@@ -72,8 +79,15 @@ export const Login = (props: LoginProp) => {
                 setPasswordError(false)
             }
         }
+        else if(eleName=='repeatedPassword')
+        {
+            setRepeatedPassword(val);
+        }
 
     }
+    /* const handleRepeatedPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRepeatedPassword(event.target.value);
+    } */
 
     const signInWithGoogle = ()=>{
         signInWithPopup(auth,googleSigninProvider).then((result)=>{
@@ -121,8 +135,8 @@ export const Login = (props: LoginProp) => {
                 {isSignedUp && <TextField className='myTextInput'
 
                     id="demo-helper-text-aligned-no-helper"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.currentTarget.value, 'repass')}
-                    label="reEnter your Password"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.currentTarget.value, 'repeatedPassword')}
+                    label="check password"
                     type={passwordShown ? "text" : "password"}
                     error={passwordError} />}
                 <div className='myButtonDiv2'>
