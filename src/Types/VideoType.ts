@@ -1,5 +1,4 @@
 
-
 export type VideoType = {
     id: string;
     title: string;
