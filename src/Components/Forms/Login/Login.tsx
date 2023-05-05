@@ -29,39 +29,40 @@ export const Login = (props: LoginProp) => {
     const dispatch = useAppDispatch();
 
     const handleSubmit = async () => {
-        if(repeatedPassword === pass){
+        if (repeatedPassword === pass) {
 
-        if (isSignedUp) {
-            await createUserWithEmailAndPassword(auth, user, pass).then((res) => {
-                const user = res.user;
-                dispatch(setUser(user))
-                sessionStorage.setItem('Auth Token', user.refreshToken);
-                addNewUserToDB(user.uid, user.email, null);
-                props.closeParentModel();
-                toast(user.email + ' Welcome!', {
-                    type: "warning",
-                });
-            }).catch((e) => toast(e));
-        } else {
-            await signInWithEmailAndPassword(auth, user, pass).then(res => {
-                const user = res.user;
-                dispatch(setUser(user))
-                sessionStorage.setItem('Auth Token', res.user.refreshToken);
-                props.closeParentModel();
-                toast(res.user.email + ' Signed in successfully!', {
-                    type: "success",
+            if (isSignedUp) {
+                await createUserWithEmailAndPassword(auth, user, pass).then((res) => {
+                    const user = res.user;
+                    dispatch(setUser(user))
+                    sessionStorage.setItem('Auth Token', user.refreshToken);
+                    addNewUserToDB(user.uid, user.email, null);
+                    toast(res.user.email + ' Signed in successfully!', {
+                        type: "success",
+                    })
+                    props.closeParentModel();
+                }).catch((e) => toast(e));
+            } else {
+                await signInWithEmailAndPassword(auth, user, pass).then(res => {
+                    const user = res.user;
+                    dispatch(setUser(user))
+                    sessionStorage.setItem('Auth Token', res.user.refreshToken);
+                    props.closeParentModel();
+                    toast(res.user.email + ' Signed in successfully!', {
+                        type: "success",
+                    }
+                    );
                 }
-                );
+                ).catch(e => toast(e));
             }
-            ).catch(e => toast(e));
-        }}else{
-            toast('password is not correct')
+        } else {
+            toast.error('password does not match')
         }
     }
 
     const handleChange = (val: string, eleName: string) => {
         if (eleName === 'user') {
-                setUsername(val)
+            setUsername(val)
             if (val.length === 0) {
                 setUsernamError(true)
             }
@@ -70,7 +71,7 @@ export const Login = (props: LoginProp) => {
             }
         }
         else if (eleName === 'pass') {
-            
+
             setPassword(val)
             if (val.length === 0) {
                 setPasswordError(true)
@@ -79,8 +80,7 @@ export const Login = (props: LoginProp) => {
                 setPasswordError(false)
             }
         }
-        else if(eleName=='repeatedPassword')
-        {
+        else if (eleName === 'repeatedPassword') {
             setRepeatedPassword(val);
         }
 

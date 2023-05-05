@@ -8,8 +8,8 @@ export const addNewUserToDB = async (uid: string, email: string | null, imageUrl
             uid: uid,
             email: email,
             videos: [],
-            avatarURL:imageUrl ||  "",
-        }).then(() => toast.success('User ' + uid + " added succefully!")
+            avatarURL: imageUrl || "",
+        }).then(() => toast.success("User added succefully!")
         ).catch(e => toast.error('Error: failed to upload new user ' + e));
     } catch (error) {
         toast.error('Error: failed to upload new user ' + error)

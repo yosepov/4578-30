@@ -42,8 +42,6 @@ export const VideoPage = () => {
         setShowMore(!showMore)
     }
 
-
-
     useEffect(() => {
 
         const getDataOfIdVideoFromFirebase = async () => {
