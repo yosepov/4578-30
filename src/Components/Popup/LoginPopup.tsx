@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { IconButton } from '@mui/material';
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
+import { IconButton, Typography } from '@mui/material';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 import { Login } from '../Forms/Login/Login';
 
@@ -27,8 +27,11 @@ export const LoginPopup = () => {
 
     return (
         <div>
-            <IconButton onClick={handleOpen} style={{ marginRight: '20px' }}>
-                <LoginOutlinedIcon />
+            <IconButton  onClick={handleOpen} style={{ marginRight: '20px' }}>
+               <Typography variant='body2' color="primary">
+               Signin &nbsp;
+                </Typography>
+                <AccountCircleOutlinedIcon color='primary' />
             </IconButton>
             <Modal
                 open={open}

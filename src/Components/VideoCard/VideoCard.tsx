@@ -5,12 +5,14 @@ import VolumeUpOutlinedIcon from '@mui/icons-material/VolumeUpOutlined';
 import VolumeOffOutlinedIcon from '@mui/icons-material/VolumeOffOutlined';
 import ClosedCaptionDisabledOutlinedIcon from '@mui/icons-material/ClosedCaptionDisabledOutlined';
 import { ModalVideo } from './ModalVideo';
+
 import './videoCard.css'
 
 export const VideoCard = (): JSX.Element => {
 
     const [volume, setVolume] = React.useState(true)
     const [subtitle, setSubtitle] = React.useState(true)
+    
 
 
     const handleVolume = (): void => {
