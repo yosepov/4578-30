@@ -59,9 +59,7 @@ export const ProfileMenu = () => {
 
     return (
         <div>
-
             <IconButton style={{ marginRight: '20px' }} onClick={handleClick}>
-
                 <Avatar src={`${googleUser && googleUser.photoURL}`} />
             </IconButton>
 

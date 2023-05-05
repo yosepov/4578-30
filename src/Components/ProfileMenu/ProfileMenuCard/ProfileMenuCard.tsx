@@ -1,18 +1,22 @@
 import { useState } from 'react';
 import './ProfileMenuCard.css'
+import { Avatar } from '@mui/material';
+import { useAppSelector } from '../../../app/hooks';
+import { selectUser } from '../../../features/user/userSlice';
 
 interface ProfileMenuCardProps {
     user: any,
 }
 
 export const ProfileMenuCard = (props: ProfileMenuCardProps) => {
+    const googleUser = useAppSelector(selectUser);
 
     const [user,] = useState(props);
   
     return (
         <div className='CardMain'>
             <div className='Card'>
-                <img src="https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg" alt="" />
+            <Avatar src={`${googleUser && googleUser.photoURL}`} />
                 <div className='CardText'>
                     <p>{user != null && user.user != null ? user.user : 'Sign In'}
                         <br />
