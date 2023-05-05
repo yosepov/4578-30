@@ -11,7 +11,7 @@ const rootPersistConfig = {
 
 const rootReducer = combineReducers({
     user: userReducer,
-    video: videoReducer
+    videos: videoReducer
 })
 
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer)
