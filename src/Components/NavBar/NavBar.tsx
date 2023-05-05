@@ -13,16 +13,28 @@ import './navbar.css';
 import SliderSideBar from '../SideNav/SliderSideBar';
 import { useAppSelector } from '../../app/hooks';
 import { selectUser } from '../../features/user/userSlice';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 export const NavBar = () => {
     const user = useAppSelector(selectUser);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (window.location.pathname === '/') {
+            navigate('/home')
+        }
+    })
+
+    const handleNavigateHome = () => {
+        navigate('/home')
+    }
 
     return <div className='myDiv'>
         <ToastContainer />
         <IconButton>
             <SliderSideBar />
         </IconButton>
-        <img width='100' alt="youtube logo" src='./Assets/Logos/YouTube-Logo.png' />
+        <img onClick={handleNavigateHome} className='logoIcon' width='100' alt="youtube logo" src='./Assets/Logos/YouTube-Logo.png' />
         {/* {googleUser && googleUser.email} */}
         <div className='search' >
             <button className='micIconButton' ><MicIcon /></button>
@@ -33,11 +45,11 @@ export const NavBar = () => {
             <button className='kayBoardButton keyboardButton'><KeyboardIcon className='keyboardIcon' /></button>
         </div>
 
-       {user && <AddNewVideoPopup />}
+        {user && <AddNewVideoPopup />}
         <IconButton >
             <NotificationsNoneOutlinedIcon />
         </IconButton>
-       { !user &&  <LoginPopup />}
+        {!user && <LoginPopup />}
         <ProfileMenu />
     </div>
 }

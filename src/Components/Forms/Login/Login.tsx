@@ -89,22 +89,22 @@ export const Login = (props: LoginProp) => {
         setRepeatedPassword(event.target.value);
     } */
 
-    const signInWithGoogle = ()=>{
-        signInWithPopup(auth,googleSigninProvider).then((result)=>{
-   const user = result.user
-   dispatch(setUser(user))
-   const profilePic = result.user.photoURL
-   addNewUserToDB(user.uid, user.email,profilePic ).then(() => {
-       toast.success('Hi ' + user.email);
-   }).catch(e => {
-       toast.error(e)
-   
-   });
-       
-        }).catch((error)=>{
-           toast.error(error)
+    const signInWithGoogle = () => {
+        signInWithPopup(auth, googleSigninProvider).then((result) => {
+            const user = result.user
+            dispatch(setUser(user))
+            const profilePic = result.user.photoURL
+            addNewUserToDB(user.uid, user.email, profilePic).then(() => {
+                toast.success('Hi ' + user.email);
+            }).catch(e => {
+                toast.error(e)
+
+            });
+
+        }).catch((error) => {
+            toast.error(error)
         })
-   }
+    }
 
     return (
         <>
@@ -148,8 +148,6 @@ export const Login = (props: LoginProp) => {
                     <Button className="login-with-google-btn" onClick={signInWithGoogle}>
                         Sign in with Google
                     </Button>
-
-
                 </div>
 
                 {/* <div className='myButtonDiv'> */}

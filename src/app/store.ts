@@ -1,14 +1,26 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import userReducer from '../features/user/userSlice'
 import videoReducer from '../features/uploadVideo/uploadVideoSlice'
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
 
-export const store = configureStore({
-    reducer: {
-        user: userReducer,
-        video:videoReducer
-    }
+const rootPersistConfig = {
+    key: 'root',
+    storage,
+}
+
+const rootReducer = combineReducers({
+    user: userReducer,
+    videos: videoReducer
 })
 
+const persistedReducer = persistReducer(rootPersistConfig, rootReducer)
+
+export const store = configureStore({
+    reducer: persistedReducer
+})
+
+export const persistor = persistStore(store)
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
