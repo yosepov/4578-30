@@ -58,12 +58,10 @@
     bottom: 190px;
     border-radius: 4px;
     padding: 3px 4px;
-    background-color: #0f0f0f;
     height: 12px;
     width: 40px;
     margin-left: 5px;
     font-size: 14px;
-    color: aliceblue;
 }
 
 .moreOption {
@@ -90,7 +88,6 @@
 
 .headerText {
     margin: 0%;
-    color: #0f0f0f;
     font-size: 17px;
     font-weight: 600;
     overflow: hidden;

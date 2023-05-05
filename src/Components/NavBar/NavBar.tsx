@@ -1,4 +1,4 @@
-import { IconButton } from '@mui/material';
+import { Card, Divider, IconButton } from '@mui/material';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import { ToastContainer } from 'react-toastify';
 import SearchIcon from '@mui/icons-material/Search';
@@ -15,6 +15,7 @@ import { useAppSelector } from '../../app/hooks';
 import { selectUser } from '../../features/user/userSlice';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { LightModeButton } from '../ThemeApp/ThemeApp';
 
 export const NavBar = () => {
     const user = useAppSelector(selectUser);
@@ -29,29 +30,34 @@ export const NavBar = () => {
         navigate('/home')
     }
 
-    return <div className='myDiv'>
-        <ToastContainer />
-        <IconButton>
-            <SliderSideBar />
-        </IconButton>
-        <img onClick={handleNavigateHome} className='logoIcon' width='100' alt="youtube logo" src='./Assets/Logos/YouTube-Logo.png' />
-        {/* {googleUser && googleUser.email} */}
-        <div className='search' >
-            <button className='micIconButton' ><MicIcon /></button>
-            <div className='divInput'>
-                <input className='input' placeholder='search'></input>
-                <button className='searchButton'><SearchIcon /></button>
-            </div>
-            <button className='kayBoardButton keyboardButton'><KeyboardIcon className='keyboardIcon' /></button>
-        </div>
 
-        {user && <AddNewVideoPopup />}
-        <IconButton >
-            <NotificationsNoneOutlinedIcon />
-        </IconButton>
-        {!user && <LoginPopup />}
-        <ProfileMenu />
-    </div>
+    return <>
+        <Card className='myDiv'>
+            <ToastContainer />
+            <IconButton>
+                <SliderSideBar />
+            </IconButton>
+            <img onClick={handleNavigateHome} className='logoIcon' width='100' alt="youtube logo" src='./Assets/Logos/YouTube-Logo.png' />
+            {/* {googleUser && googleUser.email} */}
+            <div className='search' >
+                <button className='micIconButton' ><MicIcon /></button>
+                <div className='divInput'>
+                    <input className='input' placeholder='search'></input>
+                    <button className='searchButton'><SearchIcon /></button>
+                </div>
+                <button className='kayBoardButton keyboardButton'><KeyboardIcon className='keyboardIcon' /></button>
+            </div>
+
+            {user && <AddNewVideoPopup />}
+            <IconButton >
+                <NotificationsNoneOutlinedIcon />
+            </IconButton>
+            {!user && <LoginPopup />}
+            <ProfileMenu />
+            <LightModeButton />
+        </Card>
+        <Divider />
+    </>
 }
 
 

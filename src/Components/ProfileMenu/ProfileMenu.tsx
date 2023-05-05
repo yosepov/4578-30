@@ -18,7 +18,7 @@ import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import KeyboardOutlinedIcon from '@mui/icons-material/KeyboardOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SmsFailedOutlinedIcon from '@mui/icons-material/SmsFailedOutlined';
-    
+
 import './ProfileMenu.css';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectUser } from '../../features/user/userSlice';
@@ -47,23 +47,22 @@ export const ProfileMenu = () => {
             dispatch(removeUser());
             handleClose()
             if (tkn && tkn !== '')
-            localStorage.clear()
-                toast("Sign-out successful")
+                localStorage.clear()
+            toast("Sign-out successful")
             sessionStorage.setItem('Auth Token', '');
         }).catch((error) => {
             toast("Error Signing Out" + error)
         });
     }
 
-    
-    
-    console.log(googleUser)
+
+
     return (
         <div>
 
             <IconButton style={{ marginRight: '20px' }} onClick={handleClick}>
-                
-            <Avatar src={`${googleUser && googleUser.photoURL}`} />
+
+                <Avatar src={`${googleUser && googleUser.photoURL}`} />
             </IconButton>
 
             <Menu
