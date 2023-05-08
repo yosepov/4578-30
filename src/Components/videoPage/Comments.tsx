@@ -15,30 +15,25 @@ export const Comments = () => {
     const [showButtons, setShowButtons] = useState(<></>)
     const [inputValue, setInputValue] = useState('')
 
-    useEffect(() => {
+useEffect(() => {
 
-        const getDataOfIdVideoFromFirebase = async () => {
-            const docRef = doc(database, "videos", `${id}`);
-            const docSnap = await getDoc(docRef);
+    const getDataOfIdVideoFromFirebase = async () => {
+        const docRef = doc(database, "videos", `${id}`);
+        const docSnap = await getDoc(docRef);
 
-            if (docSnap.exists()) {
-                const comment =  docSnap.data().comments
-                setCommentFromFirebase(comment)
-            }
+        if (docSnap.exists()) {
+            const comment =  docSnap.data().comments
+            setCommentFromFirebase(comment)
         }
-        getDataOfIdVideoFromFirebase()
+    }
+    getDataOfIdVideoFromFirebase()
 
-    }, [id, value])
+}, [id, value])
 
-
-
-  
 
 const updateCommentToFirebase = async () => {
     if(inputValue) {
-        setInputValue('')
-        console.log(value);
-        
+        setInputValue('')        
         const updateVideoComment = doc(database, 'videos', `${id}`)
         await updateDoc(updateVideoComment, {
             comments:arrayUnion(value)
@@ -47,8 +42,6 @@ const updateCommentToFirebase = async () => {
     } else {
         alert('this is empty comment ')
     }
-
-    
     setShowButtons(<></>)
 }
 
@@ -56,7 +49,6 @@ const hideButtons = () => {
         setShowButtons(<></>)
         setValue('')
 }
-
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -65,7 +57,6 @@ const hideButtons = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
 
 
 const commentsShow = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -82,41 +73,31 @@ const commentsShow = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaEl
     setValue(newComment)
 
 
-    setShowButtons(<>
-            <Button
-                onClick={hideButtons}
-                sx={{
-                    textTransform: 'capitalize',
-                    fontSize: '14px',
-                    fontWeight: '600',
-                }}>
-                Cancel
-            </Button>
-
-            <Button
-                type='submit'
-                onClick={updateCommentToFirebase}
-                sx={{
-                    textTransform: 'capitalize',
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    backgroundColor: '#065fd4',
-                    borderRadius: '18px',
-                    padding: '0 16px',
-                    "&:hover": { backgroundColor: '#065fd4' }
-
-                }}>
-                Comment
-            </Button>
-
+setShowButtons(<>
+        <Button
+            onClick={hideButtons}
+            sx={{
+                textTransform: 'capitalize',
+                fontSize: '14px',
+                fontWeight: '600',
+            }}>
+            Cancel
+        </Button>
+        <Button
+            type='submit'
+            onClick={updateCommentToFirebase}
+            sx={{
+                textTransform: 'capitalize',
+                fontSize: '14px',
+                fontWeight: '600',
+                backgroundColor: '#065fd4',
+                borderRadius: '18px',
+                padding: '0 16px',
+                "&:hover": { backgroundColor: '#065fd4' }
+            }}>
+            Comment
+        </Button>
         </>)
-
-
-    }
-
-    const deleteComment = (index: number) => {
-        console.log(index);
-        
     }
 
     return <>
