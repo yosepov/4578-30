@@ -58,7 +58,7 @@ const handleNavigation = (videoId: string) => {
           height: '94px'
         }}>
         <video width='168px' height='94px'
-        
+        muted
         src={res.url} 
         style={{borderRadius: '20px',cursor: 'pointer'}}
         onMouseOver={handleMouse}

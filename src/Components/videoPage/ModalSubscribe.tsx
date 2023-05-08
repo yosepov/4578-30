@@ -26,7 +26,6 @@ export const ModalSubscribe = () => {
 
             <Button sx={{
                 borderRadius: '50px',
-                color: 'black',
                 backgroundColor: 'rgba(0,0,0,0.05)',
                 width: '60px',
                 height: '35px',

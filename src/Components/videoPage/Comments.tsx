@@ -1,26 +1,61 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Avatar, Box, Button, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, TextField, Typography } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { useParams } from 'react-router-dom';
+import { doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
+import { database } from '../../Services/firebase';
 
 export const Comments = () => {
+    const { id } = useParams();
 
-    // const comments: {newValue: string} [] = []
-
+    const [value, setValue] = useState({})
+    const [commentFromFirebase, setCommentFromFirebase] = useState([])
     const [showButtons, setShowButtons] = useState(<></>)
-    const [value, setValue] = useState('')
-    const [comment, setComment] = useState(<></>)
+    const [inputValue, setInputValue] = useState('')
 
-    const [, setSearches] = useState<string[]>([])
-    const [query, setQuery] = useState("")
+    useEffect(() => {
 
-    const hideButtons = () => {
-        setShowButtons(<></>)
-        setValue('')
+        const getDataOfIdVideoFromFirebase = async () => {
+            const docRef = doc(database, "videos", `${id}`);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const comment =  docSnap.data().comments
+                setCommentFromFirebase(comment)
+            }
+        }
+        getDataOfIdVideoFromFirebase()
+
+    }, [id, value])
+
+
+
+  
+
+const updateCommentToFirebase = async () => {
+    if(inputValue) {
+        setInputValue('')
+        console.log(value);
+        
+        const updateVideoComment = doc(database, 'videos', `${id}`)
+        await updateDoc(updateVideoComment, {
+            comments:arrayUnion(value)
+        })
+        setValue({})
+    } else {
+        alert('this is empty comment ')
     }
 
-    const ITEM_HEIGHT = 48;
+    
+    setShowButtons(<></>)
+}
+
+const hideButtons = () => {
+        setShowButtons(<></>)
+        setValue('')
+}
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -33,113 +68,43 @@ export const Comments = () => {
 
 
 
+const commentsShow = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    event.preventDefault()
+    const value = event.target.value
+    setInputValue(value)
+    console.log(value);
+    
+    const date = new Date()
+    const newComment = {
+        value : value,
+        date: date.toLocaleDateString()
+    }
+    setValue(newComment)
 
-    const commentsShow = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = event.target.value
-        setValue(event.target.value)
 
-        setQuery(event.target.value)
-
-        const publishComment = () => {
-            setSearches(searches => searches.concat(query))
-            // comments.push({newValue})
-
-            setComment(<>
-                <Box sx={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    width: '640px',
-                    marginTop: '50px'
-                }}>
-                    <IconButton><Avatar src='https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg' /></IconButton>
-                    <Box sx={{ display: 'block' }}>
-                        <Typography sx={{
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            color: 'black',
-                        }}>David amagid</Typography>
-
-                        <Typography sx={{
-                            textTransform: 'capitalize',
-                            fontSize: '14px',
-                            fontWeight: '400',
-                            color: 'black',
-                            maxWidth: '90%',
-                            overflowWrap: 'break-word'
-                        }}>{newValue}</Typography>
-                    </Box>
-                    <Box>
-                        <IconButton
-                            aria-label="more"
-                            id="long-button"
-                            aria-controls={open ? 'long-menu' : undefined}
-                            aria-expanded={open ? 'true' : undefined}
-                            aria-haspopup="true"
-                            onClick={handleClick}>
-                            <MoreVertIcon />
-                        </IconButton>
-                        <Menu
-                            id="long-menu"
-                            sx={{ borderRadius: '50px' }}
-                            MenuListProps={{
-                                'aria-labelledby': 'long-button',
-
-                            }}
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            PaperProps={{
-                                style: {
-                                    maxHeight: ITEM_HEIGHT * 2,
-                                    width: '30ch',
-                                },
-                            }}
-                        >
-                            <MenuList>
-                                <MenuItem>
-                                    <ListItemIcon>
-                                        <ModeEditOutlinedIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Edit" />
-                                </MenuItem>
-
-                                <MenuItem>
-                                    <ListItemIcon>
-                                        <DeleteOutlineOutlinedIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Delete" />
-                                </MenuItem>
-                            </MenuList>
-                        </Menu>
-                    </Box>
-                </Box>
-            </>)
-            setValue('')
-        }
-
-        setShowButtons(<>
+    setShowButtons(<>
             <Button
                 onClick={hideButtons}
                 sx={{
                     textTransform: 'capitalize',
                     fontSize: '14px',
                     fontWeight: '600',
-                    color: 'black'
                 }}>
                 Cancel
             </Button>
 
             <Button
-                onClick={publishComment}
+                type='submit'
+                onClick={updateCommentToFirebase}
                 sx={{
                     textTransform: 'capitalize',
                     fontSize: '14px',
                     fontWeight: '600',
                     backgroundColor: '#065fd4',
-                    color: 'white',
                     borderRadius: '18px',
                     padding: '0 16px',
-                    "&:hover": { backgroundColor: '#065fd4', color: 'white' }
+                    "&:hover": { backgroundColor: '#065fd4' }
+
                 }}>
                 Comment
             </Button>
@@ -147,6 +112,11 @@ export const Comments = () => {
         </>)
 
 
+    }
+
+    const deleteComment = (index: number) => {
+        console.log(index);
+        
     }
 
     return <>
@@ -158,6 +128,7 @@ export const Comments = () => {
             alignItems: 'flex-start'
         }}>
             <IconButton><Avatar src='https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg' /></IconButton>
+            
             <TextField
                 sx={{
                     marginRight: '16px'
@@ -169,7 +140,11 @@ export const Comments = () => {
                 variant="standard"
                 fullWidth
                 onChange={commentsShow}
-                value={value}
+                onBlur={commentsShow}
+                value={inputValue}
+                onSubmit={(e => {
+                    e.preventDefault()
+                })}
             />
         </Box>
 
@@ -182,7 +157,94 @@ export const Comments = () => {
         </Box>
 
         <Box >
-            {comment}
+            {commentFromFirebase.slice().reverse().map((comment, index) => {  
+            return <>
+            <Box 
+             key={index}
+             sx={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                width: '640px',
+                marginTop: '50px'
+            }}>
+                <IconButton><Avatar src='https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg' /></IconButton>
+                <Box sx={{ display: 'block' }}>
+
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        width: '600px'
+                        
+                        }}>
+                    <Typography sx={{
+                        fontSize: '14px',
+                        fontWeight: '600',
+                    }}>David amagid</Typography>
+                    &nbsp;
+                    <Typography sx={{
+                        fontSize: '14px',
+                        fontWeight: '600',
+                    }}>{(comment as any).date}</Typography>
+                    </Box>
+  
+                    <Typography sx={{
+                        textTransform: 'capitalize',
+                        fontSize: '14px',
+                        fontWeight: '400',
+                        maxWidth: '90%',
+                        overflowWrap: 'break-word'
+                    }}>{(comment as any).value}</Typography>
+                </Box>
+                <Box>
+                    <IconButton
+                    
+                        key={index}
+                        aria-label="more"
+                        id="long-button"
+                        aria-controls={open ? 'long-menu' : undefined}
+                        aria-expanded={open ? 'true' : undefined}
+                        aria-haspopup="true"
+                        onClick={handleClick}
+                        >
+                        <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                        key={index}
+                        id="long-menu"
+                        sx={{ borderRadius: '50px' }}
+                        MenuListProps={{
+                            'aria-labelledby': 'long-button',
+
+                        }}
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        PaperProps={{
+                            style: {
+                                width: '30ch',
+                            },
+                        }}
+                    >
+                        <MenuList>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <ModeEditOutlinedIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Edit" />
+                            </MenuItem>
+
+                            <MenuItem>
+                                <ListItemIcon >
+                                    <DeleteOutlineOutlinedIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Delete" />
+                            </MenuItem>
+                        </MenuList>
+                    </Menu>
+                </Box>
+            </Box>
+        </>
+        })}
         </Box>
     </>
 
