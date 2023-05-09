@@ -13,11 +13,13 @@ import './navbar.css';
 import SliderSideBar from '../SideNav/SliderSideBar';
 import { useAppSelector } from '../../app/hooks';
 import { selectUser } from '../../features/user/userSlice';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { LightModeButton } from '../ThemeApp/ThemeApp';
+import { LangModeButton, LightModeButton, LangModeContext } from '../ThemeApp/ThemeApp';
 
 export const NavBar = () => {
+    const langMode = useContext(LangModeContext);
+    const isEngMode = langMode.state === 'english' ? true: false;
     const user = useAppSelector(selectUser);
     const navigate = useNavigate();
     useEffect(() => {
@@ -52,9 +54,10 @@ export const NavBar = () => {
             <IconButton >
                 <NotificationsNoneOutlinedIcon />
             </IconButton>
-            {!user && <LoginPopup />}
+            {!user && <LoginPopup isEngMode={isEngMode} />}
             <ProfileMenu />
             <LightModeButton />
+            <LangModeButton  />
         </Card>
         <Divider />
     </>

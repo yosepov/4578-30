@@ -19,8 +19,10 @@ const style = {
     p: 4,
 };
 
-
-export const LoginPopup = () => {
+interface LoginPopupProps {
+    isEngMode: boolean;
+}
+export const LoginPopup = ({isEngMode}: LoginPopupProps) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -29,7 +31,7 @@ export const LoginPopup = () => {
         <div>
             <IconButton  onClick={handleOpen} style={{ marginRight: '20px' }}>
                <Typography variant='body2' color="primary">
-               Signin &nbsp;
+               {isEngMode ? 'Signin' : 'התחבר'} &nbsp;
                 </Typography>
                 <AccountCircleOutlinedIcon color='primary' />
             </IconButton>

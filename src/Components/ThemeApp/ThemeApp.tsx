@@ -7,6 +7,10 @@ import { App } from "../../App";
 export const ColorModeContext = createContext({
     toggleColorMode: () => { }
 })
+export const LangModeContext = createContext({
+    toggleLangMode: () => { },
+    state: 'english'
+})
 
 export const LightModeButton = () => {
     const theme = useTheme();
@@ -23,14 +27,34 @@ export const LightModeButton = () => {
         </IconButton>
     )
 }
+export const LangModeButton = () => {
+    // call the context value
+    const langMode = useContext(LangModeContext);
+    return (
+        <IconButton
+            onClick={langMode.toggleLangMode}>
+           {langMode.state === 'english' ?
+            'עברית'
+            :
+            'english'
+            }
+        </IconButton>
+    )
+}
 
 export const ThemeApp = () => {
     const [mode, setMode] = useState<'light' | 'dark'>('light');
+    const [langModeState, setLangMode] = useState<'english' | 'עברית'>('עברית');
 
     const colorMode = useMemo(() => ({
         toggleColorMode: () => setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
-    }), [])
+    }), []);
 
+    const langMode = useMemo(() => ({
+        toggleLangMode: () => setLangMode((prevMode) => (prevMode === 'english' ? 'עברית' : 'english')),
+        state: langModeState
+    }), [langModeState])
+    
     const theme = useMemo(() =>
         createTheme({
             palette: {
@@ -48,9 +72,11 @@ export const ThemeApp = () => {
 
     return (
         <ColorModeContext.Provider value={colorMode}>
+        <LangModeContext.Provider value={langMode}>
             <ThemeProvider theme={theme}>
                 <App />
             </ThemeProvider>
+        </LangModeContext.Provider>
         </ColorModeContext.Provider>
     )
 
