@@ -40,9 +40,9 @@ const handleNavigation = (videoId: string) => {
 
   return <>
   <Box>
-  {allVideos.map((res: any) => {
-    return <>
-      <Box
+  {allVideos.map((res: any, index: number) => {
+    return <Box
+      key={index.toString()}
         onClick={() => handleNavigation(res.id)}
         sx={{
         display: 'flex',
@@ -102,7 +102,6 @@ const handleNavigation = (videoId: string) => {
         </Box>
         <ModalVideo/>
       </Box>
-    </>
 
   })}
   </Box>
